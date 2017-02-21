@@ -66,7 +66,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 
                 if self.checkBox_saveLog.isChecked:
                     serialOutputLog = open(self.serialOutputFilename, 'a') # append to existing file
-                    serialOutputLog.write(str(serialData))
+                    serialOutputLog.write(formattedSerialData)
                     serialOutputLog.closed
 
     def stopReadClicked(self):

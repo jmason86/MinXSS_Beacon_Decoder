@@ -1,0 +1,43 @@
+2017-02-21 13:12:40,500 ERROR yoyo
+2017-02-21 13:14:18,624 ERROR yoyo
+2017-02-21 13:14:45,362 WARNING yoyo
+2017-02-21 13:15:19,885 INFO yoyo
+2017-02-21 13:15:19,885 INFO Testing MinXSS packet parse
+2017-02-21 13:15:48,418 INFO Testing MinXSS packet parse
+2017-02-21 13:16:40,227 INFO Testing MinXSS packet parse
+2017-02-21 13:34:14,653 INFO Testing MinXSS packet parse
+2017-02-21 13:35:11,988 INFO Testing MinXSS packet parse
+2017-02-21 13:36:51,026 INFO Testing MinXSS packet parse
+2017-02-21 13:47:03,696 INFO Testing MinXSS packet parse
+2017-02-21 13:47:21,629 INFO Testing MinXSS packet parse
+2017-02-21 13:47:35,885 INFO Testing MinXSS packet parse
+2017-02-21 13:48:57,312 INFO Testing MinXSS packet parse
+2017-02-21 13:49:48,942 INFO Testing MinXSS packet parse
+2017-02-21 13:49:48,942 INFO {'5vLineVoltage': 4.95878173828125}
+2017-02-21 13:50:20,173 INFO Testing MinXSS packet parse
+2017-02-21 13:50:25,009 INFO Testing MinXSS packet parse
+2017-02-21 13:50:25,009 INFO Test results: 
+2017-02-21 16:06:12,954 INFO Testing MinXSS packet parse
+2017-02-21 16:06:12,954 INFO {'5vLineVoltage': 0.00163818359375}
+2017-02-21 16:06:46,765 INFO Testing MinXSS packet parse
+2017-02-21 16:06:46,765 INFO {'5vLineVoltage': 4.95878173828125}
+2017-02-21 16:07:04,147 INFO Testing MinXSS packet parse
+2017-02-21 16:07:04,147 INFO {'5vLineVoltage': 4.95878173828125}
+2017-02-21 16:14:08,454 INFO Testing MinXSS packet parse
+2017-02-21 16:14:08,455 INFO {'5vLineVoltage': 4.95878173828125}
+2017-02-21 16:14:30,816 INFO Testing MinXSS packet parse
+2017-02-21 16:14:30,816 INFO {'5vLineVoltage': 4.95878173828125}
+2017-02-21 16:14:44,820 INFO Testing MinXSS packet parse
+2017-02-21 16:14:44,820 INFO {'5vLineVoltage': 4.95878173828125}
+2017-02-21 16:15:59,094 INFO Testing MinXSS packet parse
+2017-02-21 16:15:59,094 INFO {'CommBoardTemperature': 23.125, '5vLineVoltage': 4.95878173828125}
+2017-02-21 16:18:16,385 INFO Testing MinXSS packet parse
+2017-02-21 16:18:16,385 INFO {'CommBoardTemperature': 23.125, 'MotherboardTemperature': 21.25, '5vLineVoltage': 4.95878173828125}
+2017-02-21 16:21:32,524 INFO Testing MinXSS packet parse
+2017-02-21 16:21:32,524 INFO {'BatteryVoltage': 8.255650818394388, 'CommBoardTemperature': 23.125, 'EpsBoardTemperature': 23.5, 'MotherboardTemperature': 21.25, '5vLineVoltage': 4.95878173828125}
+2017-02-21 16:24:15,501 INFO Testing MinXSS packet parse
+2017-02-21 16:24:15,501 INFO {'BatteryVoltage': 8.255650818394388, 'EpsBoardTemperature': 23.5, '5vLineVoltage': 4.95878173828125, 'SolarArray-YCurrent': 3.9990234375, 'MotherboardTemperature': 21.25, 'CommBoardTemperature': 23.125}
+2017-02-21 16:28:18,292 INFO Testing MinXSS packet parse
+2017-02-21 16:28:18,292 INFO {'BatteryVoltage': 8.255650818394388, 'EpsBoardTemperature': 23.5, '5vLineVoltage': 4.95878173828125, 'SolarArray-YCurrent': 3.9990234375, 'SolarArray+XCurrent': 3.9990234375, 'MotherboardTemperature': 21.25, 'SolarArray+YCurrent': 791.806640625, 'SolarArray+YVoltage': 1.58361328125, 'SolarArray+xVoltage': 1.66359375, 'CommBoardTemperature': 23.125, 'SolarArray-YVoltage': 1.9115332031249999}
+2017-02-21 16:29:33,428 INFO Testing MinXSS packet parse
+2017-02-21 16:29:33,428 INFO {'BatteryVoltage': 8.255650818394388, 'EpsBoardTemperature': 23.5, '5vLineVoltage': 4.95878173828125, 'SolarArray-YCurrent': 3.9990234375, 'SolarArray+XCurrent': 3.9990234375, 'MotherboardTemperature': 21.25, 'SolarArray+YCurrent': 3.9990234375, 'SolarArray+YVoltage': 1.58361328125, 'SolarArray+XVoltage': 1.66359375, 'CommBoardTemperature': 23.125, 'SolarArray-YVoltage': 1.9115332031249999}
