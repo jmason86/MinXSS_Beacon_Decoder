@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="jpm">
+    <file>MinXSS CubeSat Logo.png</file>
+    <file>CU LASP.png</file>
+    <file>CUlogo_transparent.png</file>
+    <file>satellite-station.png</file>
+    <file>universal-serial-usb-connector.png</file>
+  </qresource>
+</RCC>

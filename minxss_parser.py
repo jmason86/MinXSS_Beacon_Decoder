@@ -8,8 +8,14 @@ import logging
 class Minxss_Parser():
     def __init__(self, minxssSerialData, log):
         self.log = log # debug log
-        #self.selectedTelemetryDictionary = self.parsePacket(minxssSerialData)
 
+    # Purpose:
+    #   Top level wrapper function to take serial data and return parsed and interpretted telemetry as a dictionary
+    # Input:
+    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    # Output:
+    #   selectedTelemetryDictionary [dictionary]: The telemetry with key/value pairs
+    #
     def parsePacket(self, minxssSerialData):
         # Find the sync bytes (0x08, 0x19), reframe the packet to start after sync
         syncOffset = self.findSyncIndex(minxssSerialData)
@@ -105,7 +111,7 @@ class Minxss_Parser():
     
     ##
     # End byte->human-readable conversion functions
-    #
+    ##
     
     # Purpose:
     #   Test parsing a packet
