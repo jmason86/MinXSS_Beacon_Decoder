@@ -1,5 +1,6 @@
 <RCC>
-  <qresource prefix="jpm">
+  <qresource>
+    <file>refresh-button.png</file>
     <file>MinXSS CubeSat Logo.png</file>
     <file>CU LASP.png</file>
     <file>CUlogo_transparent.png</file>
