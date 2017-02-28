@@ -12,6 +12,7 @@ import connect_serial_decode_kiss
 from PySide import QtCore, QtGui
 import time, datetime
 from serial.tools import list_ports
+import minxss_parser
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -50,7 +51,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             connectedPort = connect_serial_decode_kiss.connect_serial_decode_kiss(port, baudRate, self.log)
             portReadable = connectedPort.testRead()
         
-            # If port is readable, store the reference to it and start reading . Either way, update the GUI serial status
+            # If port is readable, store the reference to it and start reading. Either way, update the GUI serial status
             if portReadable:
                 # Store port in instance variable and start reading
                 self.connectedPort = connectedPort
@@ -62,7 +63,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
                 self.label_serialStatus.setPalette(palette)
             else:
-                self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Port test read failed", None, QtGui.QApplication.UnicodeUTF8))
+                self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
                 palette = QtGui.QPalette()
                 palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
                 self.label_serialStatus.setPalette(palette)
@@ -86,6 +87,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     serialOutputLog = open(self.serialOutputFilename, 'a') # append to existing file
                     serialOutputLog.write(formattedSerialData)
                     serialOutputLog.closed
+
+                # Parse and interpret the binary data into human readable telemetry
+                selectedTelemetryDictionary = minxss_parser.parsePacket(serialData)
+                    
+                # Update GUI with telemetry points
+                self.label_batteryVoltage.setText(selectedTelemetryDictionary['BatteryVoltage'])
     
     def stopRead(self):
         self.connectedPort.close()
@@ -102,17 +109,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.serialOutputFilename = 'MinXSS_Beacon_Decoder/output/' + datetime.datetime.now().isoformat() + '.txt'
             with open(self.serialOutputFilename, 'w') as serialOutputLog:
                 # Update the GUI for the log file - is saving
-                self.label_savingToLogFile.setText("Saving to log file: " + self.serialOutputFilename)
+                self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.serialOutputFilename)
                 palette = QtGui.QPalette()
                 palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
-                self.label_savingToLogFile.setPalette(palette)
+                self.textBrowser_savingToLogFile.setPalette(palette)
             serialOutputLog.closed
         else:
             # Update the GUI for the log file - not saving
-            self.label_savingToLogFile.setText("Not saving to log file")
+            self.textBrowser_savingToLogFile.setText("Not saving to log file")
             palette = QtGui.QPalette()
             palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
-            self.label_savingToLogFile.setPalette(palette)
+            self.textBrowser_savingToLogFile.setPalette(palette)
 
     def setupOutputLog(self):
         if not os.path.exists("MinXSS_Beacon_Decoder/output"):
@@ -120,10 +127,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.serialOutputFilename = "MinXSS_Beacon_Decoder/output/" + datetime.datetime.now().isoformat() + ".txt"
         with open(self.serialOutputFilename, 'w') as serialOutputLog:
             # Update the GUI for the log file - is saving
-            self.label_savingToLogFile.setText("Saving to log file: " + self.serialOutputFilename)
+            self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.serialOutputFilename)
             palette = QtGui.QPalette()
             palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
-            self.label_savingToLogFile.setPalette(palette)
+            self.textBrowser_savingToLogFile.setPalette(palette)
         serialOutputLog.closed
 
     def createLog(self):
