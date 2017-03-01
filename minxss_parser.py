@@ -43,6 +43,8 @@ class Minxss_Parser():
         selectedTelemetryDictionary['SolarArray+XVoltage'] = self.decodeBytesSolarArrayVoltage(minxssSerialData[142:142+2])  # [V]
         selectedTelemetryDictionary['SolarArray+YVoltage'] = self.decodeBytesSolarArrayVoltage(minxssSerialData[146:146+2])  # [V]
         
+        self.log.info("From MinXSS parser:")
+        self.log.info(selectedTelemetryDictionary)
         return selectedTelemetryDictionary
 
     # Purpose:
@@ -54,7 +56,7 @@ class Minxss_Parser():
     #
     def findSyncIndex(self, minxssSerialData):
         syncBytes = bytearray([0x08, 0x19]) # This is actually the CCSDS start and then the housekeeping packet APID
-        packetStartIndex = minxssSerialData.find(syncBytes)
+        packetStartIndex = bytearray(minxssSerialData).find(syncBytes)
         return packetStartIndex
     
     # Purpose:
@@ -78,6 +80,9 @@ class Minxss_Parser():
             telemetryPointRaw += shiftedByte
             numberOfBitsToShiftBy += 8
         
+        print(bytearrayTemp)
+        print(type(bytearrayTemp))
+        print(telemetryPointRaw)
         return telemetryPointRaw
 
     ##

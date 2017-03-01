@@ -34,80 +34,11 @@ class connect_serial_decode_kiss():
         while(1):
             newdata = self.ser.read(self.ser.in_waiting)
             for byte in newdata:
-                data.append(byte)
+                data.append(byte) # JPM: This results in a list rather than a bytearray, which breaks my code. Why do this? Else how to convert to bytearray
 
             if(self.ser.in_waiting == 0):
                 break
         return data
-
-    def get_packet(self):
-        header_len = 12
-        xsum_len = 2
-        sync_bytes = [0xA5,0xA5]
-        image_status_len = 129 #128 bytes of file info, one byte header
-        hk_packet_len = 170-16 #total length is 170, this takes everything else out (which we later add back in)
-        initial_offset_len = 16 #not sure what the 16 byte offset is
-        packet = []
-        data = []
-        payload_len = 0
-
-        #Grab data we saved from before
-        if(len(self.serial_read_storage)>0):
-            data = self.serial_read_storage
-            self.serial_read_storage = []
-
-        #get more data
-        data = data + self.read()
-
-        #See if we have a full packet and translate from KISS
-        [is_full_packet, packet, data] = self.KISS_read(data)
-
-        #if(len(data)>0 and is_full_packet == 0):
-        #    self.log.warning("NOTE: get_packet: Have {0} bytes but do not have a full packet!".format(len(data)))
-
-        #store the remaining data
-        self.serial_read_storage = data
-
-        # if we have a full packet, process it
-        if(is_full_packet == 1):
-            packet = packet[initial_offset_len:]
-            #Check the packet type and add in the length
-            if(packet[0] == 0xc8): #then we have an ADCS image status packet
-                payload_len = image_status_len
-            elif(packet[0] == 0x19): #then we have an HK packet
-                payload_len = hk_packet_len
-
-            else:
-                self.log.error("Cannot process packet with opcode {0}! Packet contents:".format(hex(packet[0])))
-                self.log.error(packet)
-                return -1 #didn't work
-
-            #check the length
-            expected_len = header_len + payload_len + xsum_len + len(sync_bytes)
-            if(len(packet) != expected_len):
-                self.log.error("Received packet (ID={0} incorrectly sized! ({1} size != {2} expected size)".format(packet[0],len(packet),expected_len))
-                self.log.error(packet)
-                return -1
-
-            #check the checksum (disabled right now)
-            if(0):
-                xsum_content = packet[0:header_len+payload_len]
-                calc_crc = self.ax25_crc(xsum_content)
-                packet_crc = (packet[header_len + payload_len] | (packet[header_len+payload_len+1] <<8))
-                if(calc_crc !=  packet_crc):
-                    self.log.warning("Received packet with mismatched checksum, calc crc {0} != rx crc {1}".format( hex(calc_crc), hex(packet_crc)) )
-                    self.log.warning(packet)
-                    return -1
-
-            if(packet[-1] != 0xA5 or packet[-2] != 0xA5):
-                self.log.warning('Sync bytes are {0} and {1}, not 0xA5 0xA5!'.format(packet[-1],packet[-2]))
-
-            #all checks have passed - return the packet
-            return(packet)
-
-        else:
-            #if we get here, then we don't have a full packet
-            return -1
 
     #Take an arbitrary numeric data array and figure out if it is not a KISS packet, a partial KISS packet, or a full KISS packet
     #returns a control value and the packet (is_ready,[packet],[remaining_data])

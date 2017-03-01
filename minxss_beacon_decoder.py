@@ -89,10 +89,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     serialOutputLog.closed
 
                 # Parse and interpret the binary data into human readable telemetry
-                selectedTelemetryDictionary = minxss_parser.parsePacket(serialData)
-                    
-                # Update GUI with telemetry points
-                self.label_batteryVoltage.setText(selectedTelemetryDictionary['BatteryVoltage'])
+                minxssParser = minxss_parser.Minxss_Parser(serialData, self.log)
+                print(type(serialData))
+                selectedTelemetryDictionary = minxssParser.parsePacket(serialData)
+                
+                # If valid data, update GUI with telemetry points
+                if selectedTelemetryDictionary != -1:
+                    self.label_batteryVoltage.setText(str(selectedTelemetryDictionary['BatteryVoltage']))
     
     def stopRead(self):
         self.connectedPort.close()

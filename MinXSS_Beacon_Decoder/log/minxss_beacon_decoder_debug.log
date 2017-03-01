@@ -201,3 +201,977 @@
 2017-02-27 16:52:28,110 INFO Closing ground station link
 2017-02-27 17:05:34,035 INFO Launched app
 2017-02-27 17:11:19,091 INFO Launched app
+2017-03-01 10:56:33,745 INFO Launched app
+2017-03-01 10:56:45,974 INFO Attempting to connect to serial port
+2017-03-01 10:56:45,974 INFO Attempting to connect to serial port
+2017-03-01 10:56:45,975 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 10:56:45,975 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 10:56:47,477 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 10:56:47,477 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 10:56:47,477 INFO Test read on port was successful
+2017-03-01 10:56:47,477 INFO Test read on port was successful
+2017-03-01 11:02:06,116 INFO Attempting to disconnect from serial port
+2017-03-01 11:02:06,116 INFO Attempting to disconnect from serial port
+2017-03-01 11:02:06,117 INFO Closing ground station link
+2017-03-01 11:02:06,117 INFO Closing ground station link
+2017-03-01 11:02:45,168 INFO Launched app
+2017-03-01 11:02:52,542 INFO Attempting to connect to serial port
+2017-03-01 11:02:52,542 INFO Attempting to connect to serial port
+2017-03-01 11:02:52,542 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:02:52,542 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:02:54,045 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:02:54,045 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:02:54,045 INFO Test read on port was successful
+2017-03-01 11:02:54,045 INFO Test read on port was successful
+2017-03-01 11:13:05,022 INFO Closing ground station link
+2017-03-01 11:13:05,022 INFO Closing ground station link
+2017-03-01 11:13:30,528 INFO Launched app
+2017-03-01 11:13:35,035 INFO Attempting to connect to serial port
+2017-03-01 11:13:35,035 INFO Attempting to connect to serial port
+2017-03-01 11:13:35,036 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:13:35,036 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:13:36,538 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:13:36,538 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:13:36,539 INFO Test read on port was successful
+2017-03-01 11:13:36,539 INFO Test read on port was successful
+2017-03-01 11:13:38,014 INFO Closing ground station link
+2017-03-01 11:13:38,014 INFO Closing ground station link
+2017-03-01 11:15:12,561 INFO Launched app
+2017-03-01 11:15:17,195 INFO Attempting to connect to serial port
+2017-03-01 11:15:17,195 INFO Attempting to connect to serial port
+2017-03-01 11:15:17,196 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:15:17,196 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:15:18,698 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:15:18,698 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:15:18,698 INFO Test read on port was successful
+2017-03-01 11:15:18,698 INFO Test read on port was successful
+2017-03-01 11:15:49,401 INFO Attempting to disconnect from serial port
+2017-03-01 11:15:49,401 INFO Attempting to disconnect from serial port
+2017-03-01 11:15:49,401 INFO Closing ground station link
+2017-03-01 11:15:49,401 INFO Closing ground station link
+2017-03-01 11:15:53,556 INFO Launched app
+2017-03-01 11:15:59,194 INFO Attempting to connect to serial port
+2017-03-01 11:15:59,194 INFO Attempting to connect to serial port
+2017-03-01 11:15:59,195 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:15:59,195 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:16:00,697 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:16:00,697 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:16:00,697 INFO Test read on port was successful
+2017-03-01 11:16:00,697 INFO Test read on port was successful
+2017-03-01 11:16:33,538 INFO Launched app
+2017-03-01 11:16:37,820 INFO Attempting to connect to serial port
+2017-03-01 11:16:37,820 INFO Attempting to connect to serial port
+2017-03-01 11:16:37,820 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:16:37,820 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:16:39,323 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:16:39,323 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:16:39,324 INFO Test read on port was successful
+2017-03-01 11:16:39,324 INFO Test read on port was successful
+2017-03-01 11:17:05,802 INFO Launched app
+2017-03-01 11:17:14,385 INFO Attempting to connect to serial port
+2017-03-01 11:17:14,385 INFO Attempting to connect to serial port
+2017-03-01 11:17:14,385 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:17:14,385 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:17:15,887 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:17:15,887 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:17:15,887 INFO Test read on port was successful
+2017-03-01 11:17:15,887 INFO Test read on port was successful
+2017-03-01 11:17:17,363 INFO Closing ground station link
+2017-03-01 11:17:17,363 INFO Closing ground station link
+2017-03-01 11:18:15,290 INFO Attempting to disconnect from serial port
+2017-03-01 11:18:15,290 INFO Attempting to disconnect from serial port
+2017-03-01 11:18:15,291 INFO Closing ground station link
+2017-03-01 11:18:15,291 INFO Closing ground station link
+2017-03-01 11:37:44,080 INFO Launched app
+2017-03-01 11:37:51,551 INFO Attempting to connect to serial port
+2017-03-01 11:37:51,551 INFO Attempting to connect to serial port
+2017-03-01 11:37:51,551 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:37:51,551 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:37:53,054 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:37:53,054 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:37:53,054 INFO Test read on port was successful
+2017-03-01 11:37:53,054 INFO Test read on port was successful
+2017-03-01 11:38:12,107 INFO Closing ground station link
+2017-03-01 11:38:12,107 INFO Closing ground station link
+2017-03-01 11:38:59,860 INFO Attempting to disconnect from serial port
+2017-03-01 11:38:59,860 INFO Attempting to disconnect from serial port
+2017-03-01 11:38:59,861 INFO Closing ground station link
+2017-03-01 11:38:59,861 INFO Closing ground station link
+2017-03-01 11:39:20,492 INFO Launched app
+2017-03-01 11:39:24,565 INFO Attempting to connect to serial port
+2017-03-01 11:39:24,565 INFO Attempting to connect to serial port
+2017-03-01 11:39:24,565 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:39:24,565 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:39:26,067 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:39:26,067 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:39:26,067 INFO Test read on port was successful
+2017-03-01 11:39:26,067 INFO Test read on port was successful
+2017-03-01 11:39:48,067 INFO Closing ground station link
+2017-03-01 11:39:48,067 INFO Closing ground station link
+2017-03-01 11:41:02,147 INFO Attempting to disconnect from serial port
+2017-03-01 11:41:02,147 INFO Attempting to disconnect from serial port
+2017-03-01 11:41:02,147 INFO Closing ground station link
+2017-03-01 11:41:02,147 INFO Closing ground station link
+2017-03-01 11:43:36,413 INFO Launched app
+2017-03-01 11:43:41,138 INFO Attempting to connect to serial port
+2017-03-01 11:43:41,138 INFO Attempting to connect to serial port
+2017-03-01 11:43:41,139 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:43:41,139 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:43:42,641 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:43:42,641 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:43:42,642 INFO Test read on port was successful
+2017-03-01 11:43:42,642 INFO Test read on port was successful
+2017-03-01 11:43:57,357 INFO Attempting to disconnect from serial port
+2017-03-01 11:43:57,357 INFO Attempting to disconnect from serial port
+2017-03-01 11:43:57,358 INFO Closing ground station link
+2017-03-01 11:43:57,358 INFO Closing ground station link
+2017-03-01 11:43:58,324 INFO Closing ground station link
+2017-03-01 11:43:58,324 INFO Closing ground station link
+2017-03-01 11:44:03,163 INFO Launched app
+2017-03-01 11:44:07,785 INFO Attempting to connect to serial port
+2017-03-01 11:44:07,785 INFO Attempting to connect to serial port
+2017-03-01 11:44:07,785 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:44:07,785 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:44:09,287 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:44:09,287 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:44:09,288 INFO Test read on port was successful
+2017-03-01 11:44:09,288 INFO Test read on port was successful
+2017-03-01 11:44:11,565 INFO Closing ground station link
+2017-03-01 11:44:11,565 INFO Closing ground station link
+2017-03-01 11:45:00,140 INFO Attempting to disconnect from serial port
+2017-03-01 11:45:00,140 INFO Attempting to disconnect from serial port
+2017-03-01 11:45:00,140 INFO Closing ground station link
+2017-03-01 11:45:00,140 INFO Closing ground station link
+2017-03-01 11:45:29,169 INFO Launched app
+2017-03-01 11:45:33,219 INFO Attempting to connect to serial port
+2017-03-01 11:45:33,219 INFO Attempting to connect to serial port
+2017-03-01 11:45:33,219 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:45:33,219 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:45:34,721 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:45:34,721 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:45:34,721 INFO Test read on port was successful
+2017-03-01 11:45:34,721 INFO Test read on port was successful
+2017-03-01 11:45:35,540 INFO Closing ground station link
+2017-03-01 11:45:35,540 INFO Closing ground station link
+2017-03-01 11:45:42,425 INFO Attempting to disconnect from serial port
+2017-03-01 11:45:42,425 INFO Attempting to disconnect from serial port
+2017-03-01 11:45:42,425 INFO Closing ground station link
+2017-03-01 11:45:42,425 INFO Closing ground station link
+2017-03-01 11:46:14,160 INFO Launched app
+2017-03-01 11:46:19,579 INFO Attempting to connect to serial port
+2017-03-01 11:46:19,579 INFO Attempting to connect to serial port
+2017-03-01 11:46:19,580 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:46:19,580 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:46:21,082 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:46:21,082 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:46:21,082 INFO Test read on port was successful
+2017-03-01 11:46:21,082 INFO Test read on port was successful
+2017-03-01 11:46:23,534 INFO Closing ground station link
+2017-03-01 11:46:23,534 INFO Closing ground station link
+2017-03-01 11:47:16,378 INFO Launched app
+2017-03-01 11:47:20,476 INFO Attempting to connect to serial port
+2017-03-01 11:47:20,476 INFO Attempting to connect to serial port
+2017-03-01 11:47:20,476 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:47:20,476 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:47:21,978 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:47:21,978 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:47:21,978 INFO Test read on port was successful
+2017-03-01 11:47:21,978 INFO Test read on port was successful
+2017-03-01 11:47:23,535 INFO Closing ground station link
+2017-03-01 11:47:23,535 INFO Closing ground station link
+2017-03-01 11:47:27,474 INFO Attempting to disconnect from serial port
+2017-03-01 11:47:27,474 INFO Attempting to disconnect from serial port
+2017-03-01 11:47:27,474 INFO Closing ground station link
+2017-03-01 11:47:27,474 INFO Closing ground station link
+2017-03-01 11:48:20,447 INFO Launched app
+2017-03-01 11:48:24,188 INFO Attempting to connect to serial port
+2017-03-01 11:48:24,188 INFO Attempting to connect to serial port
+2017-03-01 11:48:24,188 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:48:24,188 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:48:25,691 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:48:25,691 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:48:25,691 INFO Test read on port was successful
+2017-03-01 11:48:25,691 INFO Test read on port was successful
+2017-03-01 11:48:26,109 INFO Closing ground station link
+2017-03-01 11:48:26,109 INFO Closing ground station link
+2017-03-01 11:48:42,273 INFO Launched app
+2017-03-01 11:48:45,702 INFO Attempting to connect to serial port
+2017-03-01 11:48:45,702 INFO Attempting to connect to serial port
+2017-03-01 11:48:45,702 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:48:45,702 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:48:47,203 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:48:47,203 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:48:47,203 INFO Test read on port was successful
+2017-03-01 11:48:47,203 INFO Test read on port was successful
+2017-03-01 11:48:47,509 INFO Closing ground station link
+2017-03-01 11:48:47,509 INFO Closing ground station link
+2017-03-01 11:49:17,726 INFO Launched app
+2017-03-01 11:49:21,642 INFO Attempting to connect to serial port
+2017-03-01 11:49:21,642 INFO Attempting to connect to serial port
+2017-03-01 11:49:21,642 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:49:21,642 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:49:23,144 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:49:23,144 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:49:23,144 INFO Test read on port was successful
+2017-03-01 11:49:23,144 INFO Test read on port was successful
+2017-03-01 11:49:26,094 INFO Closing ground station link
+2017-03-01 11:49:26,094 INFO Closing ground station link
+2017-03-01 11:56:44,462 INFO Launched app
+2017-03-01 11:56:49,497 INFO Attempting to connect to serial port
+2017-03-01 11:56:49,497 INFO Attempting to connect to serial port
+2017-03-01 11:56:49,497 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:56:49,497 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:56:50,999 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:56:50,999 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:56:50,999 INFO Test read on port was successful
+2017-03-01 11:56:50,999 INFO Test read on port was successful
+2017-03-01 11:56:57,403 INFO From MinXSS parser:
+2017-03-01 11:56:57,403 INFO From MinXSS parser:
+2017-03-01 11:56:57,403 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 11:56:57,403 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 11:56:57,408 INFO Closing ground station link
+2017-03-01 11:56:57,408 INFO Closing ground station link
+2017-03-01 11:58:55,356 INFO Launched app
+2017-03-01 11:58:59,812 INFO Attempting to connect to serial port
+2017-03-01 11:58:59,812 INFO Attempting to connect to serial port
+2017-03-01 11:58:59,813 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:58:59,813 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:59:01,315 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:59:01,315 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 11:59:01,315 INFO Test read on port was successful
+2017-03-01 11:59:01,315 INFO Test read on port was successful
+2017-03-01 11:59:21,359 INFO No sync bytes found
+2017-03-01 11:59:21,359 INFO No sync bytes found
+2017-03-01 11:59:21,361 INFO Closing ground station link
+2017-03-01 11:59:21,361 INFO Closing ground station link
+2017-03-01 12:00:53,150 INFO Launched app
+2017-03-01 12:00:56,936 INFO Attempting to connect to serial port
+2017-03-01 12:00:56,936 INFO Attempting to connect to serial port
+2017-03-01 12:00:56,936 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:00:56,936 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:00:58,438 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:00:58,438 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:00:58,438 INFO Test read on port was successful
+2017-03-01 12:00:58,438 INFO Test read on port was successful
+2017-03-01 12:01:00,329 INFO No sync bytes found
+2017-03-01 12:01:00,329 INFO No sync bytes found
+2017-03-01 12:01:00,330 INFO Closing ground station link
+2017-03-01 12:01:00,330 INFO Closing ground station link
+2017-03-01 12:01:48,038 INFO Launched app
+2017-03-01 12:01:51,883 INFO Attempting to connect to serial port
+2017-03-01 12:01:51,883 INFO Attempting to connect to serial port
+2017-03-01 12:01:51,883 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:01:51,883 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:01:53,385 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:01:53,385 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:01:53,385 INFO Test read on port was successful
+2017-03-01 12:01:53,385 INFO Test read on port was successful
+2017-03-01 12:01:54,331 INFO From MinXSS parser:
+2017-03-01 12:01:54,331 INFO From MinXSS parser:
+2017-03-01 12:01:54,331 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:01:54,331 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:01:54,345 INFO No sync bytes found
+2017-03-01 12:01:54,345 INFO No sync bytes found
+2017-03-01 12:01:54,346 INFO Closing ground station link
+2017-03-01 12:01:54,346 INFO Closing ground station link
+2017-03-01 12:04:08,324 INFO Launched app
+2017-03-01 12:04:12,028 INFO Attempting to connect to serial port
+2017-03-01 12:04:12,028 INFO Attempting to connect to serial port
+2017-03-01 12:04:12,028 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:04:12,028 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:04:13,530 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:04:13,530 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:04:13,531 INFO Test read on port was successful
+2017-03-01 12:04:13,531 INFO Test read on port was successful
+2017-03-01 12:04:18,285 INFO From MinXSS parser:
+2017-03-01 12:04:18,285 INFO From MinXSS parser:
+2017-03-01 12:04:18,286 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:04:18,286 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:04:18,300 INFO No sync bytes found
+2017-03-01 12:04:18,300 INFO No sync bytes found
+2017-03-01 12:04:18,301 INFO Closing ground station link
+2017-03-01 12:04:18,301 INFO Closing ground station link
+2017-03-01 12:05:53,587 INFO Launched app
+2017-03-01 12:05:57,497 INFO Attempting to connect to serial port
+2017-03-01 12:05:57,497 INFO Attempting to connect to serial port
+2017-03-01 12:05:57,497 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:05:57,497 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:05:58,999 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:05:58,999 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:05:59,000 INFO Test read on port was successful
+2017-03-01 12:05:59,000 INFO Test read on port was successful
+2017-03-01 12:06:06,252 INFO From MinXSS parser:
+2017-03-01 12:06:06,252 INFO From MinXSS parser:
+2017-03-01 12:06:06,253 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:06:06,253 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:06:06,268 INFO No sync bytes found
+2017-03-01 12:06:06,268 INFO No sync bytes found
+2017-03-01 12:06:06,269 INFO Closing ground station link
+2017-03-01 12:06:06,269 INFO Closing ground station link
+2017-03-01 12:06:29,583 INFO Launched app
+2017-03-01 12:06:33,899 INFO Attempting to connect to serial port
+2017-03-01 12:06:33,899 INFO Attempting to connect to serial port
+2017-03-01 12:06:33,900 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:06:33,900 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:06:35,402 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:06:35,402 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:06:35,402 INFO Test read on port was successful
+2017-03-01 12:06:35,402 INFO Test read on port was successful
+2017-03-01 12:06:42,239 INFO No sync bytes found
+2017-03-01 12:06:42,239 INFO No sync bytes found
+2017-03-01 12:06:42,243 INFO Closing ground station link
+2017-03-01 12:06:42,243 INFO Closing ground station link
+2017-03-01 12:11:16,445 INFO Launched app
+2017-03-01 12:11:19,994 INFO Attempting to connect to serial port
+2017-03-01 12:11:19,994 INFO Attempting to connect to serial port
+2017-03-01 12:11:19,995 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:11:19,995 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:11:21,497 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:11:21,497 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:11:21,497 INFO Test read on port was successful
+2017-03-01 12:11:21,497 INFO Test read on port was successful
+2017-03-01 12:11:30,159 INFO From MinXSS parser:
+2017-03-01 12:11:30,159 INFO From MinXSS parser:
+2017-03-01 12:11:30,159 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:11:30,159 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:11:30,161 INFO Closing ground station link
+2017-03-01 12:11:30,161 INFO Closing ground station link
+2017-03-01 12:11:59,259 INFO Launched app
+2017-03-01 12:12:03,452 INFO Attempting to connect to serial port
+2017-03-01 12:12:03,452 INFO Attempting to connect to serial port
+2017-03-01 12:12:03,452 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:12:03,452 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:12:04,953 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:12:04,953 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:12:04,953 INFO Test read on port was successful
+2017-03-01 12:12:04,953 INFO Test read on port was successful
+2017-03-01 12:12:06,138 INFO No sync bytes found
+2017-03-01 12:12:06,138 INFO No sync bytes found
+2017-03-01 12:12:06,140 INFO Closing ground station link
+2017-03-01 12:12:06,140 INFO Closing ground station link
+2017-03-01 12:14:17,377 INFO Launched app
+2017-03-01 12:14:21,264 INFO Attempting to connect to serial port
+2017-03-01 12:14:21,264 INFO Attempting to connect to serial port
+2017-03-01 12:14:21,264 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:14:21,264 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:14:22,767 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:14:22,767 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:14:22,767 INFO Test read on port was successful
+2017-03-01 12:14:22,767 INFO Test read on port was successful
+2017-03-01 12:14:50,944 INFO Launched app
+2017-03-01 12:14:54,953 INFO Attempting to connect to serial port
+2017-03-01 12:14:54,953 INFO Attempting to connect to serial port
+2017-03-01 12:14:54,954 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:14:54,954 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:14:56,455 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:14:56,455 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:14:56,455 INFO Test read on port was successful
+2017-03-01 12:14:56,455 INFO Test read on port was successful
+2017-03-01 12:14:57,097 INFO From MinXSS parser:
+2017-03-01 12:14:57,097 INFO From MinXSS parser:
+2017-03-01 12:14:57,098 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:14:57,098 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:14:57,112 INFO No sync bytes found
+2017-03-01 12:14:57,112 INFO No sync bytes found
+2017-03-01 12:14:57,112 INFO Closing ground station link
+2017-03-01 12:14:57,112 INFO Closing ground station link
+2017-03-01 12:15:47,443 INFO Launched app
+2017-03-01 12:15:51,276 INFO Attempting to connect to serial port
+2017-03-01 12:15:51,276 INFO Attempting to connect to serial port
+2017-03-01 12:15:51,277 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:15:51,277 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:15:52,778 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:15:52,778 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:15:52,778 INFO Test read on port was successful
+2017-03-01 12:15:52,778 INFO Test read on port was successful
+2017-03-01 12:16:00,079 INFO From MinXSS parser:
+2017-03-01 12:16:00,079 INFO From MinXSS parser:
+2017-03-01 12:16:00,079 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:16:00,079 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:16:00,093 INFO No sync bytes found
+2017-03-01 12:16:00,093 INFO No sync bytes found
+2017-03-01 12:16:00,094 INFO Closing ground station link
+2017-03-01 12:16:00,094 INFO Closing ground station link
+2017-03-01 12:16:32,222 INFO Launched app
+2017-03-01 12:16:35,380 INFO Attempting to connect to serial port
+2017-03-01 12:16:35,380 INFO Attempting to connect to serial port
+2017-03-01 12:16:35,380 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:16:35,380 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:16:36,883 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:16:36,883 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:16:36,883 INFO Test read on port was successful
+2017-03-01 12:16:36,883 INFO Test read on port was successful
+2017-03-01 12:16:45,049 INFO No sync bytes found
+2017-03-01 12:16:45,049 INFO No sync bytes found
+2017-03-01 12:16:45,050 INFO Closing ground station link
+2017-03-01 12:16:45,050 INFO Closing ground station link
+2017-03-01 12:17:35,315 INFO Launched app
+2017-03-01 12:17:38,699 INFO Attempting to connect to serial port
+2017-03-01 12:17:38,699 INFO Attempting to connect to serial port
+2017-03-01 12:17:38,699 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:17:38,699 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:17:40,201 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:17:40,201 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:17:40,201 INFO Test read on port was successful
+2017-03-01 12:17:40,201 INFO Test read on port was successful
+2017-03-01 12:17:57,028 INFO No sync bytes found
+2017-03-01 12:17:57,028 INFO No sync bytes found
+2017-03-01 12:17:57,036 INFO Closing ground station link
+2017-03-01 12:17:57,036 INFO Closing ground station link
+2017-03-01 12:19:32,652 INFO Launched app
+2017-03-01 12:19:36,584 INFO Attempting to connect to serial port
+2017-03-01 12:19:36,584 INFO Attempting to connect to serial port
+2017-03-01 12:19:36,584 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:19:36,584 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:19:38,086 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:19:38,086 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:19:38,086 INFO Test read on port was successful
+2017-03-01 12:19:38,086 INFO Test read on port was successful
+2017-03-01 12:19:45,003 INFO From MinXSS parser:
+2017-03-01 12:19:45,003 INFO From MinXSS parser:
+2017-03-01 12:19:45,011 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:19:45,011 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:19:45,018 INFO No sync bytes found
+2017-03-01 12:19:45,018 INFO No sync bytes found
+2017-03-01 12:19:45,033 INFO No sync bytes found
+2017-03-01 12:19:45,033 INFO No sync bytes found
+2017-03-01 12:19:45,050 INFO No sync bytes found
+2017-03-01 12:19:45,050 INFO No sync bytes found
+2017-03-01 12:19:45,066 INFO No sync bytes found
+2017-03-01 12:19:45,066 INFO No sync bytes found
+2017-03-01 12:19:45,082 INFO No sync bytes found
+2017-03-01 12:19:45,082 INFO No sync bytes found
+2017-03-01 12:19:45,098 INFO No sync bytes found
+2017-03-01 12:19:45,098 INFO No sync bytes found
+2017-03-01 12:19:45,114 INFO No sync bytes found
+2017-03-01 12:19:45,114 INFO No sync bytes found
+2017-03-01 12:19:45,130 INFO No sync bytes found
+2017-03-01 12:19:45,130 INFO No sync bytes found
+2017-03-01 12:19:45,146 INFO No sync bytes found
+2017-03-01 12:19:45,146 INFO No sync bytes found
+2017-03-01 12:20:11,992 INFO From MinXSS parser:
+2017-03-01 12:20:11,992 INFO From MinXSS parser:
+2017-03-01 12:20:11,993 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:20:11,993 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:20:12,008 INFO No sync bytes found
+2017-03-01 12:20:12,008 INFO No sync bytes found
+2017-03-01 12:20:12,025 INFO No sync bytes found
+2017-03-01 12:20:12,025 INFO No sync bytes found
+2017-03-01 12:20:12,041 INFO No sync bytes found
+2017-03-01 12:20:12,041 INFO No sync bytes found
+2017-03-01 12:20:12,057 INFO No sync bytes found
+2017-03-01 12:20:12,057 INFO No sync bytes found
+2017-03-01 12:20:12,073 INFO No sync bytes found
+2017-03-01 12:20:12,073 INFO No sync bytes found
+2017-03-01 12:20:12,089 INFO No sync bytes found
+2017-03-01 12:20:12,089 INFO No sync bytes found
+2017-03-01 12:20:12,105 INFO No sync bytes found
+2017-03-01 12:20:12,105 INFO No sync bytes found
+2017-03-01 12:20:12,121 INFO No sync bytes found
+2017-03-01 12:20:12,121 INFO No sync bytes found
+2017-03-01 12:20:12,137 INFO No sync bytes found
+2017-03-01 12:20:12,137 INFO No sync bytes found
+2017-03-01 12:20:53,185 INFO Launched app
+2017-03-01 12:20:56,996 INFO Attempting to connect to serial port
+2017-03-01 12:20:56,996 INFO Attempting to connect to serial port
+2017-03-01 12:20:56,997 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:20:56,997 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:20:58,498 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:20:58,498 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:20:58,499 INFO Test read on port was successful
+2017-03-01 12:20:58,499 INFO Test read on port was successful
+2017-03-01 12:21:14,974 INFO From MinXSS parser:
+2017-03-01 12:21:14,974 INFO From MinXSS parser:
+2017-03-01 12:21:14,974 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:21:14,974 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:21:14,988 INFO No sync bytes found
+2017-03-01 12:21:14,988 INFO No sync bytes found
+2017-03-01 12:21:15,004 INFO No sync bytes found
+2017-03-01 12:21:15,004 INFO No sync bytes found
+2017-03-01 12:21:15,022 INFO No sync bytes found
+2017-03-01 12:21:15,022 INFO No sync bytes found
+2017-03-01 12:21:15,036 INFO No sync bytes found
+2017-03-01 12:21:15,036 INFO No sync bytes found
+2017-03-01 12:21:15,052 INFO No sync bytes found
+2017-03-01 12:21:15,052 INFO No sync bytes found
+2017-03-01 12:21:15,069 INFO No sync bytes found
+2017-03-01 12:21:15,069 INFO No sync bytes found
+2017-03-01 12:21:15,084 INFO No sync bytes found
+2017-03-01 12:21:15,084 INFO No sync bytes found
+2017-03-01 12:21:15,100 INFO No sync bytes found
+2017-03-01 12:21:15,100 INFO No sync bytes found
+2017-03-01 12:21:15,116 INFO No sync bytes found
+2017-03-01 12:21:15,116 INFO No sync bytes found
+2017-03-01 12:21:23,969 INFO No sync bytes found
+2017-03-01 12:21:23,969 INFO No sync bytes found
+2017-03-01 12:21:23,985 INFO From MinXSS parser:
+2017-03-01 12:21:23,985 INFO From MinXSS parser:
+2017-03-01 12:21:23,986 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:21:23,986 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:21:24,001 INFO No sync bytes found
+2017-03-01 12:21:24,001 INFO No sync bytes found
+2017-03-01 12:21:24,017 INFO No sync bytes found
+2017-03-01 12:21:24,017 INFO No sync bytes found
+2017-03-01 12:21:24,033 INFO No sync bytes found
+2017-03-01 12:21:24,033 INFO No sync bytes found
+2017-03-01 12:21:24,049 INFO No sync bytes found
+2017-03-01 12:21:24,049 INFO No sync bytes found
+2017-03-01 12:21:24,065 INFO No sync bytes found
+2017-03-01 12:21:24,065 INFO No sync bytes found
+2017-03-01 12:21:24,081 INFO No sync bytes found
+2017-03-01 12:21:24,081 INFO No sync bytes found
+2017-03-01 12:21:24,097 INFO No sync bytes found
+2017-03-01 12:21:24,097 INFO No sync bytes found
+2017-03-01 12:21:24,114 INFO No sync bytes found
+2017-03-01 12:21:24,114 INFO No sync bytes found
+2017-03-01 12:24:47,405 INFO Launched app
+2017-03-01 12:24:51,540 INFO Attempting to connect to serial port
+2017-03-01 12:24:51,540 INFO Attempting to connect to serial port
+2017-03-01 12:24:51,540 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:24:51,540 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:24:53,042 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:24:53,042 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:24:53,043 INFO Test read on port was successful
+2017-03-01 12:24:53,043 INFO Test read on port was successful
+2017-03-01 12:24:59,912 INFO No sync bytes found
+2017-03-01 12:24:59,912 INFO No sync bytes found
+2017-03-01 12:24:59,926 INFO No sync bytes found
+2017-03-01 12:24:59,926 INFO No sync bytes found
+2017-03-01 12:24:59,942 INFO No sync bytes found
+2017-03-01 12:24:59,942 INFO No sync bytes found
+2017-03-01 12:24:59,958 INFO No sync bytes found
+2017-03-01 12:24:59,958 INFO No sync bytes found
+2017-03-01 12:24:59,974 INFO No sync bytes found
+2017-03-01 12:24:59,974 INFO No sync bytes found
+2017-03-01 12:24:59,990 INFO No sync bytes found
+2017-03-01 12:24:59,990 INFO No sync bytes found
+2017-03-01 12:25:00,006 INFO No sync bytes found
+2017-03-01 12:25:00,006 INFO No sync bytes found
+2017-03-01 12:25:00,022 INFO No sync bytes found
+2017-03-01 12:25:00,022 INFO No sync bytes found
+2017-03-01 12:25:00,038 INFO No sync bytes found
+2017-03-01 12:25:00,038 INFO No sync bytes found
+2017-03-01 12:25:00,054 INFO No sync bytes found
+2017-03-01 12:25:00,054 INFO No sync bytes found
+2017-03-01 12:25:08,907 INFO From MinXSS parser:
+2017-03-01 12:25:08,907 INFO From MinXSS parser:
+2017-03-01 12:25:08,908 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:25:08,908 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:25:08,923 INFO No sync bytes found
+2017-03-01 12:25:08,923 INFO No sync bytes found
+2017-03-01 12:25:08,939 INFO No sync bytes found
+2017-03-01 12:25:08,939 INFO No sync bytes found
+2017-03-01 12:25:08,955 INFO No sync bytes found
+2017-03-01 12:25:08,955 INFO No sync bytes found
+2017-03-01 12:25:08,971 INFO No sync bytes found
+2017-03-01 12:25:08,971 INFO No sync bytes found
+2017-03-01 12:25:08,987 INFO No sync bytes found
+2017-03-01 12:25:08,987 INFO No sync bytes found
+2017-03-01 12:25:09,003 INFO No sync bytes found
+2017-03-01 12:25:09,003 INFO No sync bytes found
+2017-03-01 12:25:09,019 INFO No sync bytes found
+2017-03-01 12:25:09,019 INFO No sync bytes found
+2017-03-01 12:25:09,035 INFO No sync bytes found
+2017-03-01 12:25:09,035 INFO No sync bytes found
+2017-03-01 12:25:09,051 INFO No sync bytes found
+2017-03-01 12:25:09,051 INFO No sync bytes found
+2017-03-01 12:25:17,904 INFO From MinXSS parser:
+2017-03-01 12:25:17,904 INFO From MinXSS parser:
+2017-03-01 12:25:17,904 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:25:17,904 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:25:17,920 INFO No sync bytes found
+2017-03-01 12:25:17,920 INFO No sync bytes found
+2017-03-01 12:25:17,936 INFO No sync bytes found
+2017-03-01 12:25:17,936 INFO No sync bytes found
+2017-03-01 12:25:17,952 INFO No sync bytes found
+2017-03-01 12:25:17,952 INFO No sync bytes found
+2017-03-01 12:25:17,968 INFO No sync bytes found
+2017-03-01 12:25:17,968 INFO No sync bytes found
+2017-03-01 12:25:17,984 INFO No sync bytes found
+2017-03-01 12:25:17,984 INFO No sync bytes found
+2017-03-01 12:25:18,000 INFO No sync bytes found
+2017-03-01 12:25:18,000 INFO No sync bytes found
+2017-03-01 12:25:18,016 INFO No sync bytes found
+2017-03-01 12:25:18,016 INFO No sync bytes found
+2017-03-01 12:25:18,032 INFO No sync bytes found
+2017-03-01 12:25:18,032 INFO No sync bytes found
+2017-03-01 12:25:18,048 INFO No sync bytes found
+2017-03-01 12:25:18,048 INFO No sync bytes found
+2017-03-01 12:25:35,898 INFO From MinXSS parser:
+2017-03-01 12:25:35,898 INFO From MinXSS parser:
+2017-03-01 12:25:35,898 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:25:35,898 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:25:35,914 INFO No sync bytes found
+2017-03-01 12:25:35,914 INFO No sync bytes found
+2017-03-01 12:25:35,930 INFO No sync bytes found
+2017-03-01 12:25:35,930 INFO No sync bytes found
+2017-03-01 12:25:35,946 INFO No sync bytes found
+2017-03-01 12:25:35,946 INFO No sync bytes found
+2017-03-01 12:25:35,962 INFO No sync bytes found
+2017-03-01 12:25:35,962 INFO No sync bytes found
+2017-03-01 12:25:35,978 INFO No sync bytes found
+2017-03-01 12:25:35,978 INFO No sync bytes found
+2017-03-01 12:25:35,994 INFO No sync bytes found
+2017-03-01 12:25:35,994 INFO No sync bytes found
+2017-03-01 12:25:36,010 INFO No sync bytes found
+2017-03-01 12:25:36,010 INFO No sync bytes found
+2017-03-01 12:25:36,026 INFO No sync bytes found
+2017-03-01 12:25:36,026 INFO No sync bytes found
+2017-03-01 12:25:44,895 INFO From MinXSS parser:
+2017-03-01 12:25:44,895 INFO From MinXSS parser:
+2017-03-01 12:25:44,895 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:25:44,895 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:25:44,912 INFO No sync bytes found
+2017-03-01 12:25:44,912 INFO No sync bytes found
+2017-03-01 12:25:44,927 INFO No sync bytes found
+2017-03-01 12:25:44,927 INFO No sync bytes found
+2017-03-01 12:25:44,943 INFO No sync bytes found
+2017-03-01 12:25:44,943 INFO No sync bytes found
+2017-03-01 12:25:44,959 INFO No sync bytes found
+2017-03-01 12:25:44,959 INFO No sync bytes found
+2017-03-01 12:25:44,975 INFO No sync bytes found
+2017-03-01 12:25:44,975 INFO No sync bytes found
+2017-03-01 12:25:44,991 INFO No sync bytes found
+2017-03-01 12:25:44,991 INFO No sync bytes found
+2017-03-01 12:25:45,007 INFO No sync bytes found
+2017-03-01 12:25:45,007 INFO No sync bytes found
+2017-03-01 12:25:45,023 INFO No sync bytes found
+2017-03-01 12:25:45,023 INFO No sync bytes found
+2017-03-01 12:25:48,135 INFO Launched app
+2017-03-01 12:25:51,307 INFO Attempting to connect to serial port
+2017-03-01 12:25:51,307 INFO Attempting to connect to serial port
+2017-03-01 12:25:51,308 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:25:51,308 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:25:52,810 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:25:52,810 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:25:52,810 INFO Test read on port was successful
+2017-03-01 12:25:52,810 INFO Test read on port was successful
+2017-03-01 12:26:20,874 INFO No sync bytes found
+2017-03-01 12:26:20,874 INFO No sync bytes found
+2017-03-01 12:26:20,891 INFO Closing ground station link
+2017-03-01 12:26:20,891 INFO Closing ground station link
+2017-03-01 12:27:42,827 INFO Launched app
+2017-03-01 12:27:46,240 INFO Attempting to connect to serial port
+2017-03-01 12:27:46,240 INFO Attempting to connect to serial port
+2017-03-01 12:27:46,240 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:27:46,240 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:27:47,742 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:27:47,742 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:27:47,742 INFO Test read on port was successful
+2017-03-01 12:27:47,742 INFO Test read on port was successful
+2017-03-01 12:28:57,186 INFO Launched app
+2017-03-01 12:29:02,327 INFO Attempting to connect to serial port
+2017-03-01 12:29:02,327 INFO Attempting to connect to serial port
+2017-03-01 12:29:02,327 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:29:02,327 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:29:03,829 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:29:03,829 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:29:03,829 INFO Test read on port was successful
+2017-03-01 12:29:03,829 INFO Test read on port was successful
+2017-03-01 12:29:11,835 INFO From MinXSS parser:
+2017-03-01 12:29:11,835 INFO From MinXSS parser:
+2017-03-01 12:29:11,835 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:29:11,835 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:29:11,849 INFO No sync bytes found
+2017-03-01 12:29:11,849 INFO No sync bytes found
+2017-03-01 12:29:31,246 INFO Launched app
+2017-03-01 12:29:34,720 INFO Attempting to connect to serial port
+2017-03-01 12:29:34,720 INFO Attempting to connect to serial port
+2017-03-01 12:29:34,721 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:29:34,721 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:29:36,223 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:29:36,223 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:29:36,223 INFO Test read on port was successful
+2017-03-01 12:29:36,223 INFO Test read on port was successful
+2017-03-01 12:29:38,834 INFO From MinXSS parser:
+2017-03-01 12:29:38,834 INFO From MinXSS parser:
+2017-03-01 12:29:38,834 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:29:38,834 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:29:38,848 INFO No sync bytes found
+2017-03-01 12:29:38,848 INFO No sync bytes found
+2017-03-01 12:29:38,864 INFO No sync bytes found
+2017-03-01 12:29:38,864 INFO No sync bytes found
+2017-03-01 12:29:38,880 INFO No sync bytes found
+2017-03-01 12:29:38,880 INFO No sync bytes found
+2017-03-01 12:29:38,896 INFO No sync bytes found
+2017-03-01 12:29:38,896 INFO No sync bytes found
+2017-03-01 12:29:38,912 INFO No sync bytes found
+2017-03-01 12:29:38,912 INFO No sync bytes found
+2017-03-01 12:29:38,928 INFO No sync bytes found
+2017-03-01 12:29:38,928 INFO No sync bytes found
+2017-03-01 12:29:38,944 INFO No sync bytes found
+2017-03-01 12:29:38,944 INFO No sync bytes found
+2017-03-01 12:29:38,960 INFO No sync bytes found
+2017-03-01 12:29:38,960 INFO No sync bytes found
+2017-03-01 12:29:47,812 INFO No sync bytes found
+2017-03-01 12:29:47,812 INFO No sync bytes found
+2017-03-01 12:29:47,829 INFO From MinXSS parser:
+2017-03-01 12:29:47,829 INFO From MinXSS parser:
+2017-03-01 12:29:47,829 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:29:47,829 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:29:47,845 INFO No sync bytes found
+2017-03-01 12:29:47,845 INFO No sync bytes found
+2017-03-01 12:29:47,861 INFO No sync bytes found
+2017-03-01 12:29:47,861 INFO No sync bytes found
+2017-03-01 12:29:47,877 INFO No sync bytes found
+2017-03-01 12:29:47,877 INFO No sync bytes found
+2017-03-01 12:29:47,892 INFO No sync bytes found
+2017-03-01 12:29:47,892 INFO No sync bytes found
+2017-03-01 12:29:47,909 INFO No sync bytes found
+2017-03-01 12:29:47,909 INFO No sync bytes found
+2017-03-01 12:29:47,925 INFO No sync bytes found
+2017-03-01 12:29:47,925 INFO No sync bytes found
+2017-03-01 12:29:47,941 INFO No sync bytes found
+2017-03-01 12:29:47,941 INFO No sync bytes found
+2017-03-01 12:29:47,957 INFO No sync bytes found
+2017-03-01 12:29:47,957 INFO No sync bytes found
+2017-03-01 12:30:43,939 INFO Launched app
+2017-03-01 12:30:47,351 INFO Attempting to connect to serial port
+2017-03-01 12:30:47,351 INFO Attempting to connect to serial port
+2017-03-01 12:30:47,351 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:30:47,351 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:30:48,854 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:30:48,854 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:30:48,854 INFO Test read on port was successful
+2017-03-01 12:30:48,854 INFO Test read on port was successful
+2017-03-01 12:30:50,792 INFO No sync bytes found
+2017-03-01 12:30:50,792 INFO No sync bytes found
+2017-03-01 12:30:50,806 INFO From MinXSS parser:
+2017-03-01 12:30:50,806 INFO From MinXSS parser:
+2017-03-01 12:30:50,807 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:30:50,807 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:30:50,822 INFO No sync bytes found
+2017-03-01 12:30:50,822 INFO No sync bytes found
+2017-03-01 12:30:50,838 INFO No sync bytes found
+2017-03-01 12:30:50,838 INFO No sync bytes found
+2017-03-01 12:30:50,855 INFO No sync bytes found
+2017-03-01 12:30:50,855 INFO No sync bytes found
+2017-03-01 12:30:50,870 INFO No sync bytes found
+2017-03-01 12:30:50,870 INFO No sync bytes found
+2017-03-01 12:30:50,887 INFO No sync bytes found
+2017-03-01 12:30:50,887 INFO No sync bytes found
+2017-03-01 12:30:50,903 INFO No sync bytes found
+2017-03-01 12:30:50,903 INFO No sync bytes found
+2017-03-01 12:30:50,919 INFO No sync bytes found
+2017-03-01 12:30:50,919 INFO No sync bytes found
+2017-03-01 12:30:50,935 INFO No sync bytes found
+2017-03-01 12:30:50,935 INFO No sync bytes found
+2017-03-01 12:31:08,800 INFO From MinXSS parser:
+2017-03-01 12:31:08,800 INFO From MinXSS parser:
+2017-03-01 12:31:08,800 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:31:08,800 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:31:08,816 INFO No sync bytes found
+2017-03-01 12:31:08,816 INFO No sync bytes found
+2017-03-01 12:31:08,832 INFO No sync bytes found
+2017-03-01 12:31:08,832 INFO No sync bytes found
+2017-03-01 12:31:08,848 INFO No sync bytes found
+2017-03-01 12:31:08,848 INFO No sync bytes found
+2017-03-01 12:31:08,864 INFO No sync bytes found
+2017-03-01 12:31:08,864 INFO No sync bytes found
+2017-03-01 12:31:08,880 INFO No sync bytes found
+2017-03-01 12:31:08,880 INFO No sync bytes found
+2017-03-01 12:31:08,896 INFO No sync bytes found
+2017-03-01 12:31:08,896 INFO No sync bytes found
+2017-03-01 12:31:08,912 INFO No sync bytes found
+2017-03-01 12:31:08,912 INFO No sync bytes found
+2017-03-01 12:31:08,928 INFO No sync bytes found
+2017-03-01 12:31:08,928 INFO No sync bytes found
+2017-03-01 12:31:13,346 INFO Launched app
+2017-03-01 12:31:17,241 INFO Attempting to connect to serial port
+2017-03-01 12:31:17,241 INFO Attempting to connect to serial port
+2017-03-01 12:31:17,242 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:31:17,242 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:31:18,744 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:31:18,744 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:31:18,744 INFO Test read on port was successful
+2017-03-01 12:31:18,744 INFO Test read on port was successful
+2017-03-01 12:31:26,781 INFO No sync bytes found
+2017-03-01 12:31:26,781 INFO No sync bytes found
+2017-03-01 12:31:26,797 INFO From MinXSS parser:
+2017-03-01 12:31:26,797 INFO From MinXSS parser:
+2017-03-01 12:31:26,797 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:31:26,797 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:31:26,812 INFO No sync bytes found
+2017-03-01 12:31:26,812 INFO No sync bytes found
+2017-03-01 12:31:26,828 INFO No sync bytes found
+2017-03-01 12:31:26,828 INFO No sync bytes found
+2017-03-01 12:31:26,844 INFO No sync bytes found
+2017-03-01 12:31:26,844 INFO No sync bytes found
+2017-03-01 12:31:26,860 INFO No sync bytes found
+2017-03-01 12:31:26,860 INFO No sync bytes found
+2017-03-01 12:31:26,876 INFO No sync bytes found
+2017-03-01 12:31:26,876 INFO No sync bytes found
+2017-03-01 12:31:26,892 INFO No sync bytes found
+2017-03-01 12:31:26,892 INFO No sync bytes found
+2017-03-01 12:31:26,908 INFO No sync bytes found
+2017-03-01 12:31:26,908 INFO No sync bytes found
+2017-03-01 12:31:26,924 INFO No sync bytes found
+2017-03-01 12:31:26,924 INFO No sync bytes found
+2017-03-01 12:31:35,777 INFO No sync bytes found
+2017-03-01 12:31:35,777 INFO No sync bytes found
+2017-03-01 12:31:35,793 INFO From MinXSS parser:
+2017-03-01 12:31:35,793 INFO From MinXSS parser:
+2017-03-01 12:31:35,793 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:31:35,793 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:31:35,809 INFO No sync bytes found
+2017-03-01 12:31:35,809 INFO No sync bytes found
+2017-03-01 12:31:35,825 INFO No sync bytes found
+2017-03-01 12:31:35,825 INFO No sync bytes found
+2017-03-01 12:31:35,841 INFO No sync bytes found
+2017-03-01 12:31:35,841 INFO No sync bytes found
+2017-03-01 12:31:35,857 INFO No sync bytes found
+2017-03-01 12:31:35,857 INFO No sync bytes found
+2017-03-01 12:31:35,873 INFO No sync bytes found
+2017-03-01 12:31:35,873 INFO No sync bytes found
+2017-03-01 12:31:35,889 INFO No sync bytes found
+2017-03-01 12:31:35,889 INFO No sync bytes found
+2017-03-01 12:31:35,905 INFO No sync bytes found
+2017-03-01 12:31:35,905 INFO No sync bytes found
+2017-03-01 12:31:35,921 INFO No sync bytes found
+2017-03-01 12:31:35,921 INFO No sync bytes found
+2017-03-01 12:32:04,220 INFO Launched app
+2017-03-01 12:32:07,786 INFO Attempting to connect to serial port
+2017-03-01 12:32:07,786 INFO Attempting to connect to serial port
+2017-03-01 12:32:07,786 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:32:07,786 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:32:09,288 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:32:09,288 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:32:09,288 INFO Test read on port was successful
+2017-03-01 12:32:09,288 INFO Test read on port was successful
+2017-03-01 12:32:11,771 INFO No sync bytes found
+2017-03-01 12:32:11,771 INFO No sync bytes found
+2017-03-01 12:32:11,786 INFO From MinXSS parser:
+2017-03-01 12:32:11,786 INFO From MinXSS parser:
+2017-03-01 12:32:11,787 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:32:11,787 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:32:11,802 INFO No sync bytes found
+2017-03-01 12:32:11,802 INFO No sync bytes found
+2017-03-01 12:32:11,818 INFO No sync bytes found
+2017-03-01 12:32:11,818 INFO No sync bytes found
+2017-03-01 12:32:11,834 INFO No sync bytes found
+2017-03-01 12:32:11,834 INFO No sync bytes found
+2017-03-01 12:32:11,850 INFO No sync bytes found
+2017-03-01 12:32:11,850 INFO No sync bytes found
+2017-03-01 12:32:11,866 INFO No sync bytes found
+2017-03-01 12:32:11,866 INFO No sync bytes found
+2017-03-01 12:32:11,882 INFO No sync bytes found
+2017-03-01 12:32:11,882 INFO No sync bytes found
+2017-03-01 12:32:11,898 INFO No sync bytes found
+2017-03-01 12:32:11,898 INFO No sync bytes found
+2017-03-01 12:32:11,914 INFO No sync bytes found
+2017-03-01 12:32:11,914 INFO No sync bytes found
+2017-03-01 12:32:20,766 INFO No sync bytes found
+2017-03-01 12:32:20,766 INFO No sync bytes found
+2017-03-01 12:32:20,783 INFO From MinXSS parser:
+2017-03-01 12:32:20,783 INFO From MinXSS parser:
+2017-03-01 12:32:20,783 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:32:20,783 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:32:20,799 INFO No sync bytes found
+2017-03-01 12:32:20,799 INFO No sync bytes found
+2017-03-01 12:32:20,815 INFO No sync bytes found
+2017-03-01 12:32:20,815 INFO No sync bytes found
+2017-03-01 12:32:20,831 INFO No sync bytes found
+2017-03-01 12:32:20,831 INFO No sync bytes found
+2017-03-01 12:32:20,847 INFO No sync bytes found
+2017-03-01 12:32:20,847 INFO No sync bytes found
+2017-03-01 12:32:20,863 INFO No sync bytes found
+2017-03-01 12:32:20,863 INFO No sync bytes found
+2017-03-01 12:32:20,879 INFO No sync bytes found
+2017-03-01 12:32:20,879 INFO No sync bytes found
+2017-03-01 12:32:20,895 INFO No sync bytes found
+2017-03-01 12:32:20,895 INFO No sync bytes found
+2017-03-01 12:32:20,911 INFO No sync bytes found
+2017-03-01 12:32:20,911 INFO No sync bytes found
+2017-03-01 12:33:54,185 INFO Launched app
+2017-03-01 12:33:58,339 INFO Attempting to connect to serial port
+2017-03-01 12:33:58,339 INFO Attempting to connect to serial port
+2017-03-01 12:33:58,339 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:33:58,339 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:33:59,842 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:33:59,842 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:33:59,842 INFO Test read on port was successful
+2017-03-01 12:33:59,842 INFO Test read on port was successful
+2017-03-01 12:34:17,739 INFO No sync bytes found
+2017-03-01 12:34:17,739 INFO No sync bytes found
+2017-03-01 12:34:17,754 INFO No sync bytes found
+2017-03-01 12:34:17,754 INFO No sync bytes found
+2017-03-01 12:34:17,770 INFO No sync bytes found
+2017-03-01 12:34:17,770 INFO No sync bytes found
+2017-03-01 12:34:17,786 INFO No sync bytes found
+2017-03-01 12:34:17,786 INFO No sync bytes found
+2017-03-01 12:34:17,802 INFO No sync bytes found
+2017-03-01 12:34:17,802 INFO No sync bytes found
+2017-03-01 12:34:17,818 INFO No sync bytes found
+2017-03-01 12:34:17,818 INFO No sync bytes found
+2017-03-01 12:34:17,835 INFO No sync bytes found
+2017-03-01 12:34:17,835 INFO No sync bytes found
+2017-03-01 12:34:17,850 INFO No sync bytes found
+2017-03-01 12:34:17,850 INFO No sync bytes found
+2017-03-01 12:34:17,869 INFO No sync bytes found
+2017-03-01 12:34:17,869 INFO No sync bytes found
+2017-03-01 12:34:17,882 INFO No sync bytes found
+2017-03-01 12:34:17,882 INFO No sync bytes found
+2017-03-01 12:34:28,140 INFO Launched app
+2017-03-01 12:34:31,546 INFO Attempting to connect to serial port
+2017-03-01 12:34:31,546 INFO Attempting to connect to serial port
+2017-03-01 12:34:31,546 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:34:31,546 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:34:33,048 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:34:33,048 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:34:33,049 INFO Test read on port was successful
+2017-03-01 12:34:33,049 INFO Test read on port was successful
+2017-03-01 12:34:35,722 INFO No sync bytes found
+2017-03-01 12:34:35,722 INFO No sync bytes found
+2017-03-01 12:34:35,737 INFO From MinXSS parser:
+2017-03-01 12:34:35,737 INFO From MinXSS parser:
+2017-03-01 12:34:35,738 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:34:35,738 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:34:35,753 INFO No sync bytes found
+2017-03-01 12:34:35,753 INFO No sync bytes found
+2017-03-01 12:34:35,769 INFO No sync bytes found
+2017-03-01 12:34:35,769 INFO No sync bytes found
+2017-03-01 12:34:35,785 INFO No sync bytes found
+2017-03-01 12:34:35,785 INFO No sync bytes found
+2017-03-01 12:34:35,802 INFO No sync bytes found
+2017-03-01 12:34:35,802 INFO No sync bytes found
+2017-03-01 12:34:35,818 INFO No sync bytes found
+2017-03-01 12:34:35,818 INFO No sync bytes found
+2017-03-01 12:34:35,833 INFO No sync bytes found
+2017-03-01 12:34:35,833 INFO No sync bytes found
+2017-03-01 12:34:35,850 INFO No sync bytes found
+2017-03-01 12:34:35,850 INFO No sync bytes found
+2017-03-01 12:34:35,866 INFO No sync bytes found
+2017-03-01 12:34:35,866 INFO No sync bytes found
+2017-03-01 12:34:44,718 INFO No sync bytes found
+2017-03-01 12:34:44,718 INFO No sync bytes found
+2017-03-01 12:34:44,735 INFO From MinXSS parser:
+2017-03-01 12:34:44,735 INFO From MinXSS parser:
+2017-03-01 12:34:44,735 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:34:44,735 INFO {'BatteryVoltage': 0.0, 'EpsBoardTemperature': 0.0, '5vLineVoltage': 0.0, 'SolarArray-YCurrent': 0.0, 'SolarArray+XCurrent': 0.0, 'MotherboardTemperature': 0.0, 'SolarArray+YCurrent': 0.0, 'SolarArray+YVoltage': 0.0, 'SolarArray+XVoltage': 0.0, 'CommBoardTemperature': 0.0, 'SolarArray-YVoltage': 0.0}
+2017-03-01 12:34:44,751 INFO No sync bytes found
+2017-03-01 12:34:44,751 INFO No sync bytes found
+2017-03-01 12:34:44,766 INFO No sync bytes found
+2017-03-01 12:34:44,766 INFO No sync bytes found
+2017-03-01 12:34:44,782 INFO No sync bytes found
+2017-03-01 12:34:44,782 INFO No sync bytes found
+2017-03-01 12:34:44,798 INFO No sync bytes found
+2017-03-01 12:34:44,798 INFO No sync bytes found
+2017-03-01 12:34:44,814 INFO No sync bytes found
+2017-03-01 12:34:44,814 INFO No sync bytes found
+2017-03-01 12:34:44,831 INFO No sync bytes found
+2017-03-01 12:34:44,831 INFO No sync bytes found
+2017-03-01 12:34:44,849 INFO No sync bytes found
+2017-03-01 12:34:44,849 INFO No sync bytes found
+2017-03-01 12:34:44,862 INFO No sync bytes found
+2017-03-01 12:34:44,862 INFO No sync bytes found
+2017-03-01 12:35:08,027 INFO Launched app
+2017-03-01 12:35:13,312 INFO Attempting to connect to serial port
+2017-03-01 12:35:13,312 INFO Attempting to connect to serial port
+2017-03-01 12:35:13,312 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:35:13,312 INFO Opening port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:35:14,815 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:35:14,815 INFO Testing read on port: /dev/cu.usbserial-FTYT1YZH
+2017-03-01 12:35:14,815 INFO Test read on port was successful
+2017-03-01 12:35:14,815 INFO Test read on port was successful
+2017-03-01 12:35:20,721 INFO Closing ground station link
+2017-03-01 12:35:20,721 INFO Closing ground station link
