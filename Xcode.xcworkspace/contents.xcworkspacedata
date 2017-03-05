@@ -5,7 +5,7 @@
       location = "group:minxss_beacon_decoder.py">
    </FileRef>
    <FileRef
-      location = "group:connect_serial_decode_kiss.py">
+      location = "group:connect_port_decode_kiss.py">
    </FileRef>
    <FileRef
       location = "group:minxss_parser.py">

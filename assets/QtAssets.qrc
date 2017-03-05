@@ -1,5 +1,5 @@
 <RCC>
-  <qresource>
+  <qresource prefix="images">
     <file>refresh-button.png</file>
     <file>MinXSS CubeSat Logo.png</file>
     <file>CU LASP.png</file>

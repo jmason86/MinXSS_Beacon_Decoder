@@ -8,7 +8,7 @@ import logging
 from PySide.QtGui import *
 from PySide.QtCore import *
 from ui_mainWindow import Ui_MainWindow
-import connect_serial_decode_kiss
+import connect_port_decode_kiss
 from PySide import QtCore, QtGui
 import time, datetime
 from serial.tools import list_ports
@@ -22,7 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.assignWidgets()
         self.setupOutputLog() # Log of serial data for user
         self.log = self.createLog() # Debug log
-        self.serialReadThread = SerialReadThread(self.readSerial, self.stopRead)
+        self.portReadThread = PortReadThread(self.readSerial, self.stopRead)
         self.show()
     
     def setupAvailablePorts(self):
@@ -32,41 +32,57 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.comboBox_serialPort.addItems(portNames)
     
     def assignWidgets(self):
-        self.actionConnectSerial.triggered.connect(self.connecetSerialClicked)
+        self.actionConnect.triggered.connect(self.connecetClicked)
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
     
-    def connecetSerialClicked(self):
+    def connecetClicked(self):
         connectButtonText = str(self.actionConnectSerial.iconText())
         if connectButtonText == "Connect":
-            self.log.info("Attempting to connect to serial port")
+            self.log.info("Attempting to connect to port")
             
             # Update the GUI to diconnect button
             self.actionConnectSerial.setText(QtGui.QApplication.translate("MainWindow", "Disconnect", None, QtGui.QApplication.UnicodeUTF8))
         
-            # Grab the port and baud rate from UI
-            port = self.comboBox_serialPort.currentText()
-            baudRate = self.lineEdit_baudRate.text()
+            # Grab the port information from the UI
+            if tabWidget_serialIp.currentTabText == "Serial":
+                port = self.comboBox_serialPort.currentText()
+                baudRate = self.lineEdit_baudRate.text()
             
-            # Connect to the serial port and test that it is readable
-            connectedPort = connect_serial_decode_kiss.connect_serial_decode_kiss(port, baudRate, self.log)
-            portReadable = connectedPort.testRead()
+                # Connect to the serial port and test that it is readable
+                connectedPort = connect_port_decode_kiss.connect_serial(port, baudRate, self.log)
+                portReadable = connectedPort.testRead()
+            else:
+                ipAddress = self.lineEdit_ipAddress.text()
+                port = self.lineEdit_ipPort.text()
+            
+                # Connect to the IP socket but there's no test option so just have to assume its working
+                connectedPort = connect_port_decode_kiss.connect_socket(ipAddress, port, self.log)
+                portReadable = 1
         
             # If port is readable, store the reference to it and start reading. Either way, update the GUI serial status
             if portReadable:
                 # Store port in instance variable and start reading
                 self.connectedPort = connectedPort
-                self.serialReadThread.start()
+                self.portReadThread.start()
                 
                 # Update GUI
-                self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
                 palette = QtGui.QPalette()
                 palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
-                self.label_serialStatus.setPalette(palette)
+                if tabWidget_serialIp.currentTabText == "Serial":
+                    self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
+                    self.label_serialStatus.setPalette(palette)
+                else:
+                    self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
+                    self.label_socketStatus.setPalette(palette)
             else:
-                self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
                 palette = QtGui.QPalette()
                 palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
-                self.label_serialStatus.setPalette(palette)
+                if tabWidget_serialIp.currentTabText == "Serial":
+                    self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
+                    self.label_serialStatus.setPalette(palette)
+                else:
+                    self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
+                    self.label_socketStatus.setPalette(palette)
         else:
             self.log.info("Attempting to disconnect from serial port")
             
@@ -90,7 +106,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                 # Parse and interpret the binary data into human readable telemetry
                 minxssParser = minxss_parser.Minxss_Parser(serialData, self.log)
-                print(type(serialData))
                 selectedTelemetryDictionary = minxssParser.parsePacket(serialData)
                 
                 # If valid data, update GUI with telemetry points
@@ -147,9 +162,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         log.setLevel(logging.DEBUG)
         return log
 
-class SerialReadThread(QtCore.QThread):
+class PortReadThread(QtCore.QThread):
     def __init__(self, target, slotOnFinished = None):
-        super(SerialReadThread, self).__init__()
+        super(PortReadThread, self).__init__()
         self.target = target
         if slotOnFinished:
             self.finished.connect(slotOnFinished)
