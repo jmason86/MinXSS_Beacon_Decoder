@@ -11,4 +11,4 @@ test/
 .Trashes
 
 # Xcode workspace
-#Xcode*
+Xcode*
