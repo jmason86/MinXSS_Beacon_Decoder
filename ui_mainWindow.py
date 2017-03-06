@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Fri Mar  3 12:50:17 2017
+# Created: Mon Mar  6 09:35:20 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -14287,8 +14287,8 @@ class Ui_MainWindow(object):
         self.frame.setObjectName("frame")
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.frame)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.tabWidget = QtGui.QTabWidget(self.frame)
-        self.tabWidget.setObjectName("tabWidget")
+        self.tabWidget_serialIp = QtGui.QTabWidget(self.frame)
+        self.tabWidget_serialIp.setObjectName("tabWidget_serialIp")
         self.serial = QtGui.QWidget()
         self.serial.setObjectName("serial")
         self.horizontalLayout = QtGui.QHBoxLayout(self.serial)
@@ -15449,7 +15449,7 @@ class Ui_MainWindow(object):
         self.comboBox_serialPort.setObjectName("comboBox_serialPort")
         self.gridLayout.addWidget(self.comboBox_serialPort, 0, 1, 1, 1)
         self.horizontalLayout.addLayout(self.gridLayout)
-        self.tabWidget.addTab(self.serial, "")
+        self.tabWidget_serialIp.addTab(self.serial, "")
         self.tcpip = QtGui.QWidget()
         self.tcpip.setObjectName("tcpip")
         self.horizontalLayout_2 = QtGui.QHBoxLayout(self.tcpip)
@@ -15889,9 +15889,9 @@ class Ui_MainWindow(object):
         self.lineEdit_ipAddress.setText("localhost")
         self.lineEdit_ipAddress.setObjectName("lineEdit_ipAddress")
         self.gridLayout_2.addWidget(self.lineEdit_ipAddress, 1, 1, 1, 1)
-        self.lineEdit_port = QtGui.QLineEdit(self.tcpip)
-        self.lineEdit_port.setObjectName("lineEdit_port")
-        self.gridLayout_2.addWidget(self.lineEdit_port, 2, 1, 1, 1)
+        self.lineEdit_ipPort = QtGui.QLineEdit(self.tcpip)
+        self.lineEdit_ipPort.setObjectName("lineEdit_ipPort")
+        self.gridLayout_2.addWidget(self.lineEdit_ipPort, 2, 1, 1, 1)
         self.label_socketStatus = QtGui.QLabel(self.tcpip)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 43, 56))
@@ -16036,8 +16036,8 @@ class Ui_MainWindow(object):
         self.label_socketStatus.setObjectName("label_socketStatus")
         self.gridLayout_2.addWidget(self.label_socketStatus, 3, 1, 1, 1)
         self.horizontalLayout_2.addLayout(self.gridLayout_2)
-        self.tabWidget.addTab(self.tcpip, "")
-        self.verticalLayout_2.addWidget(self.tabWidget)
+        self.tabWidget_serialIp.addTab(self.tcpip, "")
+        self.verticalLayout_2.addWidget(self.tabWidget_serialIp)
         self.gridLayout_10.addWidget(self.frame, 0, 1, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtGui.QStatusBar(MainWindow)
@@ -16070,7 +16070,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionCompletePass)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget_serialIp.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lineEdit_baudRate, self.checkBox_saveLog_4)
         MainWindow.setTabOrder(self.checkBox_saveLog_4, self.checkBox_saveLog)
@@ -16188,12 +16188,12 @@ class Ui_MainWindow(object):
         self.label_15.setText(QtGui.QApplication.translate("MainWindow", "1", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("MainWindow", "Stop bits:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.serial), QtGui.QApplication.translate("MainWindow", "Serial", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget_serialIp.setTabText(self.tabWidget_serialIp.indexOf(self.serial), QtGui.QApplication.translate("MainWindow", "Serial", None, QtGui.QApplication.UnicodeUTF8))
         self.label_17.setText(QtGui.QApplication.translate("MainWindow", "IP address:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_18.setText(QtGui.QApplication.translate("MainWindow", "Port:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_36.setText(QtGui.QApplication.translate("MainWindow", "Status:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tcpip), QtGui.QApplication.translate("MainWindow", "TCP/IP", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget_serialIp.setTabText(self.tabWidget_serialIp.indexOf(self.tcpip), QtGui.QApplication.translate("MainWindow", "TCP/IP", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))
         self.actionConnect.setText(QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
         self.actionConnect.setToolTip(QtGui.QApplication.translate("MainWindow", "Connect to serial port", None, QtGui.QApplication.UnicodeUTF8))

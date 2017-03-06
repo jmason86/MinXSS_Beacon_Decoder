@@ -36,15 +36,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
     
     def connecetClicked(self):
-        connectButtonText = str(self.actionConnectSerial.iconText())
+        connectButtonText = str(self.actionConnect.iconText())
         if connectButtonText == "Connect":
             self.log.info("Attempting to connect to port")
             
             # Update the GUI to diconnect button
-            self.actionConnectSerial.setText(QtGui.QApplication.translate("MainWindow", "Disconnect", None, QtGui.QApplication.UnicodeUTF8))
+            self.actionConnect.setText(QtGui.QApplication.translate("MainWindow", "Disconnect", None, QtGui.QApplication.UnicodeUTF8))
         
             # Grab the port information from the UI
-            if tabWidget_serialIp.currentTabText == "Serial":
+            if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
                 port = self.comboBox_serialPort.currentText()
                 baudRate = self.lineEdit_baudRate.text()
             
@@ -68,7 +68,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # Update GUI
                 palette = QtGui.QPalette()
                 palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
-                if tabWidget_serialIp.currentTabText == "Serial":
+                if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
                     self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
                     self.label_serialStatus.setPalette(palette)
                 else:
@@ -87,7 +87,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.log.info("Attempting to disconnect from serial port")
             
             # Update the GUI to connect button
-            self.actionConnectSerial.setText(QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
+            self.actionConnect.setText(QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
             self.stopRead()
         
     def readSerial(self):

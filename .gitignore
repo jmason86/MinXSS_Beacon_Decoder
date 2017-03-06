@@ -1,0 +1,11 @@
+# Compiled source
+*.pyc
+
+# Folders
+MinXSS_Beacon_Decoder/
+test/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+.Trashes
