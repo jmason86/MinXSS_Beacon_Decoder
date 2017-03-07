@@ -104,20 +104,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def readSerial(self):
         # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
-            serialData = self.connectedPort.read_packet()
-            if len(serialData) > 0:
-                formattedSerialData = binascii.hexlify(serialData)
-                self.textBrowser_serialOutput.append(formattedSerialData)
+            bufferData = self.connectedPort.read_packet()
+            if len(bufferData) > 0:
+                formattedBufferData = ' '.join('0x{:02x}'.format(x) for x in bufferData)
+                self.textBrowser_serialOutput.append(formattedBufferData)
                 self.textBrowser_serialOutput.verticalScrollBar().setValue(self.textBrowser_serialOutput.verticalScrollBar().maximum())
                 
                 if self.checkBox_saveLog.isChecked:
                     serialOutputLog = open(self.serialOutputFilename, 'a') # append to existing file
-                    serialOutputLog.write(formattedSerialData)
+                    serialOutputLog.write(formattedBufferData)
                     serialOutputLog.closed
 
                 # Parse and interpret the binary data into human readable telemetry
-                minxssParser = minxss_parser.Minxss_Parser(serialData, self.log)
-                selectedTelemetryDictionary = minxssParser.parsePacket(serialData)
+                minxssParser = minxss_parser.Minxss_Parser(bufferData, self.log)
+                selectedTelemetryDictionary = minxssParser.parsePacket(bufferData)
                 
                 # If valid data, update GUI with telemetry points
                 if selectedTelemetryDictionary != -1:
