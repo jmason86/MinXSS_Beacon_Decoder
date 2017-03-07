@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Mon Mar  6 09:35:20 2017
+# Created: Tue Mar  7 12:00:53 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -14288,6 +14288,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QtGui.QVBoxLayout(self.frame)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.tabWidget_serialIp = QtGui.QTabWidget(self.frame)
+        self.tabWidget_serialIp.setTabShape(QtGui.QTabWidget.Rounded)
         self.tabWidget_serialIp.setObjectName("tabWidget_serialIp")
         self.serial = QtGui.QWidget()
         self.serial.setObjectName("serial")
@@ -15886,7 +15887,7 @@ class Ui_MainWindow(object):
         self.label_36.setObjectName("label_36")
         self.gridLayout_2.addWidget(self.label_36, 3, 0, 1, 1)
         self.lineEdit_ipAddress = QtGui.QLineEdit(self.tcpip)
-        self.lineEdit_ipAddress.setText("localhost")
+        self.lineEdit_ipAddress.setText("WinD2791")
         self.lineEdit_ipAddress.setObjectName("lineEdit_ipAddress")
         self.gridLayout_2.addWidget(self.lineEdit_ipAddress, 1, 1, 1, 1)
         self.lineEdit_ipPort = QtGui.QLineEdit(self.tcpip)
@@ -16192,6 +16193,7 @@ class Ui_MainWindow(object):
         self.label_17.setText(QtGui.QApplication.translate("MainWindow", "IP address:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_18.setText(QtGui.QApplication.translate("MainWindow", "Port:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_36.setText(QtGui.QApplication.translate("MainWindow", "Status:", None, QtGui.QApplication.UnicodeUTF8))
+        self.lineEdit_ipPort.setText(QtGui.QApplication.translate("MainWindow", "10000", None, QtGui.QApplication.UnicodeUTF8))
         self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget_serialIp.setTabText(self.tabWidget_serialIp.indexOf(self.tcpip), QtGui.QApplication.translate("MainWindow", "TCP/IP", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBar.setWindowTitle(QtGui.QApplication.translate("MainWindow", "toolBar", None, QtGui.QApplication.UnicodeUTF8))

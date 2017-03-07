@@ -33,10 +33,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.comboBox_serialPort.addItems(portNames)
     
     def assignWidgets(self):
-        self.actionConnect.triggered.connect(self.connecetClicked)
+        self.actionConnect.triggered.connect(self.connectClicked)
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
     
-    def connecetClicked(self):
+    def connectClicked(self):
         connectButtonText = str(self.actionConnect.iconText())
         if connectButtonText == "Connect":
             self.log.info("Attempting to connect to port")
@@ -85,14 +85,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
                     self.label_socketStatus.setPalette(palette)
         else:
-            self.log.info("Attempting to disconnect from serial port")
+            self.log.info("Attempting to disconnect from port")
             
             # Update the GUI to connect button
             self.actionConnect.setText(QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
+            palette = QtGui.QPalette()
+            palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
+            if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
+                self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+                self.label_serialStatus.setPalette(palette)
+            else:
+                self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+                self.label_socketStatus.setPalette(palette)
+
+            # Actually close the port
             self.stopRead()
         
     def readSerial(self):
-        # Infinite loop to read the serial port and display the data in the GUI and optionally write to output file
+        # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
             serialData = self.connectedPort.read_packet()
             if len(serialData) > 0:

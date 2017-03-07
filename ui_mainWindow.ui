@@ -42507,7 +42507,7 @@ p, li { white-space: pre-wrap; }
           <enum>QTabWidget::Rounded</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="serial">
           <attribute name="title">
@@ -47243,12 +47243,16 @@ p, li { white-space: pre-wrap; }
              <item row="1" column="1">
               <widget class="QLineEdit" name="lineEdit_ipAddress">
                <property name="text">
-                <string notr="true">localhost</string>
+                <string notr="true">WinD2791</string>
                </property>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QLineEdit" name="lineEdit_ipPort"/>
+              <widget class="QLineEdit" name="lineEdit_ipPort">
+               <property name="text">
+                <string>10000</string>
+               </property>
+              </widget>
              </item>
              <item row="3" column="1">
               <widget class="QLabel" name="label_socketStatus">

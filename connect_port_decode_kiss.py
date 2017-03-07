@@ -24,13 +24,50 @@ class connect_serial():
         self.log.info("Closing ground station link")
         self.ser.close
     
-    # Specic to MinXSS packets
+    # Purpose:
+    #   From all of the binary coming in, grab a single MinXSS packet
+    # Input:
+    #   None
+    # Output:
+    #   packet [bytearray]: A single MinXSS packet with all headers and footers
+    # TODO:
+    #   Pull this function out to a separate class that can be called with serial or socket input
     def read_packet(self):
         packet = bytearray()
-        syncOffset = -1
+        syncStartOffset = -1
         while(1):
-            syncOffset = self.findSyncIndex(packet)
-            if syncOffset == -1 or len(packet[syncOffset:]) < 256:
+#            if len(packet) > 0:
+#                print len(packet)
+#            syncStartOffset = self.findSyncStartIndex(packet)
+#            syncStopOffset = self.findSyncStopIndex(packet)
+#            
+#            # Haven't found start and haven't found stop sync so buffer everything
+#            if syncStartOffset == -1 and syncStopOffset == -1:
+#                self.log.info("Have not found start and have not found stop")
+#                bufferedData = self.ser.read()
+#                if len(bufferedData) > 0:
+#                    print len(bufferedData)
+#                for byte in bufferedData:
+#                    packet.append(byte)
+#            # Found start sync but haven't found stop sync so buffer everything
+#            elif syncStartOffset != -1 and syncStopOffset == -1:
+#                self.log.info("Found start but have not found stop")
+#                bufferedData = self.ser.read()
+#                for byte in bufferedData:
+#                    packet.append(byte)
+#            # Found start sync and stop sync so truncate packet to within start and stop syncs and break loop
+#            elif syncStartOffset != -1 and syncStopOffset != -1:
+#                self.log.info("Have found start and have found stop. Woo!")
+#                packet = packet[syncStartOffset:syncStopOffset] # Destructively throws out any surrounding partial packets
+#                break
+#            # Haven't found start sync but have found stop sync so must have missed beginning of packet -- buffer everything
+#            elif syncStartOffset == -1 and syncStopOffset != -1:
+#                self.log.info("Have not found start but have found stop")
+#                bufferedData = self.ser.read()
+#                for byte in bufferedData:
+#                    packet.append(byte)
+
+            if syncStartOffset == -1 or len(packet[syncStartOffset:]) < 256:
                 bufferedData = self.ser.read()
                 for byte in bufferedData:
                     packet.append(byte)
@@ -44,60 +81,25 @@ class connect_serial():
     # Input:
     #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
     # Output:
-    #   packetStartIndex [int]: The index within minxssSerialData where the sync bytes were found. -1 if not found.
+    #   packetStartIndex [int]: The index within minxssSerialData where the start sync bytes were found. -1 if not found.
     #
-    def findSyncIndex(self, minxssSerialData):
-        syncBytes = bytearray([0x08, 0x19]) # This is actually the CCSDS start and then the housekeeping packet APID
+    def findSyncStartIndex(self, minxssSerialData):
+        syncBytes = bytearray([0x08, 0x19])
         packetStartIndex = bytearray(minxssSerialData).find(syncBytes)
         return packetStartIndex
 
-    def ax25_crc(self,packet):
-        shift_reg = 0xFFFF;
-        Gen = 0x1021;
-        #Gen = 0x8011;
-        output_xor_mask = 0x0000;
-        #output_xor_mask = 0xFFFF;
-        packet = packet + [0,0]
-        j = 0
-        for byte in packet:
-            j += 1
-            #for i in range(8):
-            for i in reversed(range(8)):
-                inbit = (byte >> i) & 0x01
-                outbit = (shift_reg & 0x8000) >> 15
-                shift_reg = (shift_reg << 1) & 0xFFFF
-                shift_reg += inbit
-                #print("byte={0}, i={1}, inbit={2}, outbit={3}".format(hex(byte), i, inbit,outbit))
-                #if( (inbit^outbit) == 1):
-                if( outbit == 1):
-                    shift_reg = shift_reg ^ Gen
-                #print("binary CRC",bin(shift_reg))
+    # Purpose:
+    #   Find the end of the MinXSS packet and return the index within minxssSerialData
+    # Input:
+    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    # Output:
+    #   packetStopIndex [int]: The index within minxssSerialData where the end sync bytes were found. -1 if not found.
+    #
+    def findSyncStopIndex(self, minxssSerialData):
+        syncBytes = bytearray([0xa5, 0xa5])
+        packetStopIndex = bytearray(minxssSerialData).find(syncBytes)
+        return packetStopIndex
 
-
-            FCS = shift_reg ^ output_xor_mask
-            print("ax25_crc: At byte {0}, crc={1}".format(j-1,hex(FCS)))
-            #if(FCS == 0x7C10)
-
-        return FCS
-
-    def reference_test_crc(self):
-        ref_string = '123456789'
-        ref_array = []
-        for char in ref_string:
-            ref_array.append(ord(char))
-        crc_ref = self.ax25_crc(ref_array)
-        print("CRC ref 123456789",hex(crc_ref))
-
-        print("")
-        print("")
-        print("")
-
-        ref_string = 'A'
-        ref_array = []
-        for char in ref_string:
-            ref_array.append(ord(char))
-        crc_ref = self.ax25_crc(ref_array)
-        print("CRC ref A",hex(crc_ref))
 
     def testRead(self):
         self.log.info("Testing read on port: {0}".format(self.port))
@@ -128,9 +130,46 @@ class connect_socket():
 
         self.clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.clientsocket.connect((ipAddress, int(port)))
+    
+    def close(self):
+        self.log.info("Closing ground station link")
+        self.clientsocket.close()
+    
+    # Purpose:
+    #   From all of the binary coming in, grab a single MinXSS packet
+    # Input:
+    #   None
+    # Output:
+    #   packet [bytearray]: A single MinXSS packet with all headers and footers
+    # TODO:
+    #   Pull this function out to a separate class that can be called with serial or socket input
+    def read_packet(self):
+        packet = bytearray()
+        syncStartOffset = -1
+        while(1):
+            syncStartOffset = self.findSyncStartIndex(packet)
 
-    def read(self):
-        return self.clientsocket.recv(4096) # 4096 is the max amount of data allowed at once
+            if syncStartOffset == -1 or len(packet[syncStartOffset:]) < 254:
+                bufferedData = bytearray(self.clientsocket.recv(254))
+                print binascii.hexlify(bufferedData)
+                for byte in bufferedData:
+                    packet.append(byte)
+            else:
+                break
+        
+        return packet
+    
+    # Purpose:
+    #   Find the start of the MinXSS packet and return the index within minxssSerialData
+    # Input:
+    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    # Output:
+    #   packetStartIndex [int]: The index within minxssSerialData where the start sync bytes were found. -1 if not found.
+    #
+    def findSyncStartIndex(self, minxssSerialData):
+        syncBytes = bytearray([0x08, 0x19])
+        packetStartIndex = bytearray(minxssSerialData).find(syncBytes)
+        return packetStartIndex
 
 class unkiss():
     def __init__(self, packet, log):
