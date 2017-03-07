@@ -6,6 +6,7 @@ import sys
 import time
 import serial
 import socket
+import pdb, binascii
 
 class connect_serial():
     def __init__(self, port, baudRate, log):
@@ -14,29 +15,41 @@ class connect_serial():
         self.log = log
         self.log.info("Opening port: {0}".format(port))
         self.ser = serial.Serial(port, baudRate, timeout=.01)
-        self.ser.flushInput()
+        #self.ser.flushInput()
 
         if (not self.ser.readable()):
             raise Exception("Port not readable")
 
-
     def close(self):
         self.log.info("Closing ground station link")
         self.ser.close
+    
+    # Specic to MinXSS packets
+    def read_packet(self):
+        packet = bytearray()
+        syncOffset = -1
+        while(1):
+            syncOffset = self.findSyncIndex(packet)
+            if syncOffset == -1 or len(packet[syncOffset:]) < 256:
+                bufferedData = self.ser.read()
+                for byte in bufferedData:
+                    packet.append(byte)
+            else:
+                break
+        
+        return packet
 
-    def read(self):
-        return self.ser.read(self.ser.in_waiting)
-        #data = []
-        #newdata = []
-        #while(1):
-        #    newdata = self.ser.read(self.ser.in_waiting)
-        #    for byte in newdata:
-        #        data.append(byte)
-
-        #    if(self.ser.in_waiting == 0):
-        #        break
-        #return data
-
+    # Purpose:
+    #   Find the start of the MinXSS packet and return the index within minxssSerialData
+    # Input:
+    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    # Output:
+    #   packetStartIndex [int]: The index within minxssSerialData where the sync bytes were found. -1 if not found.
+    #
+    def findSyncIndex(self, minxssSerialData):
+        syncBytes = bytearray([0x08, 0x19]) # This is actually the CCSDS start and then the housekeeping packet APID
+        packetStartIndex = bytearray(minxssSerialData).find(syncBytes)
+        return packetStartIndex
 
     def ax25_crc(self,packet):
         shift_reg = 0xFFFF;

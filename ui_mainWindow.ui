@@ -42503,8 +42503,11 @@ p, li { white-space: pre-wrap; }
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QTabWidget" name="tabWidget_serialIp">
+         <property name="tabShape">
+          <enum>QTabWidget::Rounded</enum>
+         </property>
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="serial">
           <attribute name="title">
@@ -45948,7 +45951,6 @@ p, li { white-space: pre-wrap; }
            </item>
           </layout>
           <zorder></zorder>
-          <zorder></zorder>
          </widget>
          <widget class="QWidget" name="tcpip">
           <attribute name="title">
@@ -47678,8 +47680,6 @@ p, li { white-space: pre-wrap; }
             </layout>
            </item>
           </layout>
-          <zorder>gridLayoutWidget</zorder>
-          <zorder>label_4</zorder>
          </widget>
         </widget>
        </item>

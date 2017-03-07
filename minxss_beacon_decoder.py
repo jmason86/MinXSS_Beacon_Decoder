@@ -13,6 +13,7 @@ from PySide import QtCore, QtGui
 import time, datetime
 from serial.tools import list_ports
 import minxss_parser
+import binascii
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -93,9 +94,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def readSerial(self):
         # Infinite loop to read the serial port and display the data in the GUI and optionally write to output file
         while(True):
-            serialData = self.connectedPort.read()
+            serialData = self.connectedPort.read_packet()
             if len(serialData) > 0:
-                formattedSerialData = ' '.join(map(lambda x:x.encode('hex'),serialData))
+                formattedSerialData = binascii.hexlify(serialData)
                 self.textBrowser_serialOutput.append(formattedSerialData)
                 self.textBrowser_serialOutput.verticalScrollBar().setValue(self.textBrowser_serialOutput.verticalScrollBar().maximum())
                 
@@ -110,7 +111,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 
                 # If valid data, update GUI with telemetry points
                 if selectedTelemetryDictionary != -1:
-                    self.label_batteryVoltage.setText(str(selectedTelemetryDictionary['BatteryVoltage']))
+                    self.label_batteryVoltage.setText("{0:.2f}".format(round(selectedTelemetryDictionary['BatteryVoltage'], 2)))
     
     def stopRead(self):
         self.connectedPort.close()

@@ -4,6 +4,7 @@ __contact__ = "jmason86@gmail.com"
 
 import os
 import logging
+import pdb, binascii
 
 class Minxss_Parser():
     def __init__(self, minxssSerialData, log):
@@ -35,6 +36,10 @@ class Minxss_Parser():
         selectedTelemetryDictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxssSerialData[122:122+2])       # [deg C]
         selectedTelemetryDictionary['MotherboardTemperature'] = self.decodeBytesTemperature(minxssSerialData[124:124+2])     # [deg C]
         selectedTelemetryDictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxssSerialData[128:128+2])        # [deg C]
+        print syncOffset
+        print len(minxssSerialData)
+        print binascii.hexlify(minxssSerialData[132:132+2])
+        print binascii.hexlify(minxssSerialData)
         selectedTelemetryDictionary['BatteryVoltage'] = self.decodeBytesFuelGaugeBatteryVoltage(minxssSerialData[132:132+2]) # [V]
         selectedTelemetryDictionary['SolarArray-YCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[136:136+2])  # [mA]
         selectedTelemetryDictionary['SolarArray+XCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[140:140+2])  # [mA]
@@ -79,10 +84,7 @@ class Minxss_Parser():
             shiftedByte = byte << numberOfBitsToShiftBy
             telemetryPointRaw += shiftedByte
             numberOfBitsToShiftBy += 8
-        
-        print(bytearrayTemp)
-        print(type(bytearrayTemp))
-        print(telemetryPointRaw)
+
         return telemetryPointRaw
 
     ##
@@ -136,7 +138,7 @@ class Minxss_Parser():
 #
 if __name__ == '__main__':
     # Create a typical telemetry packet as received by the serial line
-    exampleData = bytearray([0xc0, 0x00, 0x9a, 0x92, 0x9c, 0xb0, 0xa6, 0x64, 0x60, 0x86,
+    exampleData = bytearray([0xc0, 0x00, 0x9a, 0x92, 0x00, 0xb0, 0xa6, 0x64, 0x60, 0x86,
                              0xa2, 0x40, 0x40, 0x40, 0x40, 0xe1, 0x03, 0xf0, 0x08, 0x19,
                              0xc1, 0x6f, 0x00, 0xf7, 0xf1, 0x34, 0xd6, 0x45, 0x47, 0x02,
                              0x0a, 0x86, 0x4b, 0x00, 0x0c, 0x00, 0x01, 0x00, 0x2e, 0x74,
