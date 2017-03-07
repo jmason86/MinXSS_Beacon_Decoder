@@ -36,10 +36,6 @@ class Minxss_Parser():
         selectedTelemetryDictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxssSerialData[122:122+2])       # [deg C]
         selectedTelemetryDictionary['MotherboardTemperature'] = self.decodeBytesTemperature(minxssSerialData[124:124+2])     # [deg C]
         selectedTelemetryDictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxssSerialData[128:128+2])        # [deg C]
-        print syncOffset
-        print len(minxssSerialData)
-        print binascii.hexlify(minxssSerialData[132:132+2])
-        print binascii.hexlify(minxssSerialData)
         selectedTelemetryDictionary['BatteryVoltage'] = self.decodeBytesFuelGaugeBatteryVoltage(minxssSerialData[132:132+2]) # [V]
         selectedTelemetryDictionary['SolarArray-YCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[136:136+2])  # [mA]
         selectedTelemetryDictionary['SolarArray+XCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[140:140+2])  # [mA]

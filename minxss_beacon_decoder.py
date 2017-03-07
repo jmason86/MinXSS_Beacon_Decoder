@@ -122,7 +122,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # If valid data, update GUI with telemetry points
                 if selectedTelemetryDictionary != -1:
                     self.label_batteryVoltage.setText("{0:.2f}".format(round(selectedTelemetryDictionary['BatteryVoltage'], 2)))
-    
+                    self.label_epsBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['EpsBoardTemperature'], 2)))
+                    self.label_commBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['CommBoardTemperature'], 2)))
+                    
     def stopRead(self):
         self.connectedPort.close()
     

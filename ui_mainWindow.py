@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Tue Mar  7 12:00:53 2017
+# Created: Tue Mar  7 13:02:29 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -10261,7 +10261,7 @@ class Ui_MainWindow(object):
         self.label_65.setFont(font)
         self.label_65.setObjectName("label_65")
         self.gridLayout_8.addWidget(self.label_65, 4, 0, 1, 1)
-        self.label_83 = QtGui.QLabel(self.groupBox_4)
+        self.label_epsBoardTemperature = QtGui.QLabel(self.groupBox_4)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(237, 237, 237))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -10398,13 +10398,13 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-        self.label_83.setPalette(palette)
+        self.label_epsBoardTemperature.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily("Copperplate Gothic Light")
-        self.label_83.setFont(font)
-        self.label_83.setObjectName("label_83")
-        self.gridLayout_8.addWidget(self.label_83, 3, 1, 1, 1)
-        self.label_78 = QtGui.QLabel(self.groupBox_4)
+        self.label_epsBoardTemperature.setFont(font)
+        self.label_epsBoardTemperature.setObjectName("label_epsBoardTemperature")
+        self.gridLayout_8.addWidget(self.label_epsBoardTemperature, 3, 1, 1, 1)
+        self.label_commBoardTemperature = QtGui.QLabel(self.groupBox_4)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(237, 237, 237))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -10541,12 +10541,12 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-        self.label_78.setPalette(palette)
+        self.label_commBoardTemperature.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily("Copperplate Gothic Light")
-        self.label_78.setFont(font)
-        self.label_78.setObjectName("label_78")
-        self.gridLayout_8.addWidget(self.label_78, 1, 1, 1, 1)
+        self.label_commBoardTemperature.setFont(font)
+        self.label_commBoardTemperature.setObjectName("label_commBoardTemperature")
+        self.gridLayout_8.addWidget(self.label_commBoardTemperature, 1, 1, 1, 1)
         self.label_85 = QtGui.QLabel(self.groupBox_4)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(237, 237, 237))
@@ -16152,8 +16152,8 @@ class Ui_MainWindow(object):
         self.groupBox_4.setTitle(QtGui.QApplication.translate("MainWindow", "Temperature", None, QtGui.QApplication.UnicodeUTF8))
         self.label_94.setText(QtGui.QApplication.translate("MainWindow", "Solar Panel +Y: ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_65.setText(QtGui.QApplication.translate("MainWindow", "Processor board:", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_83.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_78.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_epsBoardTemperature.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_commBoardTemperature.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
         self.label_85.setText(QtGui.QApplication.translate("MainWindow", "Value", None, QtGui.QApplication.UnicodeUTF8))
         self.label_64.setText(QtGui.QApplication.translate("MainWindow", "Solar Panel +X: ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_88.setText(QtGui.QApplication.translate("MainWindow", "N - N ", None, QtGui.QApplication.UnicodeUTF8))

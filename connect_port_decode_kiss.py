@@ -151,7 +151,6 @@ class connect_socket():
 
             if syncStartOffset == -1 or len(packet[syncStartOffset:]) < 254:
                 bufferedData = bytearray(self.clientsocket.recv(254))
-                print binascii.hexlify(bufferedData)
                 for byte in bufferedData:
                     packet.append(byte)
             else:
