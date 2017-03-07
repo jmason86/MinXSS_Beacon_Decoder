@@ -121,10 +121,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 
                 # If valid data, update GUI with telemetry points
                 if selectedTelemetryDictionary != -1:
+                    # Display numbers in GUI
                     self.label_batteryVoltage.setText("{0:.2f}".format(round(selectedTelemetryDictionary['BatteryVoltage'], 2)))
                     self.label_epsBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['EpsBoardTemperature'], 2)))
                     self.label_commBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['CommBoardTemperature'], 2)))
                     
+                    # Setup color palettes
+                    paletteGreen = QtGui.QPalette()
+                    paletteGreen.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
+                    paletteYellow = QtGui.QPalette()
+                    paletteYellow.setColor(QtGui.QPalette.Foreground, QColor(244, 212, 66)) # Yellow
+                    paletteRed = QtGui.QPalette()
+                    paletteRed.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
+                    
+                    # Color code telemetry
+                    if selectedTelemetryDictionary['BatteryVoltage'] >= 7.1:
+                        self.label_batteryVoltage.setPalette(paletteGreen)
+                    elif selectedTelemetryDictionary['BatteryVoltage'] >= 6.9:
+                        self.label_batteryVoltage.setPalette(paletteYellow)
+                    else:
+                        self.label_batteryVoltage.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['EpsBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['EpsBoardTemperature'] <= 45.0:
+                        self.label_epsBoardTemperature.setPalette(paletteGreen)
+                    else:
+                        self.label_epsBoardTemperature.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['CommBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['CommBoardTemperature'] <= 60.0:
+                        self.label_commBoardTemperature.setPalette(paletteGreen)
+                    else:
+                        self.label_commBoardTemperature.setPalette(paletteRed)
+
     def stopRead(self):
         self.connectedPort.close()
     
