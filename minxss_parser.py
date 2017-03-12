@@ -32,11 +32,13 @@ class Minxss_Parser():
         # Get the telemetry points
         # Note: Second index in range of minxssSerialData must be +1 what you'd normally expect because python is wonky
         # For example, to grab bytes at indices 3 and 4, you don't do minxssSerialData[3:4], you have to do minxssSerialData[3:5]
-        selectedTelemetryDictionary['5vLineVoltage'] = self.decodeBytesCdh5v(minxssSerialData[82:82+2])                      # [V]
         selectedTelemetryDictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxssSerialData[122:122+2])       # [deg C]
+        selectedTelemetryDictionary['BatteryTemperature'] = self.decodeBytesTemperatureBattery(minxssSerialData[174:174+2])  # [deg C]
         selectedTelemetryDictionary['MotherboardTemperature'] = self.decodeBytesTemperature(minxssSerialData[124:124+2])     # [deg C]
         selectedTelemetryDictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxssSerialData[128:128+2])        # [deg C]
         selectedTelemetryDictionary['BatteryVoltage'] = self.decodeBytesFuelGaugeBatteryVoltage(minxssSerialData[132:132+2]) # [V]
+        selectedTelemetryDictionary['BatteryChargeCurrent'] = self.decodeBytesBatteryCurrent(minxssSerialData[168:168+2])    # [mA]
+        selectedTelemetryDictionary['BatteryDischargeCurrent'] = self.decodeBytesBatteryCurrent(minxssSerialData[172:172+2]) # [mA]
         selectedTelemetryDictionary['SolarArray-YCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[136:136+2])  # [mA]
         selectedTelemetryDictionary['SolarArray+XCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[140:140+2])  # [mA]
         selectedTelemetryDictionary['SolarArray+YCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[144:144+2])  # [mA]
@@ -97,14 +99,17 @@ class Minxss_Parser():
     #   telemetryPoint [int, float, string, as appropriate]: The telemetry point in human-readable form and units
     #
     
-    def decodeBytesCdh5v(self, bytearrayTemp):
-        return self.decodeBytes(bytearrayTemp) * 6.71 / 4096. # [V]
-    
     def decodeBytesTemperature(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) / 256.0 # [deg C]
     
+    def decodeBytesTemperatureBattery(self, bytearrayTemp):
+        return self.decodeBytes(bytearrayTemp) * 0.18766 - 250.2 # [deg C]
+    
     def decodeBytesFuelGaugeBatteryVoltage(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) / 6415.0 # [V]
+    
+    def decodeBytesBatteryCurrent(self, bytearrayTemp):
+        return self.decodeBytes(bytearrayTemp) * 3.5568 - 61.6 # [mA]
     
     def decodeBytesSolarArrayCurrent(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) * 163.8 / 327.68 # [mA]

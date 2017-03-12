@@ -121,10 +121,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 
                 # If valid data, update GUI with telemetry points
                 if selectedTelemetryDictionary != -1:
+                    ##
                     # Display numbers in GUI
+                    ##
+                    
+                    # Power
                     self.label_batteryVoltage.setText("{0:.2f}".format(round(selectedTelemetryDictionary['BatteryVoltage'], 2)))
-                    self.label_epsBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['EpsBoardTemperature'], 2)))
+                    if selectedTelemetryDictionary['BatteryChargeCurrent'] > selectedTelemetryDictionary['BatteryDischargeCurrent']:
+                        batteryCurrent = selectedTelemetryDictionary['BatteryChargeCurrent'] / 1e3
+                        self.label_batteryCurrentText.setText("Battery Charge Current")
+                    else:
+                        batteryCurrent = selectedTelemetryDictionary['BatteryDischargeCurrent'] / 1e3
+                        self.label_batteryCurrentText.setText("Battery Discharge Current")
+                    self.label_batteryCurrent.setText("{0:.2f}".format(round(batteryCurrent, 2)))
+                    solarPanelMinusYPower = selectedTelemetryDictionary['SolarArray-YVoltage'] * selectedTelemetryDictionary['SolarArray-YCurrent'] / 1e3
+                    self.label_solarPanelMinusY.setText("{0:.2f}".format(round(solarPanelMinusYPower, 2)))
+                    solarPanelPlusXPower = selectedTelemetryDictionary['SolarArray+XVoltage'] * selectedTelemetryDictionary['SolarArray+XCurrent'] / 1e3
+                    self.label_solarPanelPlusX.setText("{0:.2f}".format(round(solarPanelPlusXPower, 2)))
+                    solarPanelPlusYPower = selectedTelemetryDictionary['SolarArray+YVoltage'] * selectedTelemetryDictionary['SolarArray+YCurrent'] / 1e3
+                    self.label_solarPanelPlusY.setText("{0:.2f}".format(round(solarPanelPlusYPower, 2)))
+                    
+                    # Temperature
                     self.label_commBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['CommBoardTemperature'], 2)))
+                    self.label_batteryTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['BatteryTemperature'], 2)))
+                    self.label_epsBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['EpsBoardTemperature'], 2)))
                     
                     # Setup color palettes
                     paletteGreen = QtGui.QPalette()
@@ -134,21 +154,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     paletteRed = QtGui.QPalette()
                     paletteRed.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
                     
+                    ##
                     # Color code telemetry
+                    ##
+                    # Power
                     if selectedTelemetryDictionary['BatteryVoltage'] >= 7.1:
                         self.label_batteryVoltage.setPalette(paletteGreen)
                     elif selectedTelemetryDictionary['BatteryVoltage'] >= 6.9:
                         self.label_batteryVoltage.setPalette(paletteYellow)
                     else:
                         self.label_batteryVoltage.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['EpsBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['EpsBoardTemperature'] <= 45.0:
-                        self.label_epsBoardTemperature.setPalette(paletteGreen)
+                    if solarPanelMinusYPower >= 0 and solarPanelMinusYPower <= 9.7:
+                        self.label_solarPanelMinusY.setPalette(paletteGreen)
                     else:
-                        self.label_epsBoardTemperature.setPalette(paletteRed)
+                        self.label_solarPanelMinusY.setPalette(paletteRed)
+                    if solarPanelPlusXPower >= 0 and solarPanelPlusXPower <= 5.9:
+                        self.label_solarPanelPlusX.setPalette(paletteGreen)
+                    else:
+                        self.label_solarPanelPlusX.setPalette(paletteRed)
+                    if solarPanelPlusYPower >= 0 and solarPanelPlusYPower <= 10.4:
+                        self.label_solarPanelPlusY.setPalette(paletteGreen)
+                    else:
+                        self.label_solarPanelPlusY.setPalette(paletteRed)
+                            
+                    # Temperature
                     if selectedTelemetryDictionary['CommBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['CommBoardTemperature'] <= 60.0:
                         self.label_commBoardTemperature.setPalette(paletteGreen)
                     else:
                         self.label_commBoardTemperature.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['BatteryTemperatre'] >= 5.0 and selectedTelemetryDictionary['BatteryTemperature'] <= 25:
+                        self.label_batteryTemperature.setPalette(paletteGreen)
+                    elif selectedTelemetryDictionary['BatteryTemperature'] >= 2.0 and selectedTelemetryDictionary['BatteryTemperatre'] < 5.0 or selectedTelemetryDictionary['BatteryTemperatre'] < 5.0 > 25.0 :
+                        self.label_batteryTemperature.setPalette(paletteYellow)
+                    else:
+                        self.label_batteryTemperature.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['EpsBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['EpsBoardTemperature'] <= 45.0:
+                        self.label_epsBoardTemperature.setPalette(paletteGreen)
+                    else:
+                        self.label_epsBoardTemperature.setPalette(paletteRed)
 
     def stopRead(self):
         self.connectedPort.close()
