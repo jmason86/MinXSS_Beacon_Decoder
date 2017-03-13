@@ -32,6 +32,9 @@ class Minxss_Parser():
         # Get the telemetry points
         # Note: Second index in range of minxssPacket must be +1 what you'd normally expect because python is wonky
         # For example, to grab bytes at indices 3 and 4, you don't do minxssPacket[3:4], you have to do minxssPacket[3:5]
+        selectedTelemetryDictionary['SpsX'] = self.decodeSps(minxssPacket[204:204+2])                                               # [deg]
+        selectedTelemetryDictionary['SpsY'] = self.decodeSps(minxssPacket[206:206+2])                                               # [deg]
+        selectedTelemetryDictionary['Xp'] = self.decodeXp(minxssPacket[192:192+4])                                                  # [DN]
         selectedTelemetryDictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[122:122+2])                  # [deg C]
         selectedTelemetryDictionary['BatteryTemperature'] = self.decodeBytesTemperatureBattery(minxssPacket[174:174+2])             # [deg C]
         selectedTelemetryDictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[128:128+2])                   # [deg C]
@@ -102,6 +105,11 @@ class Minxss_Parser():
     # Output:
     #   telemetryPoint [int, float, string, as appropriate]: The telemetry point in human-readable form and units
     #
+    
+    def decodeSps(self, bytearrayTemp):
+        return self.decodeBytes(bytearrayTemp) / 1e4 * 3.0 # [deg]
+    def decodeXp(self, bytearrayTemp):
+        return self.decodeBytes(bytearrayTemp) # [DN]
     
     def decodeBytesTemperature(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) / 256.0 # [deg C]

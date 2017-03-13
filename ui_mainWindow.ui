@@ -13819,7 +13819,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLabel" name="label_68">
+             <widget class="QLabel" name="label_xp">
               <property name="palette">
                <palette>
                 <active>
@@ -14668,12 +14668,12 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>N - N </string>
+               <string>[0, 24860] DN/s</string>
               </property>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_63">
+             <widget class="QLabel" name="label_spsX">
               <property name="palette">
                <palette>
                 <active>
@@ -15527,7 +15527,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="label_62">
+             <widget class="QLabel" name="label_spsY">
               <property name="palette">
                <palette>
                 <active>
@@ -16376,7 +16376,7 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>N - N </string>
+               <string>[-3, 3] º</string>
               </property>
              </widget>
             </item>
@@ -16803,7 +16803,7 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>N - N </string>
+               <string>[-3, 3]] º</string>
               </property>
              </widget>
             </item>

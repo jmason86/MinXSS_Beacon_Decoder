@@ -124,6 +124,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     ##
                     # Display numbers in GUI
                     ##
+                    # Solar Data
+                    self.label_spsX.setText("{0:.2f}".format(round(selectedTelemetryDictionary['SpsX'], 2)))
+                    self.label_spsY.setText("{0:.2f}".format(round(selectedTelemetryDictionary['SpsY'], 2)))
+                    self.label_xp.setText("{0:.2f}".format(round(selectedTelemetryDictionary['Xp'], 2)))
                     
                     # Power
                     self.label_batteryVoltage.setText("{0:.2f}".format(round(selectedTelemetryDictionary['BatteryVoltage'], 2)))
@@ -162,6 +166,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     ##
                     # Color code telemetry
                     ##
+                    # Solar Data
+                    if abs(selectedTelemetryDictionary['SpsX']) <= 3.0:
+                        self.label_spsX.setPalette(paletteGreen)
+                    else:
+                        self.label_spsX.setPalette(paletteRed)
+                    if abs(selectedTelemetryDictionary['SpsY']) <= 3.0:
+                        self.label_spsY.setPalette(paletteGreen)
+                    else:
+                        self.label_spsY.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['Xp'] <= 24860.0 and selectedTelemetryDictionary['Xp'] >= 0:
+                        self.label_xp.setPalette(paletteGreen)
+                    else:
+                        self.label_xp.setPalette(paletteRed)
+                    
                     # Power
                     if solarPanelMinusYPower >= 0 and solarPanelMinusYPower <= 9.7:
                         self.label_solarPanelMinusYPower.setPalette(paletteGreen)
