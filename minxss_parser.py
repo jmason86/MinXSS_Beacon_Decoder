@@ -7,59 +7,63 @@ import logging
 import pdb, binascii
 
 class Minxss_Parser():
-    def __init__(self, minxssSerialData, log):
+    def __init__(self, minxssPacket, log):
         self.log = log # debug log
 
     # Purpose:
     #   Top level wrapper function to take serial data and return parsed and interpretted telemetry as a dictionary
     # Input:
-    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    #   minxssPacket [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
     # Output:
     #   selectedTelemetryDictionary [dictionary]: The telemetry with key/value pairs
     #
-    def parsePacket(self, minxssSerialData):
+    def parsePacket(self, minxssPacket):
         # Find the sync bytes (0x08, 0x19), reframe the packet to start after sync
-        syncOffset = self.findSyncIndex(minxssSerialData)
+        syncOffset = self.findSyncIndex(minxssPacket)
         if syncOffset == -1:
             self.log.info("No sync bytes found")
             return -1
         else:
-            minxssSerialData = minxssSerialData[syncOffset:len(minxssSerialData)]
+            minxssPacket = minxssPacket[syncOffset:len(minxssPacket)]
         
         # Prepare a dictionary for storage of telemetry points
         selectedTelemetryDictionary = {}
         
         # Get the telemetry points
-        # Note: Second index in range of minxssSerialData must be +1 what you'd normally expect because python is wonky
-        # For example, to grab bytes at indices 3 and 4, you don't do minxssSerialData[3:4], you have to do minxssSerialData[3:5]
-        selectedTelemetryDictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxssSerialData[122:122+2])       # [deg C]
-        selectedTelemetryDictionary['BatteryTemperature'] = self.decodeBytesTemperatureBattery(minxssSerialData[174:174+2])  # [deg C]
-        selectedTelemetryDictionary['MotherboardTemperature'] = self.decodeBytesTemperature(minxssSerialData[124:124+2])     # [deg C]
-        selectedTelemetryDictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxssSerialData[128:128+2])        # [deg C]
-        selectedTelemetryDictionary['BatteryVoltage'] = self.decodeBytesFuelGaugeBatteryVoltage(minxssSerialData[132:132+2]) # [V]
-        selectedTelemetryDictionary['BatteryChargeCurrent'] = self.decodeBytesBatteryCurrent(minxssSerialData[168:168+2])    # [mA]
-        selectedTelemetryDictionary['BatteryDischargeCurrent'] = self.decodeBytesBatteryCurrent(minxssSerialData[172:172+2]) # [mA]
-        selectedTelemetryDictionary['SolarArray-YCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[136:136+2])  # [mA]
-        selectedTelemetryDictionary['SolarArray+XCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[140:140+2])  # [mA]
-        selectedTelemetryDictionary['SolarArray+YCurrent'] = self.decodeBytesSolarArrayCurrent(minxssSerialData[144:144+2])  # [mA]
-        selectedTelemetryDictionary['SolarArray-YVoltage'] = self.decodeBytesSolarArrayVoltage(minxssSerialData[138:138+2])  # [V]
-        selectedTelemetryDictionary['SolarArray+XVoltage'] = self.decodeBytesSolarArrayVoltage(minxssSerialData[142:142+2])  # [V]
-        selectedTelemetryDictionary['SolarArray+YVoltage'] = self.decodeBytesSolarArrayVoltage(minxssSerialData[146:146+2])  # [V]
+        # Note: Second index in range of minxssPacket must be +1 what you'd normally expect because python is wonky
+        # For example, to grab bytes at indices 3 and 4, you don't do minxssPacket[3:4], you have to do minxssPacket[3:5]
+        selectedTelemetryDictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[122:122+2])                  # [deg C]
+        selectedTelemetryDictionary['BatteryTemperature'] = self.decodeBytesTemperatureBattery(minxssPacket[174:174+2])             # [deg C]
+        selectedTelemetryDictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[128:128+2])                   # [deg C]
+        selectedTelemetryDictionary['CdhBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[86:86+2])                      # [deg C]
+        selectedTelemetryDictionary['MotherboardTemperature'] = self.decodeBytesTemperature(minxssPacket[124:124+2])                # [deg C]
+        selectedTelemetryDictionary['SolarPanelMinusYTemperature'] = self.decodeBytesTemperatureSolarPanel(minxssPacket[160:160+2]) # [deg C]
+        selectedTelemetryDictionary['SolarPanelPlusXTemperature'] = self.decodeBytesTemperatureSolarPanel(minxssPacket[162:162+2])  # [deg C]
+        selectedTelemetryDictionary['SolarPanelPlusYTemperature'] = self.decodeBytesTemperatureSolarPanel(minxssPacket[164:164+2])  # [deg C]
+        selectedTelemetryDictionary['BatteryVoltage'] = self.decodeBytesFuelGaugeBatteryVoltage(minxssPacket[132:132+2])            # [V]
+        selectedTelemetryDictionary['BatteryChargeCurrent'] = self.decodeBytesBatteryCurrent(minxssPacket[168:168+2])               # [mA]
+        selectedTelemetryDictionary['BatteryDischargeCurrent'] = self.decodeBytesBatteryCurrent(minxssPacket[172:172+2])            # [mA]
+        selectedTelemetryDictionary['SolarPanelMinusYCurrent'] = self.decodeBytesSolarArrayCurrent(minxssPacket[136:136+2])         # [mA]
+        selectedTelemetryDictionary['SolarPanelPlusXCurrent'] = self.decodeBytesSolarArrayCurrent(minxssPacket[140:140+2])          # [mA]
+        selectedTelemetryDictionary['SolarPanelPlusYCurrent'] = self.decodeBytesSolarArrayCurrent(minxssPacket[144:144+2])          # [mA]
+        selectedTelemetryDictionary['SolarPanelMinusYVoltage'] = self.decodeBytesSolarArrayVoltage(minxssPacket[138:138+2])         # [V]
+        selectedTelemetryDictionary['SolarPanelPlusXVoltage'] = self.decodeBytesSolarArrayVoltage(minxssPacket[142:142+2])          # [V]
+        selectedTelemetryDictionary['SolarPanelPlusYVoltage'] = self.decodeBytesSolarArrayVoltage(minxssPacket[146:146+2])          # [V]
         
         self.log.info("From MinXSS parser:")
         self.log.info(selectedTelemetryDictionary)
         return selectedTelemetryDictionary
 
     # Purpose:
-    #   Find the start of the MinXSS packet and return the index within minxssSerialData
+    #   Find the start of the MinXSS packet and return the index within minxssPacket
     # Input:
-    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    #   minxssPacket [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
     # Output:
-    #   packetStartIndex [int]: The index within minxssSerialData where the sync bytes were found. -1 if not found.
+    #   packetStartIndex [int]: The index within minxssPacket where the sync bytes were found. -1 if not found.
     #
-    def findSyncIndex(self, minxssSerialData):
+    def findSyncIndex(self, minxssPacket):
         syncBytes = bytearray([0x08, 0x19]) # This is actually the CCSDS start and then the housekeeping packet APID
-        packetStartIndex = bytearray(minxssSerialData).find(syncBytes)
+        packetStartIndex = bytearray(minxssPacket).find(syncBytes)
         return packetStartIndex
     
     # Purpose:
@@ -105,6 +109,9 @@ class Minxss_Parser():
     def decodeBytesTemperatureBattery(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) * 0.18766 - 250.2 # [deg C]
     
+    def decodeBytesTemperatureSolarPanel(self, bytearrayTemp):
+        return self.decodeBytes(bytearrayTemp) * 0.1744 - 216.0 # [deg C]
+    
     def decodeBytesFuelGaugeBatteryVoltage(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) / 6415.0 # [V]
     
@@ -124,13 +131,13 @@ class Minxss_Parser():
     # Purpose:
     #   Test parsing a packet
     # Input:
-    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    #   minxssPacket [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
     # Output:
     #   ... not sure yet
     #
-    def testParsePacket(self, minxssSerialData, log):
+    def testParsePacket(self, minxssPacket, log):
         log.info("Testing MinXSS packet parse")
-        selectedTelemetryDictionary = self.parsePacket(minxssSerialData)
+        selectedTelemetryDictionary = self.parsePacket(minxssPacket)
         print selectedTelemetryDictionary
         log.info(selectedTelemetryDictionary)
 

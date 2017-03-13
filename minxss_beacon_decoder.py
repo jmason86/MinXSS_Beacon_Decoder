@@ -134,18 +134,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         batteryCurrent = selectedTelemetryDictionary['BatteryDischargeCurrent'] / 1e3
                         self.label_batteryCurrentText.setText("Battery Discharge Current")
                     self.label_batteryCurrent.setText("{0:.2f}".format(round(batteryCurrent, 2)))
-                    solarPanelMinusYPower = selectedTelemetryDictionary['SolarArray-YVoltage'] * selectedTelemetryDictionary['SolarArray-YCurrent'] / 1e3
-                    self.label_solarPanelMinusY.setText("{0:.2f}".format(round(solarPanelMinusYPower, 2)))
-                    solarPanelPlusXPower = selectedTelemetryDictionary['SolarArray+XVoltage'] * selectedTelemetryDictionary['SolarArray+XCurrent'] / 1e3
-                    self.label_solarPanelPlusX.setText("{0:.2f}".format(round(solarPanelPlusXPower, 2)))
-                    solarPanelPlusYPower = selectedTelemetryDictionary['SolarArray+YVoltage'] * selectedTelemetryDictionary['SolarArray+YCurrent'] / 1e3
-                    self.label_solarPanelPlusY.setText("{0:.2f}".format(round(solarPanelPlusYPower, 2)))
+                    solarPanelMinusYPower = selectedTelemetryDictionary['SolarPanelMinusYVoltage'] * selectedTelemetryDictionary['SolarPanelMinusYCurrent'] / 1e3
+                    self.label_solarPanelMinusYPower.setText("{0:.2f}".format(round(solarPanelMinusYPower, 2)))
+                    solarPanelPlusXPower = selectedTelemetryDictionary['SolarPanelPlusXVoltage'] * selectedTelemetryDictionary['SolarPanelPlusXCurrent'] / 1e3
+                    self.label_solarPanelPlusXPower.setText("{0:.2f}".format(round(solarPanelPlusXPower, 2)))
+                    solarPanelPlusYPower = selectedTelemetryDictionary['SolarPanelPlusYVoltage'] * selectedTelemetryDictionary['SolarPanelPlusYCurrent'] / 1e3
+                    self.label_solarPanelPlusYPower.setText("{0:.2f}".format(round(solarPanelPlusYPower, 2)))
                     
                     # Temperature
                     self.label_commBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['CommBoardTemperature'], 2)))
                     self.label_batteryTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['BatteryTemperature'], 2)))
                     self.label_epsBoardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['EpsBoardTemperature'], 2)))
-                    
+                    self.label_cdhTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['CdhBoardTemperature'], 2)))
+                    self.label_motherboardTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['MotherboardTemperature'], 2)))
+                    self.label_solarPanelMinusYTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['SolarPanelMinusYTemperature'], 2)))
+                    self.label_solarPanelPlusXTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['SolarPanelPlusXTemperature'], 2)))
+                    self.label_solarPanelPlusYTemperature.setText("{0:.2f}".format(round(selectedTelemetryDictionary['SolarPanelPlusYTemperature'], 2)))
+
                     # Setup color palettes
                     paletteGreen = QtGui.QPalette()
                     paletteGreen.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
@@ -158,25 +163,29 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     # Color code telemetry
                     ##
                     # Power
+                    if solarPanelMinusYPower >= 0 and solarPanelMinusYPower <= 9.7:
+                        self.label_solarPanelMinusYPower.setPalette(paletteGreen)
+                    else:
+                        self.label_solarPanelMinusYPower.setPalette(paletteRed)
+                    if solarPanelPlusXPower >= 0 and solarPanelPlusXPower <= 5.9:
+                        self.label_solarPanelPlusXPower.setPalette(paletteGreen)
+                    else:
+                        self.label_solarPanelPlusXPower.setPalette(paletteRed)
+                    if solarPanelPlusYPower >= 0 and solarPanelPlusYPower <= 10.4:
+                        self.label_solarPanelPlusYPower.setPalette(paletteGreen)
+                    else:
+                        self.label_solarPanelPlusYPower.setPalette(paletteRed)
                     if selectedTelemetryDictionary['BatteryVoltage'] >= 7.1:
                         self.label_batteryVoltage.setPalette(paletteGreen)
                     elif selectedTelemetryDictionary['BatteryVoltage'] >= 6.9:
                         self.label_batteryVoltage.setPalette(paletteYellow)
                     else:
                         self.label_batteryVoltage.setPalette(paletteRed)
-                    if solarPanelMinusYPower >= 0 and solarPanelMinusYPower <= 9.7:
-                        self.label_solarPanelMinusY.setPalette(paletteGreen)
+                    if batteryCurrent >= 0 and batteryCurrent <= 2.9:
+                        self.label_batteryCurrent.setPalette(paletteGreen)
                     else:
-                        self.label_solarPanelMinusY.setPalette(paletteRed)
-                    if solarPanelPlusXPower >= 0 and solarPanelPlusXPower <= 5.9:
-                        self.label_solarPanelPlusX.setPalette(paletteGreen)
-                    else:
-                        self.label_solarPanelPlusX.setPalette(paletteRed)
-                    if solarPanelPlusYPower >= 0 and solarPanelPlusYPower <= 10.4:
-                        self.label_solarPanelPlusY.setPalette(paletteGreen)
-                    else:
-                        self.label_solarPanelPlusY.setPalette(paletteRed)
-                            
+                        self.label_batteryCurrent.setPalette(paletteRed)
+
                     # Temperature
                     if selectedTelemetryDictionary['CommBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['CommBoardTemperature'] <= 60.0:
                         self.label_commBoardTemperature.setPalette(paletteGreen)
@@ -192,6 +201,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         self.label_epsBoardTemperature.setPalette(paletteGreen)
                     else:
                         self.label_epsBoardTemperature.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['CdhBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['CdhBoardTemperature'] <= 29.0:
+                        self.label_cdhTemperature.setPalette(paletteGreen)
+                    else:
+                        self.label_cdhTemperature.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['MotherboardTemperature'] >= -13.0 and selectedTelemetryDictionary['MotherboardTemperature'] <= 28.0:
+                        self.label_motherboardTemperature.setPalette(paletteGreen)
+                    else:
+                        self.label_motherboardTemperature.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['SolarPanelMinusYTemperature'] >= -42.0 and selectedTelemetryDictionary['SolarPanelMinusYTemperature'] <= 61.0:
+                        self.label_solarPanelMinusYTemperature.setPalette(paletteGreen)
+                    else:
+                        self.label_solarPanelMinusYTemperature.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['SolarPanelPlusXTemperature'] >= -24.0 and selectedTelemetryDictionary['SolarPanelPlusXTemperature'] <= 65.0:
+                        self.label_solarPanelPlusXTemperature.setPalette(paletteGreen)
+                    else:
+                        self.label_solarPanelPlusXTemperature.setPalette(paletteRed)
+                    if selectedTelemetryDictionary['SolarPanelPlusYTemperature'] >= -35.0 and selectedTelemetryDictionary['SolarPanelPlusYTemperature'] <= 58.0:
+                        self.label_solarPanelPlusYTemperature.setPalette(paletteGreen)
+                    else:
+                        self.label_solarPanelPlusYTemperature.setPalette(paletteRed)
 
     def stopRead(self):
         self.connectedPort.close()

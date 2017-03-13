@@ -19376,7 +19376,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QLabel" name="label_solarPanelPlusX">
+             <widget class="QLabel" name="label_solarPanelPlusXPower">
               <property name="palette">
                <palette>
                 <active>
@@ -19803,7 +19803,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_solarPanelMinusY">
+             <widget class="QLabel" name="label_solarPanelMinusYPower">
               <property name="palette">
                <palette>
                 <active>
@@ -21084,7 +21084,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="3" column="1">
-             <widget class="QLabel" name="label_solarPanelPlusY">
+             <widget class="QLabel" name="label_solarPanelPlusYPower">
               <property name="palette">
                <palette>
                 <active>
@@ -26654,7 +26654,7 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>N - N </string>
+               <string>[-35, 58] ºC</string>
               </property>
              </widget>
             </item>
@@ -29227,7 +29227,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="8" column="1">
-             <widget class="QLabel" name="label_96">
+             <widget class="QLabel" name="label_solarPanelPlusYTemperature">
               <property name="palette">
                <palette>
                 <active>
@@ -30076,12 +30076,12 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>N - N </string>
+               <string>[-42, 61] ºC</string>
               </property>
              </widget>
             </item>
             <item row="7" column="1">
-             <widget class="QLabel" name="label_80">
+             <widget class="QLabel" name="label_solarPanelPlusXTemperature">
               <property name="palette">
                <palette>
                 <active>
@@ -30930,12 +30930,12 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>N - N </string>
+               <string>[-13, 28] ºC</string>
               </property>
              </widget>
             </item>
             <item row="6" column="1">
-             <widget class="QLabel" name="label_79">
+             <widget class="QLabel" name="label_solarPanelMinusYTemperature">
               <property name="palette">
                <palette>
                 <active>
@@ -31362,7 +31362,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="4" column="1">
-             <widget class="QLabel" name="label_81">
+             <widget class="QLabel" name="label_cdhTemperature">
               <property name="palette">
                <palette>
                 <active>
@@ -32644,7 +32644,7 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>N - N </string>
+               <string>[-8, 29] ºC</string>
               </property>
              </widget>
             </item>
@@ -33925,7 +33925,7 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>N - N </string>
+               <string>[-24, 65] ºC</string>
               </property>
              </widget>
             </item>
@@ -34363,7 +34363,7 @@ p, li { white-space: pre-wrap; }
              </widget>
             </item>
             <item row="5" column="1">
-             <widget class="QLabel" name="label_55">
+             <widget class="QLabel" name="label_motherboardTemperature">
               <property name="palette">
                <palette>
                 <active>

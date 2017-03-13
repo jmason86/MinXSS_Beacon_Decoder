@@ -111,7 +111,7 @@ class connect_socket():
                 self.log.error("Too many bytes in packet")
                 break
     
-        self.log.info("Packet length = " + str(len(packet))) + " bytes"
+        self.log.info("Packet length [bytes] = " + str(len(packet)))
         return packet
     
     # Purpose:
