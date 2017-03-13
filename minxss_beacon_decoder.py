@@ -8,7 +8,7 @@ import logging
 from PySide.QtGui import *
 from PySide.QtCore import *
 from ui_mainWindow import Ui_MainWindow
-import connect_port_decode_kiss
+import connect_port_get_packet
 from PySide import QtCore, QtGui
 import time, datetime
 from serial.tools import list_ports
@@ -50,14 +50,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 baudRate = self.lineEdit_baudRate.text()
             
                 # Connect to the serial port and test that it is readable
-                connectedPort = connect_port_decode_kiss.connect_serial(port, baudRate, self.log)
+                connectedPort = connect_port_get_packet.connect_serial(port, baudRate, self.log)
                 portReadable = connectedPort.testRead()
             else:
                 ipAddress = self.lineEdit_ipAddress.text()
                 port = self.lineEdit_ipPort.text()
             
                 # Connect to the IP socket but there's no test option so just have to assume its working
-                connectedPort = connect_port_decode_kiss.connect_socket(ipAddress, port, self.log)
+                connectedPort = connect_port_get_packet.connect_socket(ipAddress, port, self.log)
                 portReadable = 1
         
             # If port is readable, store the reference to it and start reading. Either way, update the GUI serial status
@@ -182,9 +182,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         self.label_commBoardTemperature.setPalette(paletteGreen)
                     else:
                         self.label_commBoardTemperature.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['BatteryTemperatre'] >= 5.0 and selectedTelemetryDictionary['BatteryTemperature'] <= 25:
+                    if selectedTelemetryDictionary['BatteryTemperature'] >= 5.0 and selectedTelemetryDictionary['BatteryTemperature'] <= 25:
                         self.label_batteryTemperature.setPalette(paletteGreen)
-                    elif selectedTelemetryDictionary['BatteryTemperature'] >= 2.0 and selectedTelemetryDictionary['BatteryTemperatre'] < 5.0 or selectedTelemetryDictionary['BatteryTemperatre'] < 5.0 > 25.0 :
+                    elif selectedTelemetryDictionary['BatteryTemperature'] >= 2.0 and selectedTelemetryDictionary['BatteryTemperatre'] < 5.0 or selectedTelemetryDictionary['BatteryTemperature'] > 25.0:
                         self.label_batteryTemperature.setPalette(paletteYellow)
                     else:
                         self.label_batteryTemperature.setPalette(paletteRed)
