@@ -211,7 +211,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         self.label_commBoardTemperature.setPalette(paletteRed)
                     if selectedTelemetryDictionary['BatteryTemperature'] >= 5.0 and selectedTelemetryDictionary['BatteryTemperature'] <= 25:
                         self.label_batteryTemperature.setPalette(paletteGreen)
-                    elif selectedTelemetryDictionary['BatteryTemperature'] >= 2.0 and selectedTelemetryDictionary['BatteryTemperatre'] < 5.0 or selectedTelemetryDictionary['BatteryTemperature'] > 25.0:
+                    elif selectedTelemetryDictionary['BatteryTemperature'] >= 2.0 and selectedTelemetryDictionary['BatteryTemperature'] < 5.0 or selectedTelemetryDictionary['BatteryTemperature'] > 25.0:
                         self.label_batteryTemperature.setPalette(paletteYellow)
                     else:
                         self.label_batteryTemperature.setPalette(paletteRed)

@@ -32,6 +32,7 @@ class Minxss_Parser():
         # Get the telemetry points
         # Note: Second index in range of minxssPacket must be +1 what you'd normally expect because python is wonky
         # For example, to grab bytes at indices 3 and 4, you don't do minxssPacket[3:4], you have to do minxssPacket[3:5]
+        selectedTelemetryDictionary['X123Enable'] = self.decodeX123Enable(minxssPacket[88:88+2])                                    # [Boolean]
         selectedTelemetryDictionary['SpsX'] = self.decodeSps(minxssPacket[204:204+2])                                               # [deg]
         selectedTelemetryDictionary['SpsY'] = self.decodeSps(minxssPacket[206:206+2])                                               # [deg]
         selectedTelemetryDictionary['Xp'] = self.decodeXp(minxssPacket[192:192+4])                                                  # [DN]
@@ -105,9 +106,13 @@ class Minxss_Parser():
     # Output:
     #   telemetryPoint [int, float, string, as appropriate]: The telemetry point in human-readable form and units
     #
+    def decodeX123Enable(self, bytearrayTemp):
+        decodedByte = self.decodeBytes(bytearrayTemp)
+        return decodedByte & 0x0002
     
     def decodeSps(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) / 1e4 * 3.0 # [deg]
+
     def decodeXp(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) # [DN]
     

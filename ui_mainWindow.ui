@@ -14668,7 +14668,7 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>[0, 24860] DN/s</string>
+               <string>[0, 24860] DN</string>
               </property>
              </widget>
             </item>
@@ -16803,7 +16803,7 @@ p, li { white-space: pre-wrap; }
                </font>
               </property>
               <property name="text">
-               <string>[-3, 3]] º</string>
+               <string>[-3, 3] º</string>
               </property>
              </widget>
             </item>
