@@ -104,6 +104,7 @@ class connect_socket():
         
         while(self.findSyncStartIndex(bufferedData) == -1 or self.findSyncStopIndex(bufferedData) == -1):
             bufferedData = bytearray(self.clientsocket.recv(256))
+            self.log.debug(bufferedData) # Debug drop of first packet
             for byte in bufferedData:
                 packet.append(byte)
     
