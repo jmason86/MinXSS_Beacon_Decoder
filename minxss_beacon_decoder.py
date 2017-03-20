@@ -124,6 +124,35 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     ##
                     # Display numbers in GUI
                     ##
+                    
+                    # Spacecraft State
+                    self.label_flightModel.setText("{0:0=1d}".format(selectedTelemetryDictionary['FlightModel']))
+                    self.label_commandAcceptCount.setText("{0:0=1d}".format(selectedTelemetryDictionary['CommandAcceptCount']))
+                    if selectedTelemetryDictionary['SpacecraftMode'] == 0:
+                        self.label_spacecraftMode.setText("Unknown")
+                    elif selectedTelemetryDictionary['SpacecraftMode'] == 1:
+                        self.label_spacecraftMode.setText("Phoenix")
+                    elif selectedTelemetryDictionary['SpacecraftMode'] == 2:
+                        self.label_spacecraftMode.setText("Safe")
+                    elif selectedTelemetryDictionary['SpacecraftMode'] == 4:
+                        self.label_spacecraftMode.setText("Science")
+                    if selectedTelemetryDictionary['PointingMode'] == 0:
+                        self.label_pointingMode.setText("Coarse Point")
+                    elif selectedTelemetryDictionary['PointingMode'] == 1:
+                        self.label_pointingMode.setText("Fine Point")
+                    if selectedTelemetryDictionary['EnableX123'] == 1:
+                        self.label_enablex123.setText("Yes")
+                    else:
+                        self.label_enablex123.setText("No")
+                    if selectedTelemetryDictionary['EnableSps'] == 1:
+                        self.label_enableSps.setText("Yes")
+                    else:
+                        self.label_enableSps.setText("No")
+                    if selectedTelemetryDictionary['Eclipse'] == 1:
+                        self.label_eclipse.setText("Eclipse")
+                    else:
+                        self.label_eclipse.setText("In Sun")
+                    
                     # Solar Data
                     self.label_spsX.setText("{0:.2f}".format(round(selectedTelemetryDictionary['SpsX'], 2)))
                     self.label_spsY.setText("{0:.2f}".format(round(selectedTelemetryDictionary['SpsY'], 2)))
@@ -166,6 +195,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     ##
                     # Color code telemetry
                     ##
+                    
+                    # Spacecraft State
+                    if selectedTelemetryDictionary['SpacecraftMode'] == 0:
+                        self.label_spacecraftMode.setPalette(paletteRed)
+                    elif selectedTelemetryDictionary['SpacecraftMode'] == 1:
+                        self.label_spacecraftMode.setPalette(paletteRed)
+                    elif selectedTelemetryDictionary['SpacecraftMode'] == 2:
+                        self.label_spacecraftMode.setPalette(paletteYellow)
+                    elif selectedTelemetryDictionary['SpacecraftMode'] == 4:
+                        self.label_spacecraftMode.setPalette(paletteGreen)
+                    if selectedTelemetryDictionary['PointingMode'] == 0:
+                        self.label_pointingMode.setPalette(paletteYellow)
+                    elif selectedTelemetryDictionary['PointingMode'] == 1:
+                        self.label_pointingMode.setPalette(paletteGreen)
+                    
                     # Solar Data
                     if abs(selectedTelemetryDictionary['SpsX']) <= 3.0:
                         self.label_spsX.setPalette(paletteGreen)
