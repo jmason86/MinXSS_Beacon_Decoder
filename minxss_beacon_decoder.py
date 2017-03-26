@@ -141,9 +141,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     elif selectedTelemetryDictionary['PointingMode'] == 1:
                         self.label_pointingMode.setText("Fine Point")
                     if selectedTelemetryDictionary['EnableX123'] == 1:
-                        self.label_enablex123.setText("Yes")
+                        self.label_enableX123.setText("Yes")
                     else:
-                        self.label_enablex123.setText("No")
+                        self.label_enableX123.setText("No")
                     if selectedTelemetryDictionary['EnableSps'] == 1:
                         self.label_enableSps.setText("Yes")
                     else:

@@ -1739,8 +1739,8 @@
       </property>
       <property name="icon">
        <iconset resource="assets/QtAssets.qrc">
-        <normaloff>:/images/CU LASP.png</normaloff>
-        <normalon>:/CU LASP.png</normalon>:/images/CU LASP.png</iconset>
+        <normaloff>:/assets/CU LASP.png</normaloff>
+        <normalon>:/assets/CU LASP.png</normalon>:/assets/CU LASP.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -1762,9 +1762,9 @@
        <string/>
       </property>
       <property name="icon">
-       <iconset>
-        <normaloff>:/MinXSS CubeSat Logo.png</normaloff>
-        <normalon>:/images/MinXSS CubeSat Logo.png</normalon>:/MinXSS CubeSat Logo.png</iconset>
+       <iconset resource="assets/QtAssets.qrc">
+        <normaloff>:/assets/MinXSS CubeSat Logo.png</normaloff>
+        <normalon>:/assets/MinXSS CubeSat Logo.png</normalon>:/assets/MinXSS CubeSat Logo.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -41305,8 +41305,8 @@ p, li { white-space: pre-wrap; }
   <action name="actionConnect">
    <property name="icon">
     <iconset resource="assets/QtAssets.qrc">
-     <normaloff>:/images/universal-serial-usb-connector.png</normaloff>
-     <normalon>:/refresh-button.png</normalon>:/images/universal-serial-usb-connector.png</iconset>
+     <normaloff>:/assets/universal-serial-usb-connector.png</normaloff>
+     <normalon>:/assets/universal-serial-usb-connector.png</normalon>:/assets/universal-serial-usb-connector.png</iconset>
    </property>
    <property name="text">
     <string>Connect</string>
@@ -41318,8 +41318,8 @@ p, li { white-space: pre-wrap; }
   <action name="actionCompletePass">
    <property name="icon">
     <iconset resource="assets/QtAssets.qrc">
-     <normaloff>:/images/satellite-station.png</normaloff>
-     <normalon>:/satellite-station.png</normalon>:/images/satellite-station.png</iconset>
+     <normaloff>:/assets/satellite-station.png</normaloff>
+     <normalon>:/assets/satellite-station.png</normalon>:/assets/satellite-station.png</iconset>
    </property>
    <property name="text">
     <string>Complete Pass</string>
@@ -41331,8 +41331,8 @@ p, li { white-space: pre-wrap; }
   <action name="actionRefreshSerialPorts">
    <property name="icon">
     <iconset resource="assets/QtAssets.qrc">
-     <normaloff>:/images/refresh-button.png</normaloff>
-     <normalon>:/refresh-button.png</normalon>:/images/refresh-button.png</iconset>
+     <normaloff>:/assets/refresh-button.png</normaloff>
+     <normalon>:/assets/refresh-button.png</normalon>:/assets/refresh-button.png</iconset>
    </property>
    <property name="text">
     <string>Refresh Serial Ports</string>
