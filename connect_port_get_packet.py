@@ -102,9 +102,16 @@ class connect_socket():
         packet = bytearray()
         bufferedData = bytearray()
         
-        while(self.findSyncStartIndex(bufferedData) == -1 or self.findSyncStopIndex(bufferedData) == -1):
+        foundSyncStartIndex = 0
+        foundSyncStopIndex = 0
+        while(foundSyncStartIndex == 0 and foundSyncStopIndex == 0):
+            if self.findSyncStartIndex(bufferedData) != -1:
+                foundSyncStartIndex = 1
+            if self.findSyncStopIndex(bufferedData) != -1:
+                foundSyncStopIndex = 1
+            
             bufferedData = bytearray(self.clientsocket.recv(256))
-            self.log.debug(bufferedData) # Debug drop of first packet
+            self.log.debug(binascii.hexlify(bufferedData)) # Debug drop of first packet
             for byte in bufferedData:
                 packet.append(byte)
     
