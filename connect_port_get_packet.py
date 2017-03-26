@@ -111,7 +111,6 @@ class connect_socket():
                 foundSyncStopIndex = 1
             
             bufferedData = bytearray(self.clientsocket.recv(256))
-            self.log.debug(binascii.hexlify(bufferedData)) # Debug drop of first packet
             for byte in bufferedData:
                 packet.append(byte)
     
