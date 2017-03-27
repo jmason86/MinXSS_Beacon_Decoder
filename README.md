@@ -1,7 +1,7 @@
 # MinXSS_Beacon_Decoder
 A GUI for decoding serial data received with a UHF HAM radio station from the MinXSS CubeSat in space. There are two MinXSS spacecraft: MinXSS-1 deployed from the International Space Station on 2016 May 16 and continues to operate to date; MinXSS-2 will be launched in late 2017. 
 
-MinXSS-1 operates at 437.345 MHz with a beacon every 54 seconds nominally. MinXSS-2 will beacon every 9 seconds at 437.250 MHz. The beacons contain health and safety information about the spacecraft. 
+MinXSS-1 operates at 437.345 MHz with a beacon every 54 seconds nominally. MinXSS-2 will beacon every 9 seconds at 437.250 MHz. The modulation scheme is GMSK. The beacons contain health and safety information about the spacecraft. 
 
 This program receives the serial data from MinXSS, interprets (some of) it, and displays that interpreted data in human readable formats. For example, you can see real time voltages, currents, temperatures, and spacecraft mode. 
 
