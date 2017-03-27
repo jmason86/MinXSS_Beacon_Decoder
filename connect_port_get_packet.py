@@ -32,18 +32,28 @@ class connect_serial():
     #   packet [bytearray]: A single MinXSS packet with all headers and footers
     def read_packet(self):
         packet = bytearray()
-        syncStartOffset = -1
-        while(1):
-            if syncStartOffset == -1 or len(packet[syncStartOffset:]) < 256:
-                bufferedData = self.ser.read()
+        bufferedData = bytearray()
+        
+        foundSyncStartIndex = 0
+        foundSyncStopIndex = 0
+        while(foundSyncStartIndex == 0 and foundSyncStopIndex == 0):
+            if self.findSyncStartIndex(bufferedData) != -1:
+                foundSyncStartIndex = 1
+            if self.findSyncStopIndex(bufferedData) != -1:
+                foundSyncStopIndex = 1
+
+            bufferedData = self.ser.read()
                 for byte in bufferedData:
                     packet.append(byte)
-            else:
+
+            if len(packet) > 500: # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
+                self.log.error("Too many bytes in packet")
                 break
-        
+                    
+        self.log.info("Packet length [bytes] = " + str(len(packet)))
         return packet
 
-    # Purpose:
+# Purpose:
     #   Find the start of the MinXSS packet and return the index within minxssSerialData
     # Input:
     #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
@@ -129,7 +139,7 @@ class connect_socket():
     #   packetStartIndex [int]: The index within minxssSerialData where the start sync bytes were found. -1 if not found.
     #
     def findSyncStartIndex(self, minxssSerialData):
-        syncBytes = bytearray([0x08, 0x19])
+        syncBytes = bytearray([0x08, 0x19]) # Other Cubesats: Change these start sync bytes to whatever you are using to define the start of your packet
         packetStartIndex = bytearray(minxssSerialData).find(syncBytes)
         return packetStartIndex
 
@@ -141,7 +151,7 @@ class connect_socket():
     #   packetStopIndex [int]: The index within minxssSerialData where the end sync bytes were found. -1 if not found.
     #
     def findSyncStopIndex(self, minxssSerialData):
-        syncBytes = bytearray([0xa5, 0xa5])
+        syncBytes = bytearray([0xa5, 0xa5]) # Other CubeSats: Change these stop sync bytes to whatever you are using to define the end of your packet
         packetStopIndex = bytearray(minxssSerialData).find(syncBytes)
         return packetStopIndex
 
