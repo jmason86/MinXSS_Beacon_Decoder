@@ -14,6 +14,7 @@ import time, datetime
 from serial.tools import list_ports
 import minxss_parser
 import binascii
+import datetime
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -124,6 +125,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     ##
                     # Display numbers in GUI
                     ##
+                    
+                    # Current timestamp
+                    self.label_lastPacketTime.setText("Last packet at: {} local, {} UTC".format(datetime.datetime.now().isoformat(), datetime.datetime.utcnow().isoformat()))
                     
                     # Spacecraft State
                     self.label_flightModel.setText("{0:0=1d}".format(selectedTelemetryDictionary['FlightModel']))

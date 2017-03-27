@@ -43,8 +43,8 @@ class connect_serial():
                 foundSyncStopIndex = 1
 
             bufferedData = self.ser.read()
-                for byte in bufferedData:
-                    packet.append(byte)
+            for byte in bufferedData:
+                packet.append(byte)
 
             if len(packet) > 500: # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
                 self.log.error("Too many bytes in packet")
