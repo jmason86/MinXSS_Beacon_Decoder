@@ -5,6 +5,7 @@ __contact__ = "jmason86@gmail.com"
 import sys
 import os
 import logging
+from ConfigParser import SafeConfigParser
 from PySide.QtGui import *
 from PySide.QtCore import *
 from ui_mainWindow import Ui_MainWindow
@@ -22,6 +23,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setupAvailablePorts()
         self.assignWidgets()
+        self.setupLastUsedSettings()
         self.setupOutputLog() # Log of serial data for user
         self.log = self.createLog() # Debug log
         self.portReadThread = PortReadThread(self.readSerial, self.stopRead)
@@ -37,7 +39,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionConnect.triggered.connect(self.connectClicked)
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
     
+    def setupLastUsedSettings(self):
+        parser = SafeConfigParser()
+        parser.read('input_properties.cfg')
+        self.comboBox_serialPort.insertItem(0, parser.get('input_properties', 'serialPort'))
+        self.comboBox_serialPort.setCurrentIndex(0)
+        self.lineEdit_baudRate.setText(parser.get('input_properties', 'baudRate'))
+        self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ipAddress'))
+        self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
+    
     def connectClicked(self):
+        # Write the input settings used to the input_properties.cfg configuration file
+        config = SafeConfigParser()
+        config.read('input_properties.cfg')
+        config.set('input_properties', 'serialPort', self.comboBox_serialPort.currentText())
+        config.set('input_properties', 'baudRate', self.lineEdit_baudRate.text())
+        config.set('input_properties', 'ipAddress', self.lineEdit_ipAddress.text())
+        config.set('input_properties', 'port', self.lineEdit_ipPort.text())
+        with open('input_properties.cfg', 'wb') as configfile:
+            config.write(configfile)
+        
         connectButtonText = str(self.actionConnect.iconText())
         if connectButtonText == "Connect":
             self.log.info("Attempting to connect to port")
@@ -101,7 +122,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             # Actually close the port
             self.stopRead()
-        
+
     def readSerial(self):
         # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
