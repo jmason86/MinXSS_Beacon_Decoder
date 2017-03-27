@@ -215,16 +215,16 @@ if __name__ == '__main__':
                              0xa5, 0xa5, 0xc0])
     
     # Create debug log file
-    if not os.path.exists("test/log"):
-        os.makedirs("test/log")
-    log = logging.getLogger('minxss_parser_debug')
-    handler = logging.FileHandler('test/log/minxss_parser.log')
-    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-    handler.setFormatter(formatter)
-    log.addHandler(handler)
-    log.setLevel(logging.DEBUG)
+#    if not os.path.exists("test/log"):
+#        os.makedirs("test/log")
+#    log = logging.getLogger('minxss_parser_debug')
+#    handler = logging.FileHandler('test/log/minxss_parser.log')
+#    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+#    handler.setFormatter(formatter)
+#    log.addHandler(handler)
+#    log.setLevel(logging.DEBUG)
 
     # Run test
-    minxss_parser = Minxss_Parser(exampleData, log)
-    minxss_parser.testParsePacket(exampleData, log)
+#    minxss_parser = Minxss_Parser(exampleData, log)
+#    minxss_parser.testParsePacket(exampleData, log)
 

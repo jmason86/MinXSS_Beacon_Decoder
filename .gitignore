@@ -16,5 +16,6 @@ Xcode*
 # Testing code
 send_test_tcpip_packet.py
 
-
-send_test_tcpip_packet.py
+# pyinstaller executable files
+build/
+*.spec

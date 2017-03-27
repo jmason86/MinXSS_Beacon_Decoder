@@ -9,7 +9,7 @@ from ConfigParser import SafeConfigParser
 from PySide.QtGui import *
 from PySide.QtCore import *
 from ui_mainWindow import Ui_MainWindow
-import connect_port_get_packet
+#import connect_port_get_packet
 from PySide import QtCore, QtGui
 import time, datetime
 from serial.tools import list_ports
@@ -41,12 +41,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     
     def setupLastUsedSettings(self):
         parser = SafeConfigParser()
-        parser.read('input_properties.cfg')
-        self.comboBox_serialPort.insertItem(0, parser.get('input_properties', 'serialPort'))
-        self.comboBox_serialPort.setCurrentIndex(0)
-        self.lineEdit_baudRate.setText(parser.get('input_properties', 'baudRate'))
-        self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ipAddress'))
-        self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
+        if os.path.isfile(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")):
+            parser.read('input_properties.cfg')
+            self.comboBox_serialPort.insertItem(0, parser.get('input_properties', 'serialPort'))
+            self.comboBox_serialPort.setCurrentIndex(0)
+            self.lineEdit_baudRate.setText(parser.get('input_properties', 'baudRate'))
+            self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ipAddress'))
+            self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
     
     def connectClicked(self):
         # Write the input settings used to the input_properties.cfg configuration file
@@ -56,7 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         config.set('input_properties', 'baudRate', self.lineEdit_baudRate.text())
         config.set('input_properties', 'ipAddress', self.lineEdit_ipAddress.text())
         config.set('input_properties', 'port', self.lineEdit_ipPort.text())
-        with open('input_properties.cfg', 'wb') as configfile:
+        with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
             config.write(configfile)
         
         connectButtonText = str(self.actionConnect.iconText())
@@ -321,7 +322,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def saveLogToggled(self):
         if self.checkBox_saveLog.isChecked():
             # Create new log file
-            self.serialOutputFilename = 'MinXSS_Beacon_Decoder/output/' + datetime.datetime.now().isoformat() + '.txt'
+            self.serialOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat()) + ".txt"
             with open(self.serialOutputFilename, 'w') as serialOutputLog:
                 # Update the GUI for the log file - is saving
                 self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.serialOutputFilename)
@@ -337,9 +338,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.textBrowser_savingToLogFile.setPalette(palette)
 
     def setupOutputLog(self):
-        if not os.path.exists("MinXSS_Beacon_Decoder/output"):
-            os.makedirs("MinXSS_Beacon_Decoder/output")
-        self.serialOutputFilename = "MinXSS_Beacon_Decoder/output/" + datetime.datetime.now().isoformat() + ".txt"
+        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
+            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
+        self.serialOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat()) + ".txt"
+
         with open(self.serialOutputFilename, 'w') as serialOutputLog:
             # Update the GUI for the log file - is saving
             self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.serialOutputFilename)
@@ -349,14 +351,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         serialOutputLog.closed
 
     def createLog(self):
-        if not os.path.exists("MinXSS_Beacon_Decoder/log"):
-            os.makedirs("MinXSS_Beacon_Decoder/log")
+        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log")):
+            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log"))
         log = logging.getLogger('serial_reader_debug')
-        handler = logging.FileHandler('MinXSS_Beacon_Decoder/log/minxss_beacon_decoder_debug.log')
+        handler = logging.FileHandler(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log", "minxss_beacon_decoder_debug.log"))
         formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
         handler.setFormatter(formatter)
         log.addHandler(handler)
         log.setLevel(logging.DEBUG)
+        log.info("Launched app")
         return log
 
 class PortReadThread(QtCore.QThread):
@@ -370,14 +373,6 @@ class PortReadThread(QtCore.QThread):
         self.target(*args, **kwargs)
 
 if __name__ == '__main__':
-    log = logging.getLogger('serial_reader_debug')
-    handler = logging.FileHandler('MinXSS_Beacon_Decoder/log/minxss_beacon_decoder_debug.log')
-    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-    handler.setFormatter(formatter)
-    log.addHandler(handler)
-    log.setLevel(logging.DEBUG)
-    log.info("Launched app")
-    
     app = QApplication(sys.argv)
     mainWin = MainWindow()
     ret = app.exec_()
