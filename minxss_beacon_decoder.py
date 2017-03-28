@@ -340,7 +340,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def setupOutputLog(self):
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
-        self.serialOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat()) + ".txt"
+        self.serialOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + ".txt"
 
         with open(self.serialOutputFilename, 'w') as serialOutputLog:
             # Update the GUI for the log file - is saving
