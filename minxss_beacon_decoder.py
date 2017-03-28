@@ -42,7 +42,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def setupLastUsedSettings(self):
         parser = SafeConfigParser()
         if os.path.isfile(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")):
-            parser.read('input_properties.cfg')
+            parser.read(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"))
             self.comboBox_serialPort.insertItem(0, parser.get('input_properties', 'serialPort'))
             self.comboBox_serialPort.setCurrentIndex(0)
             self.lineEdit_baudRate.setText(parser.get('input_properties', 'baudRate'))
