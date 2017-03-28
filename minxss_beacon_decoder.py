@@ -9,7 +9,7 @@ from ConfigParser import SafeConfigParser
 from PySide.QtGui import *
 from PySide.QtCore import *
 from ui_mainWindow import Ui_MainWindow
-#import connect_port_get_packet
+import connect_port_get_packet
 from PySide import QtCore, QtGui
 import time, datetime
 from serial.tools import list_ports
