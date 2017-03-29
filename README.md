@@ -14,4 +14,6 @@ Here is what version 2 of the layout looks like:
 
 The other important component of this program is the optional (but default) automatic forwarding of binary data to the MinXSS team at the University of Colorado at Boulder / Laboratory for Atmospheric and Space Physics. There we merge data received at our own ground station, our station being set up in Alaska, and any other data sent in from volunteer HAM operators around the world. We process the data automatically up to the high-level science products and publish them online at our website (http://lasp.colorado.edu/home/minxss/data-ham-radio/science-data/). This all occurs daily. 
 
+Version 1.0.0-beta is now released! See https://github.com/jmason86/MinXSS_Beacon_Decoder/releases and some helpful tips in the release notes from K4KDR for getting it to work with Windows. The specific points made there are things that will be improved in the decoder with the end-goal of making the user experience as seemless as possible. 
+
 More details will be provided in this readme as development progresses. 
