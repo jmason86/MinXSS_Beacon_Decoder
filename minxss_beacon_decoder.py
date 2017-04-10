@@ -26,7 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupLastUsedSettings()
         self.setupOutputLog() # Log of serial data for user
         self.log = self.createLog() # Debug log
-        self.portReadThread = PortReadThread(self.readSerial, self.stopRead)
+        self.portReadThread = PortReadThread(self.readPort, self.stopRead)
         self.show()
     
     def setupAvailablePorts(self):
@@ -124,7 +124,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Actually close the port
             self.stopRead()
 
-    def readSerial(self):
+    def readPort(self):
         # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
             bufferData = self.connectedPort.read_packet()

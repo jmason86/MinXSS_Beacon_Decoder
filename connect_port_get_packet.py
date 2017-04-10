@@ -114,13 +114,13 @@ class connect_socket():
         
         foundSyncStartIndex = 0
         foundSyncStopIndex = 0
-        while(foundSyncStartIndex == 0 and foundSyncStopIndex == 0):
-            if self.findSyncStartIndex(bufferedData) != -1:
+        while(foundSyncStartIndex + foundSyncStopIndex < 2):
+            if self.findSyncStartIndex(packet) != -1:
                 foundSyncStartIndex = 1
-            if self.findSyncStopIndex(bufferedData) != -1:
+            if self.findSyncStopIndex(packet) != -1:
                 foundSyncStopIndex = 1
             
-            bufferedData = bytearray(self.clientsocket.recv(256))
+            bufferedData = bytearray(self.clientsocket.recv(1))
             for byte in bufferedData:
                 packet.append(byte)
     
