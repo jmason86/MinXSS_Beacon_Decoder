@@ -114,20 +114,31 @@ class connect_socket():
         
         foundSyncStartIndex = 0
         foundSyncStopIndex = 0
-        while(foundSyncStartIndex + foundSyncStopIndex < 2):
-            if self.findSyncStartIndex(packet) != -1:
-                foundSyncStartIndex = 1
-            if self.findSyncStopIndex(packet) != -1:
-                foundSyncStopIndex = 1
-            
+        foundLogPacket = 0
+        while((foundSyncStartIndex + foundSyncStopIndex) < 2):
             bufferedData = bytearray(self.clientsocket.recv(1))
             for byte in bufferedData:
                 packet.append(byte)
-    
+            
+            if self.findLogSyncStartIndex(packet) != -1:
+                foundLogPacket = 1
+            if self.findSyncStartIndex(packet) != -1:
+                foundSyncStartIndex = 1
+            if self.findSyncStopIndex(packet) != -1: # once at len(packet) > e.g., 64 then check for sync
+                if foundLogPacket == 1:
+                    packet = bytearray() # Clear out the packet because its a log message not a housekeeping packet
+                else:
+                    foundSyncStopIndex = 1
+            
+            # Check if packet length is right (how many bytes between start and stop)
+            # exit if something is bad, or keep reading if too short
+            
+            # Update find sync to also detect other types of packets (sci, etc)
+            
             if len(packet) > 500: # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
                 self.log.error("Too many bytes in packet")
                 break
-    
+
         self.log.info("Packet length [bytes] = " + str(len(packet)))
         return packet
     
@@ -154,6 +165,19 @@ class connect_socket():
         syncBytes = bytearray([0xa5, 0xa5]) # Other CubeSats: Change these stop sync bytes to whatever you are using to define the end of your packet
         packetStopIndex = bytearray(minxssSerialData).find(syncBytes)
         return packetStopIndex
+
+    # Purpose:
+    #   Find the start of the MinXSS log packet and return the index within minxssSerialData. Will want to throw out these types of packets
+    #   because they don't contain any housekeeping telemetry.
+    # Input:
+    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    # Output:
+    #   logPacketStartIndex [int]: The index within minxssSerialData where the start sync bytes were found. -1 if not found.
+    #
+    def findLogSyncStartIndex(self, minxssSerialData):
+        syncBytes = bytearray([0x08, 0x1D])
+        logPacketStartIndex = bytearray(minxssSerialData).find(syncBytes)
+        return logPacketStartIndex
 
 def testReadMain(port, baudRate, log):
     log.info("Opening port: {0}".format(port))

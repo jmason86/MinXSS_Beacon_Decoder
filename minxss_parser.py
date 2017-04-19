@@ -45,7 +45,7 @@ class Minxss_Parser():
         selectedTelemetryDictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[122:122+2])                  # [deg C]
         selectedTelemetryDictionary['BatteryTemperature'] = self.decodeBytesTemperatureBattery(minxssPacket[174:174+2])             # [deg C]
         selectedTelemetryDictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[128:128+2])                   # [deg C]
-        selectedTelemetryDictionary['CdhBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[86:86+2])                      # [deg C]
+        selectedTelemetryDictionary['CdhBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[86:86+2])                     # [deg C]
         selectedTelemetryDictionary['MotherboardTemperature'] = self.decodeBytesTemperature(minxssPacket[124:124+2])                # [deg C]
         selectedTelemetryDictionary['SolarPanelMinusYTemperature'] = self.decodeBytesTemperatureSolarPanel(minxssPacket[160:160+2]) # [deg C]
         selectedTelemetryDictionary['SolarPanelPlusXTemperature'] = self.decodeBytesTemperatureSolarPanel(minxssPacket[162:162+2])  # [deg C]
