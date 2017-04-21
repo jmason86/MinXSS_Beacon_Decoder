@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Mon Mar 27 11:31:04 2017
+# Created: Fri Apr 21 10:36:11 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -595,8 +595,8 @@ class Ui_MainWindow(object):
         self.pushButton.setFont(font)
         self.pushButton.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("./assets/CU LASP.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon.addPixmap(QtGui.QPixmap("./assets/CU LASP.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap(":/assets/CU LASP.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/assets/CU LASP.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.pushButton.setIcon(icon)
         self.pushButton.setIconSize(QtCore.QSize(230, 220))
         self.pushButton.setObjectName("pushButton")
@@ -605,8 +605,8 @@ class Ui_MainWindow(object):
         self.pushButton_2.setMinimumSize(QtCore.QSize(120, 120))
         self.pushButton_2.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("./assets/MinXSS CubeSat Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon1.addPixmap(QtGui.QPixmap("./assets/MinXSS CubeSat Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon1.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.pushButton_2.setIcon(icon1)
         self.pushButton_2.setIconSize(QtCore.QSize(100, 100))
         self.pushButton_2.setObjectName("pushButton_2")
@@ -765,7 +765,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.label_14)
         self.gridLayout_5 = QtGui.QGridLayout()
         self.gridLayout_5.setObjectName("gridLayout_5")
-        self.checkBox_saveLog_5 = QtGui.QCheckBox(self.frame_3)
+        self.checkBox_forwardData = QtGui.QCheckBox(self.frame_3)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(237, 237, 237))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -902,13 +902,13 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
-        self.checkBox_saveLog_5.setPalette(palette)
+        self.checkBox_forwardData.setPalette(palette)
         font = QtGui.QFont()
         font.setFamily("Copperplate Gothic Light")
-        self.checkBox_saveLog_5.setFont(font)
-        self.checkBox_saveLog_5.setChecked(True)
-        self.checkBox_saveLog_5.setObjectName("checkBox_saveLog_5")
-        self.gridLayout_5.addWidget(self.checkBox_saveLog_5, 1, 0, 1, 1)
+        self.checkBox_forwardData.setFont(font)
+        self.checkBox_forwardData.setChecked(True)
+        self.checkBox_forwardData.setObjectName("checkBox_forwardData")
+        self.gridLayout_5.addWidget(self.checkBox_forwardData, 1, 0, 1, 1)
         self.checkBox_saveLog = QtGui.QCheckBox(self.frame_3)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(237, 237, 237))
@@ -14048,20 +14048,20 @@ class Ui_MainWindow(object):
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.actionConnect = QtGui.QAction(MainWindow)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("./assets/universal-serial-usb-connector.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon2.addPixmap(QtGui.QPixmap("./assets/universal-serial-usb-connector.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon2.addPixmap(QtGui.QPixmap(":/assets/universal-serial-usb-connector.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/assets/universal-serial-usb-connector.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.actionConnect.setIcon(icon2)
         self.actionConnect.setObjectName("actionConnect")
         self.actionCompletePass = QtGui.QAction(MainWindow)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("./assets/satellite-station.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon3.addPixmap(QtGui.QPixmap("./assets/satellite-station.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap(":/assets/satellite-station.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/assets/satellite-station.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.actionCompletePass.setIcon(icon3)
         self.actionCompletePass.setObjectName("actionCompletePass")
         self.actionRefreshSerialPorts = QtGui.QAction(MainWindow)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("./assets/refresh-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon4.addPixmap(QtGui.QPixmap("./assets/refresh-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon4.addPixmap(QtGui.QPixmap(":/assets/refresh-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/assets/refresh-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.actionRefreshSerialPorts.setIcon(icon4)
         self.actionRefreshSerialPorts.setObjectName("actionRefreshSerialPorts")
         self.toolBar.addAction(self.actionConnect)
@@ -14072,14 +14072,14 @@ class Ui_MainWindow(object):
         self.tabWidget_serialIp.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lineEdit_baudRate, self.checkBox_saveLog)
-        MainWindow.setTabOrder(self.checkBox_saveLog, self.checkBox_saveLog_5)
-        MainWindow.setTabOrder(self.checkBox_saveLog_5, self.textBrowser_serialOutput)
+        MainWindow.setTabOrder(self.checkBox_saveLog, self.checkBox_forwardData)
+        MainWindow.setTabOrder(self.checkBox_forwardData, self.textBrowser_serialOutput)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MinXSS Beacon Decoder", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Raw serial data (hex):", None, QtGui.QApplication.UnicodeUTF8))
         self.label_14.setText(QtGui.QApplication.translate("MainWindow", "Options", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkBox_saveLog_5.setText(QtGui.QApplication.translate("MainWindow", "Forward data", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkBox_forwardData.setText(QtGui.QApplication.translate("MainWindow", "Forward data", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox_saveLog.setText(QtGui.QApplication.translate("MainWindow", "Save log", None, QtGui.QApplication.UnicodeUTF8))
         self.textBrowser_savingToLogFile.setHtml(QtGui.QApplication.translate("MainWindow", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -14186,3 +14186,14 @@ class Ui_MainWindow(object):
         self.actionCompletePass.setToolTip(QtGui.QApplication.translate("MainWindow", "Trigger data forwarding", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRefreshSerialPorts.setText(QtGui.QApplication.translate("MainWindow", "Refresh Serial Ports", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRefreshSerialPorts.setToolTip(QtGui.QApplication.translate("MainWindow", "Refresh the serial ports", None, QtGui.QApplication.UnicodeUTF8))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtGui.QApplication(sys.argv)
+    MainWindow = QtGui.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
+

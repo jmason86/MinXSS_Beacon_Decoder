@@ -10,6 +10,7 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from ui_mainWindow import Ui_MainWindow
 import connect_port_get_packet
+import scp_upload
 from PySide import QtCore, QtGui
 import time, datetime
 from serial.tools import list_ports
@@ -27,6 +28,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupOutputLog() # Log of serial data for user
         self.log = self.createLog() # Debug log
         self.portReadThread = PortReadThread(self.readPort, self.stopRead)
+        #QtGui.QApplication.connect(QtGui.QApplication, SIGNAL("aboutToQuit()"), self.prepareToExit)
         self.show()
     
     def setupAvailablePorts(self):
@@ -38,6 +40,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def assignWidgets(self):
         self.actionConnect.triggered.connect(self.connectClicked)
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
+        self.actionCompletePass.triggered.connect(self.completePassClicked)
     
     def setupLastUsedSettings(self):
         parser = SafeConfigParser()
@@ -124,6 +127,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Actually close the port
             self.stopRead()
 
+    def completePassClicked(self):
+        if self.checkBox_forwardData.isChecked:
+            scp_upload.upload(self.serialOutputFilename)
+
     def readPort(self):
         # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
@@ -134,10 +141,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.textBrowser_serialOutput.verticalScrollBar().setValue(self.textBrowser_serialOutput.verticalScrollBar().maximum())
                 
                 if self.checkBox_saveLog.isChecked:
-                    serialOutputLog = open(self.serialOutputFilename, 'a') # append to existing file
+                    serialOutputLog = open(self.serialOutputFilename, 'a', 0) # append to existing file
                     serialOutputLog.write(formattedBufferData)
                     serialOutputLog.closed
-
+                
                 # Parse and interpret the binary data into human readable telemetry
                 minxssParser = minxss_parser.Minxss_Parser(bufferData, self.log)
                 selectedTelemetryDictionary = minxssParser.parsePacket(bufferData)

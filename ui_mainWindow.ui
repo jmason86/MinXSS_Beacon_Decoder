@@ -2223,7 +2223,7 @@
        <item>
         <layout class="QGridLayout" name="gridLayout_5">
          <item row="1" column="0">
-          <widget class="QCheckBox" name="checkBox_saveLog_5">
+          <widget class="QCheckBox" name="checkBox_forwardData">
            <property name="palette">
             <palette>
              <active>
@@ -41775,7 +41775,7 @@ p, li { white-space: pre-wrap; }
  <tabstops>
   <tabstop>lineEdit_baudRate</tabstop>
   <tabstop>checkBox_saveLog</tabstop>
-  <tabstop>checkBox_saveLog_5</tabstop>
+  <tabstop>checkBox_forwardData</tabstop>
   <tabstop>textBrowser_serialOutput</tabstop>
  </tabstops>
  <resources>
