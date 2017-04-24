@@ -25,8 +25,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupAvailablePorts()
         self.assignWidgets()
         self.setupLastUsedSettings()
-        self.setupOutputLog() # Log of serial data for user
         self.log = self.createLog() # Debug log
+        self.setupOutputLog() # Log of buffer data
         self.portReadThread = PortReadThread(self.readPort, self.stopRead)
         #QtGui.QApplication.connect(QtGui.QApplication, SIGNAL("aboutToQuit()"), self.prepareToExit)
         self.show()
@@ -129,21 +129,32 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def completePassClicked(self):
         if self.checkBox_forwardData.isChecked:
-            scp_upload.upload(self.serialOutputFilename)
+            scp_upload.upload(self.bufferOutputBinaryFilename)
 
     def readPort(self):
         # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
             bufferData = self.connectedPort.read_packet()
             if len(bufferData) > 0:
+                # Decode KISS escape characters if necessary
+                if self.checkBox_decodeKiss.isChecked:
+                    bufferData.replace(bytearray([0xDB, 0xDC]), bytearray(0xC0)) # C0 is a special KISS character that get replaced; unreplace it
+                    bufferData.replace(bytearray([0xDB, 0xDD]), bytearray(0xDB)) # DB is a special KISS character that get replaced; unreplace it
+
                 formattedBufferData = ' '.join('0x{:02x}'.format(x) for x in bufferData)
                 self.textBrowser_serialOutput.append(formattedBufferData)
                 self.textBrowser_serialOutput.verticalScrollBar().setValue(self.textBrowser_serialOutput.verticalScrollBar().maximum())
                 
                 if self.checkBox_saveLog.isChecked:
-                    serialOutputLog = open(self.serialOutputFilename, 'a', 0) # append to existing file
-                    serialOutputLog.write(formattedBufferData)
-                    serialOutputLog.closed
+                    # Human readable
+                    bufferOutputLog = open(self.bufferOutputFilename, 'a', 0) # append to existing file
+                    bufferOutputLog.write(formattedBufferData)
+                    bufferOutputLog.closed
+                    
+                    # Binary
+                    bufferOutputBinaryLog = open(self.bufferOutputBinaryFilename, 'a', 0) # append to existing file
+                    bufferOutputBinaryLog.write(bufferData)
+                    bufferOutputBinaryLog.closed
                 
                 # Parse and interpret the binary data into human readable telemetry
                 minxssParser = minxss_parser.Minxss_Parser(bufferData, self.log)
@@ -329,14 +340,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def saveLogToggled(self):
         if self.checkBox_saveLog.isChecked():
             # Create new log file
-            self.serialOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat()) + ".txt"
-            with open(self.serialOutputFilename, 'w') as serialOutputLog:
+            self.bufferOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat()) + ".txt"
+            with open(self.bufferOutputFilename, 'w') as bufferOutputLog:
                 # Update the GUI for the log file - is saving
-                self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.serialOutputFilename)
+                self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.bufferOutputFilename)
                 palette = QtGui.QPalette()
                 palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
                 self.textBrowser_savingToLogFile.setPalette(palette)
-            serialOutputLog.closed
+            bufferOutputLog.closed
         else:
             # Update the GUI for the log file - not saving
             self.textBrowser_savingToLogFile.setText("Not saving to log file")
@@ -345,17 +356,27 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.textBrowser_savingToLogFile.setPalette(palette)
 
     def setupOutputLog(self):
+        # Human readable log
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
-        self.serialOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + ".txt"
+        self.bufferOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + ".txt"
 
-        with open(self.serialOutputFilename, 'w') as serialOutputLog:
+        with open(self.bufferOutputFilename, 'w') as bufferOutputLog:
             # Update the GUI for the log file - is saving
-            self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.serialOutputFilename)
+            self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.bufferOutputFilename)
             palette = QtGui.QPalette()
             palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
             self.textBrowser_savingToLogFile.setPalette(palette)
-        serialOutputLog.closed
+        bufferOutputLog.closed
+    
+        # Binary log
+        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
+            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
+        self.bufferOutputBinaryFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + ".dat"
+        
+        with open(self.bufferOutputBinaryFilename, 'w') as bufferOutputBinaryLog:
+            self.log.info("Opening binary file for buffer data")
+        bufferOutputBinaryLog.closed
 
     def createLog(self):
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log")):
