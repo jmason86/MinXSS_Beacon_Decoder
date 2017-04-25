@@ -98,6 +98,20 @@ class Minxss_Parser():
             numberOfBitsToShiftBy += 8
 
         return telemetryPointRaw
+    
+    # Purpose:
+    #   Create a signed 8 bit integer, which python's int function does not do apparently
+    # Input:
+    #   number [int]: A regular python integer
+    # Output:
+    #   signedNumber [signed int]: A negative or positive integer, as appropriate
+    #
+#    def getSignedNumber(self, number):
+#        mask = (2 ** 8) - 1
+#        if number & (1 << (8 - 1)):
+#            return number | ~mask
+#        else:
+#            return number & mask
 
     ##
     # The following functions all have the same purpose: to convert raw bytes to human-readable output.
@@ -213,18 +227,3 @@ if __name__ == '__main__':
                              0x09, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xfc, 0xff,
                              0xfd, 0xff, 0x07, 0x00, 0x07, 0x49, 0x00, 0x00, 0xe5, 0xf9,
                              0xa5, 0xa5, 0xc0])
-    
-    # Create debug log file
-#    if not os.path.exists("test/log"):
-#        os.makedirs("test/log")
-#    log = logging.getLogger('minxss_parser_debug')
-#    handler = logging.FileHandler('test/log/minxss_parser.log')
-#    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-#    handler.setFormatter(formatter)
-#    log.addHandler(handler)
-#    log.setLevel(logging.DEBUG)
-
-    # Run test
-#    minxss_parser = Minxss_Parser(exampleData, log)
-#    minxss_parser.testParsePacket(exampleData, log)
-

@@ -28,20 +28,41 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.log = self.createLog() # Debug log
         self.setupOutputLog() # Log of buffer data
         self.portReadThread = PortReadThread(self.readPort, self.stopRead)
-        #QtGui.QApplication.connect(QtGui.QApplication, SIGNAL("aboutToQuit()"), self.prepareToExit)
+        QApplication.instance().aboutToQuit.connect(self.prepareToExit)
         self.show()
     
+    # Purpose:
+    #   Determine what ports are available for serial reading and populate the combo box with these options
+    # Input:
+    #   None
+    # Output:
+    #   None
+    #
     def setupAvailablePorts(self):
         self.comboBox_serialPort.clear()
         listPortInfoObjects = list_ports.comports()
         portNames = [x[0] for x in listPortInfoObjects]
         self.comboBox_serialPort.addItems(portNames)
     
+    # Purpose:
+    #   Connect UI interactive elements to other functions herein so that code is executed upon user interaction with these elements
+    # Input:
+    #   None
+    # Output:
+    #   None
+    #
     def assignWidgets(self):
         self.actionConnect.triggered.connect(self.connectClicked)
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
         self.actionCompletePass.triggered.connect(self.completePassClicked)
     
+    # Purpose:
+    #   Grab the last used input settings and use those as the startup values
+    # Input:
+    #   None (though uses the input_properties.cfg configuration file on disk)
+    # Output:
+    #   None
+    #
     def setupLastUsedSettings(self):
         parser = SafeConfigParser()
         if os.path.isfile(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")):
@@ -51,7 +72,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.lineEdit_baudRate.setText(parser.get('input_properties', 'baudRate'))
             self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ipAddress'))
             self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
-    
+
+    # Purpose:
+    #   Respond to the connect button being clicked -- conect to either the serial or socket as determined by the user/GUI
+    # Input:
+    #   None (but looks at the current configuration of the GUI for what to connect to and with what settings)
+    # Output:
+    #   None
+    #
     def connectClicked(self):
         # Write the input settings used to the input_properties.cfg configuration file
         config = SafeConfigParser()
@@ -127,10 +155,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Actually close the port
             self.stopRead()
 
+    # Purpose:
+    #   Respond to the complete pass button being clicked -- upload the binary output data, which is handled in a separate function
+    # Input:
+    #   None
+    # Output:
+    #   None
+    #
     def completePassClicked(self):
-        if self.checkBox_forwardData.isChecked:
-            scp_upload.upload(self.bufferOutputBinaryFilename)
+        self.uploadData()
 
+    # Purpose:
+    #   Read the buffer data from the port (be it serial or socket) in an infinite loop; decode and display any MinXSS housekeeping packets
+    # Input:
+    #   None
+    # Output:
+    #   None
+    #
     def readPort(self):
         # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
@@ -138,9 +179,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if len(bufferData) > 0:
                 # Decode KISS escape characters if necessary
                 if self.checkBox_decodeKiss.isChecked:
-                    bufferData.replace(bytearray([0xDB, 0xDC]), bytearray(0xC0)) # C0 is a special KISS character that get replaced; unreplace it
-                    bufferData.replace(bytearray([0xDB, 0xDD]), bytearray(0xDB)) # DB is a special KISS character that get replaced; unreplace it
-
+                    bufferData = bufferData.replace(bytearray([0xdb, 0xdc]), bytearray([0xc0])) # C0 is a special KISS character that get replaced; unreplace it
+                    bufferData = bufferData.replace(bytearray([0xdb, 0xdd]), bytearray([0xdd])) # DB is a special KISS character that get replaced; unreplace it
                 formattedBufferData = ' '.join('0x{:02x}'.format(x) for x in bufferData)
                 self.textBrowser_serialOutput.append(formattedBufferData)
                 self.textBrowser_serialOutput.verticalScrollBar().setValue(self.textBrowser_serialOutput.verticalScrollBar().maximum())
@@ -269,15 +309,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         self.label_xp.setPalette(paletteRed)
                     
                     # Power
-                    if solarPanelMinusYPower >= 0 and solarPanelMinusYPower <= 9.7:
+                    if solarPanelMinusYPower >= -1.0 and solarPanelMinusYPower <= 9.7:
                         self.label_solarPanelMinusYPower.setPalette(paletteGreen)
                     else:
                         self.label_solarPanelMinusYPower.setPalette(paletteRed)
-                    if solarPanelPlusXPower >= 0 and solarPanelPlusXPower <= 5.9:
+                    if solarPanelPlusXPower >= -1.0 and solarPanelPlusXPower <= 5.9:
                         self.label_solarPanelPlusXPower.setPalette(paletteGreen)
                     else:
                         self.label_solarPanelPlusXPower.setPalette(paletteRed)
-                    if solarPanelPlusYPower >= 0 and solarPanelPlusYPower <= 10.4:
+                    if solarPanelPlusYPower >= -1.0 and solarPanelPlusYPower <= 10.4:
                         self.label_solarPanelPlusYPower.setPalette(paletteGreen)
                     else:
                         self.label_solarPanelPlusYPower.setPalette(paletteRed)
@@ -327,7 +367,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         self.label_solarPanelPlusYTemperature.setPalette(paletteGreen)
                     else:
                         self.label_solarPanelPlusYTemperature.setPalette(paletteRed)
-
+    
+    # Purpose:
+    #   Respond to disconnect button being clicked -- disconnect from the port, be it serial or socket
+    # Input:
+    #   None
+    # Output:
+    #   None
+    #
     def stopRead(self):
         self.connectedPort.close()
     
@@ -337,6 +384,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
         self.label_serialStatus.setPalette(palette)
 
+    # Purpose:
+    #   Respond to the user toggling the save log button (create a new output data log as appropriate)
+    # Input:
+    #   None
+    # Output:
+    #   Creates a log file on disk if toggling on
+    #
     def saveLogToggled(self):
         if self.checkBox_saveLog.isChecked():
             # Create new log file
@@ -355,6 +409,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
             self.textBrowser_savingToLogFile.setPalette(palette)
 
+    # Purpose:
+    #   Create the output files for a human readable hex interpretation of the MinXSS data and a binary file
+    # Input:
+    #   None
+    # Output:
+    #   A .tex file with hex MinXSS data and a .dat file with binary MinXSS data
+    #
     def setupOutputLog(self):
         # Human readable log
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
@@ -378,6 +439,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.log.info("Opening binary file for buffer data")
         bufferOutputBinaryLog.closed
 
+    # Purpose:
+    #   Initialize a debugger log file
+    # Input:
+    #   None
+    # Output:
+    #   The .log file for informational and debug statements
+    #
     def createLog(self):
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log")):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log"))
@@ -390,13 +458,48 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         log.info("Launched app")
         return log
 
+    # Purpose:
+    #   Upload binary data to the MinXSS team
+    # Input:
+    #   None (though will grab the .dat binary file from disk)
+    # Output:
+    #   None (though will send that .dat binary file over the internet via scp to a server handled by the MinXSS team)
+    #
+    def uploadData(self):
+        if self.checkBox_forwardData.isChecked:
+            scp_upload.upload(self.bufferOutputBinaryFilename)
+    
+    # Purpose:
+    #   Respond to the user clicking the close application button -- handle any last business, which is just uploading the binary file in this case
+    # Input:
+    #   None
+    # Output:
+    #   None
+    #
+    def prepareToExit(self):
+        self.uploadData
+
+# Purpose:
+#   Separate class that handles reading the port in an infinite loop -- means the main loop can still be responsive to user interaction
+# Input:
+#   QtCore.QThread: The thread to run this task on
+# Output:
+#   N/A
+#
 class PortReadThread(QtCore.QThread):
     def __init__(self, target, slotOnFinished = None):
         super(PortReadThread, self).__init__()
         self.target = target
         if slotOnFinished:
             self.finished.connect(slotOnFinished)
-
+    
+    # Purpose:
+    #   Run a specific block of code in the thread
+    # Input:
+    #   args, kwargs: flexible input for arguments
+    # Output:
+    #   None
+    #
     def run(self, *args, **kwargs):
         self.target(*args, **kwargs)
 

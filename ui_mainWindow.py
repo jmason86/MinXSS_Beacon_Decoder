@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Mon Apr 24 10:03:23 2017
+# Created: Mon Apr 24 12:39:04 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -14228,7 +14228,7 @@ class Ui_MainWindow(object):
 "</style></head><body style=\" font-family:\'Copperplate Gothic Light\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#41cd44;\">Saving to log file:</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox_forwardData.setText(QtGui.QApplication.translate("MainWindow", "Forward data", None, QtGui.QApplication.UnicodeUTF8))
-        self.checkBox_decodeKiss.setText(QtGui.QApplication.translate("MainWindow", "Decode KISS", None, QtGui.QApplication.UnicodeUTF8))
+        self.checkBox_decodeKiss.setText(QtGui.QApplication.translate("MainWindow", "KISS input", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox_saveLog.setText(QtGui.QApplication.translate("MainWindow", "Save log", None, QtGui.QApplication.UnicodeUTF8))
         self.label_19.setText(QtGui.QApplication.translate("MainWindow", "Real-Time Telemetry", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("MainWindow", "Spacecraft State", None, QtGui.QApplication.UnicodeUTF8))

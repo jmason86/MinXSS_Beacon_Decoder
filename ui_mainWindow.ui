@@ -3520,7 +3520,7 @@ p, li { white-space: pre-wrap; }
             </font>
            </property>
            <property name="text">
-            <string>Decode KISS</string>
+            <string>KISS input</string>
            </property>
            <property name="checked">
             <bool>true</bool>
