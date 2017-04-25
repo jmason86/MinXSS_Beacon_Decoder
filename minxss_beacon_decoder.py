@@ -54,6 +54,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def assignWidgets(self):
         self.actionConnect.triggered.connect(self.connectClicked)
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
+        self.checkBox_forwardData.stateChanged.connect(self.forwardDataToggled)
         self.actionCompletePass.triggered.connect(self.completePassClicked)
     
     # Purpose:
@@ -410,6 +411,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.textBrowser_savingToLogFile.setPalette(palette)
 
     # Purpose:
+    #   Respond to the user toggling the forward data button (update the GUI to correspond)
+    # Input:
+    #   None
+    # Output:
+    #   Creates a log file on disk if toggling on
+    #
+    def forwardDataToggled(self):
+        if self.checkBox_forwardData.isChecked():
+            self.label_uploadStatus.setText("Upload status: Idle")
+        else:
+            self.label_uploadStatus.setText("Upload status: Disabled")
+    
+    # Purpose:
     #   Create the output files for a human readable hex interpretation of the MinXSS data and a binary file
     # Input:
     #   None
@@ -455,7 +469,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         handler.setFormatter(formatter)
         log.addHandler(handler)
         log.setLevel(logging.DEBUG)
-        log.info("Launched app")
+        log.info("Launched MinXSS Beacon Decoder")
         return log
 
     # Purpose:
@@ -467,7 +481,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #
     def uploadData(self):
         if self.checkBox_forwardData.isChecked:
+            self.label_uploadStatus.setText("Upload status: Uploading")
+            self.log.info("Uploading data")
             scp_upload.upload(self.bufferOutputBinaryFilename)
+            self.label_uploadStatus.setText("Upload status: Complete")
+            self.log.info("Upload complete")
     
     # Purpose:
     #   Respond to the user clicking the close application button -- handle any last business, which is just uploading the binary file in this case
@@ -477,7 +495,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #   None
     #
     def prepareToExit(self):
-        self.uploadData
+        self.log.info("About to quit")
+        self.uploadData()
+        self.log.info("Closing MinXSS Beacon Decoder")
 
 # Purpose:
 #   Separate class that handles reading the port in an infinite loop -- means the main loop can still be responsive to user interaction
