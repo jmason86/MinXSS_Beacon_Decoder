@@ -22,7 +22,7 @@ class Minxss_Parser():
         # Find the sync bytes (0x08, 0x19), reframe the packet to start after sync
         syncOffset = self.findSyncIndex(minxssPacket)
         if syncOffset == -1:
-            self.log.info("No sync bytes found")
+            self.log.error("No sync bytes found in minxss_parser, exiting.")
             return -1
         else:
             minxssPacket = minxssPacket[syncOffset:len(minxssPacket)]

@@ -126,18 +126,20 @@ class connect_socket():
                 foundSyncStartIndex = 1
             if self.findSyncStopIndex(packet) != -1: # once at len(packet) > e.g., 64 then check for sync
                 if foundLogPacket == 1:
+                    self.log.info("Found log message. Ignoring in search of housekeeping packet.")
                     packet = bytearray() # Clear out the packet because its a log message not a housekeeping packet
                 else:
                     foundSyncStopIndex = 1
-            
-            # Check if packet length is right (how many bytes between start and stop)
-            # exit if something is bad, or keep reading if too short
-            
-            # Update find sync to also detect other types of packets (sci, etc)
-            
+        
             if len(packet) > 500: # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
-                self.log.error("Too many bytes in packet")
-                break
+                self.log.error("Too many bytes in packet, resetting packet buffer")
+                
+                if foundSyncStartIndex:
+                    self.log.info("Resetting packet buffer to start at the identified start sync index")
+                    packet = packet[self.findSyncStartIndex(packet):]
+                else:
+                    self.log.info("Resetting packet buffer to null")
+                    packet = bytearray()
 
         self.log.info("Packet length [bytes] = " + str(len(packet)))
         return packet
