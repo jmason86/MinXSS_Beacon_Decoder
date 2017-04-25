@@ -5,6 +5,7 @@ __contact__ = "jmason86@gmail.com"
 import os
 import logging
 import pdb, binascii
+import numpy as np
 
 class Minxss_Parser():
     def __init__(self, minxssPacket, log):
@@ -81,38 +82,29 @@ class Minxss_Parser():
     # Input:
     #   bytearrayTemp [bytearray]: The bytes corresponding to the telemetry to decode.
     #                              Can accept any number of bytes but do not expect more than 4
+    # Flags:
+    #   returnUnsignedInt: Set this to 1 or True to return an unsigned integer instead of the default signed integer
     # Output:
     #   telemetryPointRaw [int]: The single integer for the telemetry point to be converted to human-readable by the appropriate function
     #
-    def decodeBytes(self, bytearrayTemp):
-        # Check input
-        if len(bytearrayTemp) > 4:
-            self.log.debug("More input bytes than the expected 4 for a MinXSS telemetry point")
-        
-        # Loop through bytes and shift them progressively more and sum them up so that they create a single word
-        numberOfBitsToShiftBy = 0
-        telemetryPointRaw = 0
-        for byte in bytearrayTemp:
-            shiftedByte = byte << numberOfBitsToShiftBy
-            telemetryPointRaw += shiftedByte
-            numberOfBitsToShiftBy += 8
-
-        return telemetryPointRaw
-    
-    # Purpose:
-    #   Create a signed 8 bit integer, which python's int function does not do apparently
-    # Input:
-    #   number [int]: A regular python integer
-    # Output:
-    #   signedNumber [signed int]: A negative or positive integer, as appropriate
-    #
-#    def getSignedNumber(self, number):
-#        mask = (2 ** 8) - 1
-#        if number & (1 << (8 - 1)):
-#            return number | ~mask
-#        else:
-#            return number & mask
-
+    def decodeBytes(self, bytearrayTemp, returnUnsignedInt = 0):
+        if len(bytearrayTemp) == 1:
+            return bytearrayTemp
+        elif len(bytearrayTemp) == 2:
+            if returnUnsignedInt:
+                return np.uint16((np.int8(bytearrayTemp[1]) << 8) | np.uint8(bytearrayTemp[0]))
+            else:
+                return np.int16((np.uint8(bytearrayTemp[1]) << 8) | np.uint8(bytearrayTemp[0]))
+        elif len(bytearrayTemp) == 4:
+            if returnUnsignedInt:
+                return np.uint32((np.uint8(bytearrayTemp[3]) << 24) | (np.uint8(bytearrayTemp[2] << 16)) |
+                                (np.uint8(bytearrayTemp[1] << 8)) | (np.uint8(bytearrayTemp[0] << 0)))
+            else:
+                return np.int32((np.uint8(bytearrayTemp[3]) << 24) | (np.uint8(bytearrayTemp[2] << 16)) |
+                                (np.uint8(bytearrayTemp[1] << 8)) | (np.uint8(bytearrayTemp[0] << 0)))
+        else:
+            self.log.debug("More bytes than expected")
+                
     ##
     # The following functions all have the same purpose: to convert raw bytes to human-readable output.
     # Only the units will be commented on. The function and variable names are explicit and verbose for clarity.
@@ -154,28 +146,28 @@ class Minxss_Parser():
         return (bytearrayTemp & 0x08) >> 3
 
     def decodeXp(self, bytearrayTemp):
-        return self.decodeBytes(bytearrayTemp) # [DN]
+        return self.decodeBytes(bytearrayTemp, returnUnsignedInt = 1) # [DN]
     
     def decodeBytesTemperature(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) / 256.0 # [deg C]
     
     def decodeBytesTemperatureBattery(self, bytearrayTemp):
-        return self.decodeBytes(bytearrayTemp) * 0.18766 - 250.2 # [deg C]
+        return self.decodeBytes(bytearrayTemp, returnUnsignedInt = 1) * 0.18766 - 250.2 # [deg C]
     
     def decodeBytesTemperatureSolarPanel(self, bytearrayTemp):
-        return self.decodeBytes(bytearrayTemp) * 0.1744 - 216.0 # [deg C]
+        return self.decodeBytes(bytearrayTemp, returnUnsignedInt = 1) * 0.1744 - 216.0 # [deg C]
     
     def decodeBytesFuelGaugeBatteryVoltage(self, bytearrayTemp):
-        return self.decodeBytes(bytearrayTemp) / 6415.0 # [V]
+        return self.decodeBytes(bytearrayTemp, returnUnsignedInt = 1) / 6415.0 # [V]
     
     def decodeBytesBatteryCurrent(self, bytearrayTemp):
-        return self.decodeBytes(bytearrayTemp) * 3.5568 - 61.6 # [mA]
+        return self.decodeBytes(bytearrayTemp, returnUnsignedInt = 1) * 3.5568 - 61.6 # [mA]
     
     def decodeBytesSolarArrayCurrent(self, bytearrayTemp):
-        return self.decodeBytes(bytearrayTemp) * 163.8 / 327.68 # [mA]
+        return self.decodeBytes(bytearrayTemp, returnUnsignedInt = 1) * 163.8 / 327.68 # [mA]
     
     def decodeBytesSolarArrayVoltage(self, bytearrayTemp):
-        return self.decodeBytes(bytearrayTemp) * 32.76 / 32768.0 # [V]
+        return self.decodeBytes(bytearrayTemp, returnUnsignedInt = 1) * 32.76 / 32768.0 # [V]
     
     ##
     # End byte->human-readable conversion functions
