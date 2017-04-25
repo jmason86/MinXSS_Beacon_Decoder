@@ -18,6 +18,7 @@ send_test_tcpip_packet.py
 
 # pyinstaller executable files
 build/
+dist/
 *.spec
 
 # pyinstaller make file shortcut

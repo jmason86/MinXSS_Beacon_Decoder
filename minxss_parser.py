@@ -5,7 +5,7 @@ __contact__ = "jmason86@gmail.com"
 import os
 import logging
 import pdb, binascii
-import numpy as np
+from numpy import int8, uint8, int16, uint16, int32, uint32 
 
 class Minxss_Parser():
     def __init__(self, minxssPacket, log):
@@ -92,16 +92,16 @@ class Minxss_Parser():
             return bytearrayTemp
         elif len(bytearrayTemp) == 2:
             if returnUnsignedInt:
-                return np.uint16((np.int8(bytearrayTemp[1]) << 8) | np.uint8(bytearrayTemp[0]))
+                return uint16((int8(bytearrayTemp[1]) << 8) | uint8(bytearrayTemp[0]))
             else:
-                return np.int16((np.uint8(bytearrayTemp[1]) << 8) | np.uint8(bytearrayTemp[0]))
+                return int16((uint8(bytearrayTemp[1]) << 8) | uint8(bytearrayTemp[0]))
         elif len(bytearrayTemp) == 4:
             if returnUnsignedInt:
-                return np.uint32((np.uint8(bytearrayTemp[3]) << 24) | (np.uint8(bytearrayTemp[2] << 16)) |
-                                (np.uint8(bytearrayTemp[1] << 8)) | (np.uint8(bytearrayTemp[0] << 0)))
+                return uint32((uint8(bytearrayTemp[3]) << 24) | (uint8(bytearrayTemp[2] << 16)) |
+                                (uint8(bytearrayTemp[1] << 8)) | (uint8(bytearrayTemp[0] << 0)))
             else:
-                return np.int32((np.uint8(bytearrayTemp[3]) << 24) | (np.uint8(bytearrayTemp[2] << 16)) |
-                                (np.uint8(bytearrayTemp[1] << 8)) | (np.uint8(bytearrayTemp[0] << 0)))
+                return int32((uint8(bytearrayTemp[3]) << 24) | (uint8(bytearrayTemp[2] << 16)) |
+                                (uint8(bytearrayTemp[1] << 8)) | (uint8(bytearrayTemp[0] << 0)))
         else:
             self.log.debug("More bytes than expected")
                 
