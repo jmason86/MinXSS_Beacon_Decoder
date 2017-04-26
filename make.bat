@@ -1,0 +1,1 @@
+pyinstaller minxss_beacon_decoder.py --onefile -n MinXSS_Beacon_DecoderWin --clean --windowed --noconfirm

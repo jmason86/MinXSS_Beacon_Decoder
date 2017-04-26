@@ -21,5 +21,3 @@ build/
 dist/
 *.spec
 
-# pyinstaller make file shortcut
-make.*
