@@ -133,6 +133,10 @@ class connect_socket():
                 else:
                     foundSyncStopIndex = 1
                     self.log.debug("Found non-log stop sync bytes")
+            if foundSyncStartIndex + foundSyncStopIndex == 2:
+                if self.findSyncStartIndex(packet) > self.findSyncStopIndex(packet):
+                    self.log.debug("Start sync is after stop sync. Resetting packet buffer to start at the identified start sync index")
+                    packet = packet[self.findSyncStartIndex(packet):]
         
             if len(packet) > 500: # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
                 self.log.error("Too many bytes in packet, resetting packet buffer")
