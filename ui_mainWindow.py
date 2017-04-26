@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Wed Apr 26 17:02:48 2017
+# Created: Wed Apr 26 17:44:47 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -14345,7 +14345,7 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Mid, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush = QtGui.QBrush(QtGui.QColor(96, 232, 78))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Text, brush)
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
@@ -14390,7 +14390,7 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Mid, brush)
-        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush = QtGui.QBrush(QtGui.QColor(96, 232, 78))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Text, brush)
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
@@ -15050,8 +15050,8 @@ class Ui_MainWindow(object):
         self.pushButton_2.setPalette(palette)
         self.pushButton_2.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo White.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo White.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.pushButton_2.setIcon(icon)
         self.pushButton_2.setIconSize(QtCore.QSize(100, 100))
         self.pushButton_2.setObjectName("pushButton_2")
@@ -16065,8 +16065,8 @@ class Ui_MainWindow(object):
         self.pushButton.setFont(font)
         self.pushButton.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/assets/CU LASP.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        icon1.addPixmap(QtGui.QPixmap(":/assets/CU LASP.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon1.addPixmap(QtGui.QPixmap(":/assets/CU LASP White Text.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/assets/CU LASP White Text.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.pushButton.setIcon(icon1)
         self.pushButton.setIconSize(QtCore.QSize(230, 220))
         self.pushButton.setObjectName("pushButton")
@@ -16324,7 +16324,7 @@ class Ui_MainWindow(object):
         self.label_batteryTemperature.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
         self.label_58.setText(QtGui.QApplication.translate("MainWindow", "Radio:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_87.setText(QtGui.QApplication.translate("MainWindow", "[-8, 58] ºC", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_19.setText(QtGui.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v1.0.4-pre-release", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_19.setText(QtGui.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v1.0.5-pre-release", None, QtGui.QApplication.UnicodeUTF8))
         self.label_lastPacketTime.setText(QtGui.QApplication.translate("MainWindow", "Last packet at: ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_uploadStatus.setText(QtGui.QApplication.translate("MainWindow", "Upload status: Idle", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Raw serial data (hex):", None, QtGui.QApplication.UnicodeUTF8))
@@ -16350,7 +16350,7 @@ class Ui_MainWindow(object):
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Copperplate Gothic Light\'; font-size:10pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#41cd44;\">Saving to log file:</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'.SF NS Text\'; font-size:13pt;\">Log file</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox_forwardData.setText(QtGui.QApplication.translate("MainWindow", "Forward data", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox_decodeKiss.setText(QtGui.QApplication.translate("MainWindow", "KISS input", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox_saveLog.setText(QtGui.QApplication.translate("MainWindow", "Save log", None, QtGui.QApplication.UnicodeUTF8))

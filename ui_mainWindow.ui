@@ -33833,7 +33833,7 @@
                </font>
               </property>
               <property name="text">
-               <string>MinXSS CubeSat Real-Time Telemetry v1.0.4-pre-release</string>
+               <string>MinXSS CubeSat Real-Time Telemetry v1.0.5-pre-release</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -42671,9 +42671,9 @@
                 <colorrole role="Text">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>255</red>
-                   <green>255</green>
-                   <blue>255</blue>
+                   <red>96</red>
+                   <green>232</green>
+                   <blue>78</blue>
                   </color>
                  </brush>
                 </colorrole>
@@ -42808,9 +42808,9 @@
                 <colorrole role="Text">
                  <brush brushstyle="SolidPattern">
                   <color alpha="255">
-                   <red>255</red>
-                   <green>255</green>
-                   <blue>255</blue>
+                   <red>96</red>
+                   <green>232</green>
+                   <blue>78</blue>
                   </color>
                  </brush>
                 </colorrole>
@@ -43037,7 +43037,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Copperplate Gothic Light'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#41cd44;&quot;&gt;Saving to log file:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.SF NS Text'; font-size:13pt;&quot;&gt;Log file&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -44782,8 +44782,8 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="icon">
            <iconset resource="assets/QtAssets.qrc">
-            <normaloff>:/assets/MinXSS CubeSat Logo.png</normaloff>
-            <normalon>:/assets/MinXSS CubeSat Logo.png</normalon>:/assets/MinXSS CubeSat Logo.png</iconset>
+            <normaloff>:/assets/MinXSS CubeSat Logo White.png</normaloff>
+            <normalon>:/assets/MinXSS CubeSat Logo White.png</normalon>:/assets/MinXSS CubeSat Logo White.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -47812,8 +47812,8 @@ p, li { white-space: pre-wrap; }
           </property>
           <property name="icon">
            <iconset resource="assets/QtAssets.qrc">
-            <normaloff>:/assets/CU LASP.png</normaloff>
-            <normalon>:/assets/CU LASP.png</normalon>:/assets/CU LASP.png</iconset>
+            <normaloff>:/assets/CU LASP White Text.png</normaloff>
+            <normalon>:/assets/CU LASP White Text.png</normalon>:/assets/CU LASP White Text.png</iconset>
           </property>
           <property name="iconSize">
            <size>

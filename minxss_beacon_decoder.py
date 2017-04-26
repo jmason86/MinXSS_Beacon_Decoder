@@ -400,14 +400,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # Update the GUI for the log file - is saving
                 self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.bufferOutputFilename)
                 palette = QtGui.QPalette()
-                palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
+                palette.setColor(QtGui.QPalette.Text, QColor(55, 195, 58)) # Green
                 self.textBrowser_savingToLogFile.setPalette(palette)
+            
             bufferOutputLog.closed
         else:
             # Update the GUI for the log file - not saving
             self.textBrowser_savingToLogFile.setText("Not saving to log file")
             palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77)) # Red
+            palette.setColor(QtGui.QPalette.Text, QColor(242, 86, 77)) # Red
             self.textBrowser_savingToLogFile.setPalette(palette)
 
     # Purpose:
@@ -440,7 +441,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Update the GUI for the log file - is saving
             self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.bufferOutputFilename)
             palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58)) # Green
+            palette.setColor(QtGui.QPalette.Text, QColor(55, 195, 58)) # Green
             self.textBrowser_savingToLogFile.setPalette(palette)
         bufferOutputLog.closed
     

@@ -1,10 +1,9 @@
 <RCC>
   <qresource prefix="assets">
+    <file>MinXSS CubeSat Logo White.png</file>
     <file>refresh-button.png</file>
-    <file>MinXSS CubeSat Logo.png</file>
-    <file>CU LASP.png</file>
-    <file>CUlogo_transparent.png</file>
     <file>satellite-station.png</file>
+    <file>CU LASP White Text.png</file>
     <file>universal-serial-usb-connector.png</file>
   </qresource>
 </RCC>
