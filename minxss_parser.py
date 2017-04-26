@@ -20,12 +20,16 @@ class Minxss_Parser():
     #
     def parsePacket(self, minxssPacket):
         # Find the sync bytes (0x08, 0x19), reframe the packet to start after sync
-        syncOffset = self.findSyncIndex(minxssPacket)
+        syncOffset = self.findSyncStartIndex(minxssPacket)
         if syncOffset == -1:
-            self.log.error("No sync bytes found in minxss_parser, exiting.")
+            self.log.error("No start sync bytes found in minxss_parser, exiting.")
             return -1
         else:
+            self.log.debug("minxss_parser received packet of length [bytes]: " + str(len(minxssPacket)))
+            self.log.debug("minxss_parser found start sync bytes at index: " + str(self.findSyncStartIndex(minxssPacket)))
+            self.log.debug("minxss_parser found stop sync bytes at index: " + str(self.findSyncStopIndex(minxssPacket)))
             minxssPacket = minxssPacket[syncOffset:len(minxssPacket)]
+            self.log.debug("minxss_parser truncating packet starting from start sync byte. New packet length [bytes] = " + str(len(minxssPacket)))
         
         # Prepare a dictionary for storage of telemetry points
         selectedTelemetryDictionary = {}
@@ -66,16 +70,28 @@ class Minxss_Parser():
         return selectedTelemetryDictionary
 
     # Purpose:
-    #   Find the start of the MinXSS packet and return the index within minxssPacket
+    #   Find the start of the MinXSS packet and return the index within minxssSerialData
     # Input:
-    #   minxssPacket [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
     # Output:
-    #   packetStartIndex [int]: The index within minxssPacket where the sync bytes were found. -1 if not found.
+    #   packetStartIndex [int]: The index within minxssSerialData where the start sync bytes were found. -1 if not found.
     #
-    def findSyncIndex(self, minxssPacket):
-        syncBytes = bytearray([0x08, 0x19]) # This is actually the CCSDS start and then the housekeeping packet APID
-        packetStartIndex = bytearray(minxssPacket).find(syncBytes)
+    def findSyncStartIndex(self, minxssSerialData):
+        syncBytes = bytearray([0x08, 0x19]) # Other Cubesats: Change these start sync bytes to whatever you are using to define the start of your packet
+        packetStartIndex = bytearray(minxssSerialData).find(syncBytes)
         return packetStartIndex
+    
+    # Purpose:
+    #   Find the end of the MinXSS packet and return the index within minxssSerialData
+    # Input:
+    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
+    # Output:
+    #   packetStopIndex [int]: The index within minxssSerialData where the end sync bytes were found. -1 if not found.
+    #
+    def findSyncStopIndex(self, minxssSerialData):
+        syncBytes = bytearray([0xa5, 0xa5]) # Other CubeSats: Change these stop sync bytes to whatever you are using to define the end of your packet
+        packetStopIndex = bytearray(minxssSerialData).find(syncBytes)
+        return packetStopIndex
     
     # Purpose:
     #   Combine several bytes corresponding to a single telemetry point to a single integer
