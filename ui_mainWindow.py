@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Wed Apr 26 09:57:49 2017
+# Created: Wed Apr 26 11:00:20 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -16342,12 +16342,4 @@ class Ui_MainWindow(object):
         self.actionRefreshSerialPorts.setText(QtGui.QApplication.translate("MainWindow", "Refresh Serial Ports", None, QtGui.QApplication.UnicodeUTF8))
         self.actionRefreshSerialPorts.setToolTip(QtGui.QApplication.translate("MainWindow", "Refresh the serial ports", None, QtGui.QApplication.UnicodeUTF8))
 
-if __name__ == "__main__":
-    import sys
-    app = QtGui.QApplication(sys.argv)
-    MainWindow = QtGui.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
-
+import QtAssets_rc
