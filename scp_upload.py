@@ -11,7 +11,8 @@ def upload(file):
     port = 22
     username = "minxssham"
     password = "minxsshampass"
-    directory = "Dropbox/minxss_dropbox/data/ham_data/"
+    directory = "Dropbox/minxss_dropbox/ham_data_temp/"
+    #directory = "Dropbox/minxss_dropbox/data/ham_data/"
     
     # Set up
     ssh = paramiko.SSHClient()
