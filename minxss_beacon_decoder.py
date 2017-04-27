@@ -55,6 +55,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionConnect.triggered.connect(self.connectClicked)
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
         self.checkBox_forwardData.stateChanged.connect(self.forwardDataToggled)
+        self.checkBox_decodeKiss.stateChanged.connect(self.decodeKissToggled)
         self.actionCompletePass.triggered.connect(self.completePassClicked)
     
     # Purpose:
@@ -73,6 +74,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.lineEdit_baudRate.setText(parser.get('input_properties', 'baudRate'))
             self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ipAddress'))
             self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
+            self.lineEdit_latitude.setText(parser.get('input_properties', 'latitude'))
+            self.lineEdit_longitude.setText(parser.get('input_properties', 'longitude'))
+            if parser.get('input_properties', 'decodeKiss') == "True":
+                self.checkBox_decodeKiss.setChecked(True)
+            else:
+                self.checkBox_decodeKiss.setChecked(False)
+            if parser.get('input_properties', 'forwardData') == "True":
+                self.checkBox_forwardData.setChecked(True)
+            else:
+                self.checkBox_decodeKiss.setChecked(False)
 
     # Purpose:
     #   Respond to the connect button being clicked -- conect to either the serial or socket as determined by the user/GUI
@@ -89,6 +100,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         config.set('input_properties', 'baudRate', self.lineEdit_baudRate.text())
         config.set('input_properties', 'ipAddress', self.lineEdit_ipAddress.text())
         config.set('input_properties', 'port', self.lineEdit_ipPort.text())
+        config.set('input_properties', 'latitude', self.lineEdit_latitude.text())
+        config.set('input_properties', 'longitude', self.lineEdit_longitude.text())
         with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
             config.write(configfile)
         
@@ -394,16 +407,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     #
     def saveLogToggled(self):
         if self.checkBox_saveLog.isChecked():
-            # Create new log file
-            self.bufferOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat()) + ".txt"
-            with open(self.bufferOutputFilename, 'w') as bufferOutputLog:
-                # Update the GUI for the log file - is saving
-                self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.bufferOutputFilename)
-                palette = QtGui.QPalette()
-                palette.setColor(QtGui.QPalette.Text, QColor(55, 195, 58)) # Green
-                self.textBrowser_savingToLogFile.setPalette(palette)
-            
-            bufferOutputLog.closed
+            self.setupOutputLog()
         else:
             # Update the GUI for the log file - not saving
             self.textBrowser_savingToLogFile.setText("Not saving to log file")
@@ -421,9 +425,48 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def forwardDataToggled(self):
         if self.checkBox_forwardData.isChecked():
             self.label_uploadStatus.setText("Upload status: Idle")
+        
+            # Write the input settings used to the input_properties.cfg configuration file
+            config = SafeConfigParser()
+            config.read('input_properties.cfg')
+            config.set('input_properties', 'forwardData', "True")
+            self.log.info("Forward data set to True")
+            with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
+                config.write(configfile)
         else:
             self.label_uploadStatus.setText("Upload status: Disabled")
-    
+
+            # Write the input settings used to the input_properties.cfg configuration file
+            config = SafeConfigParser()
+            config.read('input_properties.cfg')
+            config.set('input_properties', 'forwardData', "False")
+            self.log.info("Forward data set to False")
+            with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
+                config.write(configfile)
+
+    # Purpose:
+    #   Respond to the user toggling the forward data button (update the GUI to correspond)
+    # Input:
+    #   None
+    # Output:
+    #   Creates a log file on disk if toggling on
+    #
+    def decodeKissToggled(self):
+        if self.checkBox_decodeKiss.isChecked():
+            config = SafeConfigParser()
+            config.read('input_properties.cfg')
+            config.set('input_properties', 'decodeKiss', "True")
+            self.log.info("Decode KISS set to True")
+            with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
+                config.write(configfile)
+        else:
+            config = SafeConfigParser()
+            config.read('input_properties.cfg')
+            config.set('input_properties', 'decodeKiss', "False")
+            self.log.info("Decode KISS set to False")
+            with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
+                config.write(configfile)
+
     # Purpose:
     #   Create the output files for a human readable hex interpretation of the MinXSS data and a binary file
     # Input:
@@ -448,7 +491,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Binary log
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
-        self.bufferOutputBinaryFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + ".dat"
+        latitude = self.lineEdit_latitude.text()
+        longitude = self.lineEdit_longitude.text()
+
+        self.bufferOutputBinaryFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + "_" + latitude + "_" + longitude + ".dat"
         
         with open(self.bufferOutputBinaryFilename, 'w') as bufferOutputBinaryLog:
             self.log.info("Opening binary file for buffer data")

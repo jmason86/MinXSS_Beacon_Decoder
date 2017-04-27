@@ -122,20 +122,16 @@ class connect_socket():
             
             if self.findLogSyncStartIndex(packet) != -1:
                 foundLogPacket = 1
-                self.log.debug("Found log message start sync bytes")
             if self.findSyncStartIndex(packet) != -1:
                 foundSyncStartIndex = 1
-                self.log.debug("Found hk packet start sync bytes")
             if self.findSyncStopIndex(packet) != -1: # once at len(packet) > e.g., 64 then check for sync
                 if foundLogPacket == 1:
                     self.log.info("Found log message. Ignoring in search of housekeeping packet.")
                     packet = bytearray() # Clear out the packet because its a log message not a housekeeping packet
                 else:
                     foundSyncStopIndex = 1
-                    self.log.debug("Found non-log stop sync bytes")
             if foundSyncStartIndex + foundSyncStopIndex == 2:
                 if self.findSyncStartIndex(packet) > self.findSyncStopIndex(packet):
-                    self.log.debug("Start sync is after stop sync. Resetting packet buffer to start at the identified start sync index")
                     packet = packet[self.findSyncStartIndex(packet):]
                     foundSyncStopIndex = 0
         

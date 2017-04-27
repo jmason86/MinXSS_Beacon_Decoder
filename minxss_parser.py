@@ -25,11 +25,7 @@ class Minxss_Parser():
             self.log.error("No start sync bytes found in minxss_parser, exiting.")
             return -1
         else:
-            self.log.debug("minxss_parser received packet of length [bytes]: " + str(len(minxssPacket)))
-            self.log.debug("minxss_parser found start sync bytes at index: " + str(self.findSyncStartIndex(minxssPacket)))
-            self.log.debug("minxss_parser found stop sync bytes at index: " + str(self.findSyncStopIndex(minxssPacket)))
             minxssPacket = minxssPacket[syncOffset:len(minxssPacket)]
-            self.log.debug("minxss_parser truncating packet starting from start sync byte. New packet length [bytes] = " + str(len(minxssPacket)))
         
         # Prepare a dictionary for storage of telemetry points
         selectedTelemetryDictionary = {}
