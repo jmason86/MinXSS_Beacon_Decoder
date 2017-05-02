@@ -145,11 +145,11 @@ class Minxss_Parser():
     
     def decodeEnableX123(self, bytearrayTemp):
         decodedByte = self.decodeBytes(bytearrayTemp)
-        return (decodedByte & 0x0008) >> 3 # [Boolean]
+        return (decodedByte & 0x0002) >> 1 # [Boolean]
     
     def decodeEnableSps(self, bytearrayTemp):
-        decodeByte = self.decodeBytes(bytearrayTemp)
-        return (decodeByte & 0x0004) >> 2 # [Boolean]
+        decodedByte = self.decodeBytes(bytearrayTemp)
+        return (decodedByte & 0x0004) >> 2 # [Boolean]
     
     def decodeSps(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) / 1e4 * 3.0 # [deg]
