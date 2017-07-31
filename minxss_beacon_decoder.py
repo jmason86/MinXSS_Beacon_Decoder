@@ -10,7 +10,7 @@ from PySide.QtGui import *
 from PySide.QtCore import *
 from ui_mainWindow import Ui_MainWindow
 import connect_port_get_packet
-import scp_upload
+import file_upload
 from PySide import QtCore, QtGui
 import time, datetime
 from serial.tools import list_ports
@@ -21,11 +21,11 @@ import datetime
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+        self.log = self.createLog() # Debug log
         self.setupUi(self)
         self.setupAvailablePorts()
         self.assignWidgets()
         self.setupLastUsedSettings()
-        self.log = self.createLog() # Debug log
         self.setupOutputLog() # Log of buffer data
         self.portReadThread = PortReadThread(self.readPort, self.stopRead)
         QApplication.instance().aboutToQuit.connect(self.prepareToExit)
@@ -530,7 +530,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.checkBox_forwardData.isChecked:
             self.label_uploadStatus.setText("Upload status: Uploading")
             self.log.info("Uploading data")
-            scp_upload.upload(self.bufferOutputBinaryFilename)
+            file_upload.upload(self.bufferOutputBinaryFilename, self.log)
             self.label_uploadStatus.setText("Upload status: Complete")
             self.log.info("Upload complete")
     
