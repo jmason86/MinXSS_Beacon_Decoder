@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Wed May  3 10:55:11 2017
+# Created: Mon Jul 31 16:02:00 2017
 #      by: pyside-uic 0.2.14 running on PySide 1.2.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -17309,7 +17309,7 @@ class Ui_MainWindow(object):
         self.label_batteryTemperature.setText(QtGui.QApplication.translate("MainWindow", "-", None, QtGui.QApplication.UnicodeUTF8))
         self.label_58.setText(QtGui.QApplication.translate("MainWindow", "Radio:", None, QtGui.QApplication.UnicodeUTF8))
         self.label_87.setText(QtGui.QApplication.translate("MainWindow", "[-8, 58] ºC", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_19.setText(QtGui.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v1.1.1", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_19.setText(QtGui.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v1.2.0", None, QtGui.QApplication.UnicodeUTF8))
         self.label_lastPacketTime.setText(QtGui.QApplication.translate("MainWindow", "Last packet at: ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_uploadStatus.setText(QtGui.QApplication.translate("MainWindow", "Upload status: Idle", None, QtGui.QApplication.UnicodeUTF8))
         self.label.setText(QtGui.QApplication.translate("MainWindow", "Raw serial data (hex):", None, QtGui.QApplication.UnicodeUTF8))
