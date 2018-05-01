@@ -351,37 +351,45 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                         self.label_batteryCurrent.setPalette(paletteRed)
 
                     # Temperature
-                    if selectedTelemetryDictionary['CommBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['CommBoardTemperature'] <= 60.0:
+                    if selectedTelemetryDictionary['CommBoardTemperature'] >= -8.0 and \
+                       selectedTelemetryDictionary['CommBoardTemperature'] <= 60.0:
                         self.label_commBoardTemperature.setPalette(paletteGreen)
                     else:
                         self.label_commBoardTemperature.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['BatteryTemperature'] >= 5.0 and selectedTelemetryDictionary['BatteryTemperature'] <= 25:
+                    if selectedTelemetryDictionary['BatteryTemperature'] >= 5.0 and \
+                       selectedTelemetryDictionary['BatteryTemperature'] <= 25:
                         self.label_batteryTemperature.setPalette(paletteGreen)
                     elif selectedTelemetryDictionary['BatteryTemperature'] >= 2.0 and selectedTelemetryDictionary['BatteryTemperature'] < 5.0 or selectedTelemetryDictionary['BatteryTemperature'] > 25.0:
                         self.label_batteryTemperature.setPalette(paletteYellow)
                     else:
                         self.label_batteryTemperature.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['EpsBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['EpsBoardTemperature'] <= 45.0:
+                    if selectedTelemetryDictionary['EpsBoardTemperature'] >= -8.0 and \
+                       selectedTelemetryDictionary['EpsBoardTemperature'] <= 45.0:
                         self.label_epsBoardTemperature.setPalette(paletteGreen)
                     else:
                         self.label_epsBoardTemperature.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['CdhBoardTemperature'] >= -8.0 and selectedTelemetryDictionary['CdhBoardTemperature'] <= 29.0:
+                    if selectedTelemetryDictionary['CdhBoardTemperature'] >= -8.0 and \
+                       selectedTelemetryDictionary['CdhBoardTemperature'] <= 29.0:
                         self.label_cdhTemperature.setPalette(paletteGreen)
                     else:
                         self.label_cdhTemperature.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['MotherboardTemperature'] >= -13.0 and selectedTelemetryDictionary['MotherboardTemperature'] <= 28.0:
+                    if selectedTelemetryDictionary['MotherboardTemperature'] >= -13.0 and \
+                       selectedTelemetryDictionary['MotherboardTemperature'] <= 28.0:
                         self.label_motherboardTemperature.setPalette(paletteGreen)
                     else:
                         self.label_motherboardTemperature.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['SolarPanelMinusYTemperature'] >= -42.0 and selectedTelemetryDictionary['SolarPanelMinusYTemperature'] <= 61.0:
+                    if selectedTelemetryDictionary['SolarPanelMinusYTemperature'] >= -42.0 and \
+                       selectedTelemetryDictionary['SolarPanelMinusYTemperature'] <= 61.0:
                         self.label_solarPanelMinusYTemperature.setPalette(paletteGreen)
                     else:
                         self.label_solarPanelMinusYTemperature.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['SolarPanelPlusXTemperature'] >= -24.0 and selectedTelemetryDictionary['SolarPanelPlusXTemperature'] <= 65.0:
+                    if selectedTelemetryDictionary['SolarPanelPlusXTemperature'] >= -24.0 and \
+                       selectedTelemetryDictionary['SolarPanelPlusXTemperature'] <= 65.0:
                         self.label_solarPanelPlusXTemperature.setPalette(paletteGreen)
                     else:
                         self.label_solarPanelPlusXTemperature.setPalette(paletteRed)
-                    if selectedTelemetryDictionary['SolarPanelPlusYTemperature'] >= -35.0 and selectedTelemetryDictionary['SolarPanelPlusYTemperature'] <= 58.0:
+                    if selectedTelemetryDictionary['SolarPanelPlusYTemperature'] >= -35.0 and \
+                       selectedTelemetryDictionary['SolarPanelPlusYTemperature'] <= 58.0:
                         self.label_solarPanelPlusYTemperature.setPalette(paletteGreen)
                     else:
                         self.label_solarPanelPlusYTemperature.setPalette(paletteRed)
