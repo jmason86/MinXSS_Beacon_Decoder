@@ -13,6 +13,9 @@ test/
 # Xcode workspace
 Xcode*
 
+# PyCharm workspace
+.idea/
+
 # Testing code
 send_test_tcpip_packet.py
 
