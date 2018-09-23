@@ -1,14 +1,15 @@
 import sys
 import os
 import logging
-from ConfigParser import SafeConfigParser
-from PySide import QtGui, QtCore
-from PySide.QtGui import QMainWindow, QApplication, QColor
+from configparser import SafeConfigParser
+from PySide2 import QtGui, QtCore
+from PySide2.QtWidgets import QMainWindow, QApplication
+from PySide2.QtGui import QColor
 from ui_mainWindow import Ui_MainWindow
 import connect_port_get_packet
 import file_upload
 import datetime
-from serial.tools import list_ports
+from serial.tools import list_ports  # This is pyserial, not plain serial
 import minxss_parser
 
 """Call the GUI and attach it to functions."""
@@ -21,15 +22,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__()
         self.log = self.createLog()  # Debug log
         self.setupUi(self)
-        self.setupAvailablePorts()
-        self.assignWidgets()
-        self.setupLastUsedSettings()
+        self.setup_available_ports()
+        self.assign_widgets()
+        self.setup_last_used_settings()
         self.setupOutputLog()  # Log of buffer data
         self.portReadThread = PortReadThread(self.readPort, self.stopRead)
         QApplication.instance().aboutToQuit.connect(self.prepareToExit)
         self.show()
 
-    def setupAvailablePorts(self):
+    def setup_available_ports(self):
         """
         Purpose:
             Determine what ports are available for serial reading and populate the combo box with these options
@@ -43,7 +44,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         portNames = [x[0] for x in listPortInfoObjects]
         self.comboBox_serialPort.addItems(portNames)
 
-    def assignWidgets(self):
+    def assign_widgets(self):
         """
         Purpose:
            Connect UI interactive elements to other functions herein so that code is executed upon user interaction with these elements
@@ -58,7 +59,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.checkBox_decodeKiss.stateChanged.connect(self.decodeKissToggled)
         self.actionCompletePass.triggered.connect(self.completePassClicked)
 
-    def setupLastUsedSettings(self):
+    def setup_last_used_settings(self):
         """
         Purpose:
            Grab the last used input settings and use those as the startup values

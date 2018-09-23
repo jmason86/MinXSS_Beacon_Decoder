@@ -195,7 +195,7 @@ class Minxss_Parser():
     def testParsePacket(self, minxssPacket, log):
         log.info("Testing MinXSS packet parse")
         selectedTelemetryDictionary = self.parsePacket(minxssPacket)
-        print selectedTelemetryDictionary
+        print(selectedTelemetryDictionary)
         log.info(selectedTelemetryDictionary)
 
 # Purpose:
