@@ -1,7 +1,7 @@
 import sys
 import os
 import logging
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 from PySide2 import QtGui, QtCore
 from PySide2.QtWidgets import QMainWindow, QApplication
 from PySide2.QtGui import QColor
@@ -26,7 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.assign_widgets()
         self.setup_last_used_settings()
         self.setupOutputLog()  # Log of buffer data
-        self.portReadThread = PortReadThread(self.readPort, self.stopRead)
+        self.portReadThread = PortReadThread(self.read_port, self.stopRead)
         QApplication.instance().aboutToQuit.connect(self.prepareToExit)
         self.show()
 
@@ -46,48 +46,58 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def assign_widgets(self):
         """
-        Purpose:
-           Connect UI interactive elements to other functions herein so that code is executed upon user interaction with these elements
-         Input:
-           None
-         Output:
-           None
+        Connect UI interactive elements to other functions herein so that code is executed upon user interaction with these elements
         """
-        self.actionConnect.triggered.connect(self.connectClicked)
+        self.actionConnect.triggered.connect(self.connect_clicked)
         self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
         self.checkBox_forwardData.stateChanged.connect(self.forwardDataToggled)
         self.checkBox_decodeKiss.stateChanged.connect(self.decodeKissToggled)
-        self.actionCompletePass.triggered.connect(self.completePassClicked)
+        self.actionCompletePass.triggered.connect(self.complete_pass_clicked)
 
     def setup_last_used_settings(self):
-        """
-        Purpose:
-           Grab the last used input settings and use those as the startup values
-         Input:
-           None (though uses the input_properties.cfg configuration file on disk)
-         Output:
-           None
-        """
-        parser = SafeConfigParser()
-        if os.path.isfile(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")):
-            parser.read(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"))
-            self.comboBox_serialPort.insertItem(0, parser.get('input_properties', 'serialPort'))
-            self.comboBox_serialPort.setCurrentIndex(0)
-            self.lineEdit_baudRate.setText(parser.get('input_properties', 'baudRate'))
-            self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ipAddress'))
-            self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
-            self.lineEdit_latitude.setText(parser.get('input_properties', 'latitude'))
-            self.lineEdit_longitude.setText(parser.get('input_properties', 'longitude'))
-            if parser.get('input_properties', 'decodeKiss') == "True":
-                self.checkBox_decodeKiss.setChecked(True)
-            else:
-                self.checkBox_decodeKiss.setChecked(False)
-            if parser.get('input_properties', 'forwardData') == "True":
-                self.checkBox_forwardData.setChecked(True)
-            else:
-                self.checkBox_decodeKiss.setChecked(False)
+        parser = ConfigParser()
+        config_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")
+        if not self.config_file_exists_and_is_not_empty(config_filename):
+            self.write_default_config(config_filename)
 
-    def connectClicked(self):
+        parser.read(config_filename)
+        self.set_instance_variables_from_config(parser)
+
+    @staticmethod
+    def config_file_exists_and_is_not_empty(config_filename):
+        return os.path.isfile(config_filename) and os.stat(config_filename).st_size != 0
+
+    @staticmethod
+    def write_default_config(config_filename):
+        with open(config_filename, "w") as config_file:
+            print("[input_properties]", file=config_file)
+            print("serial_port = 3", file=config_file)
+            print("baud_rate = 19200", file=config_file)
+            print("ip_address = localhost", file=config_file)
+            print("port = 10000", file=config_file)
+            print("decode_kiss = True", file=config_file)
+            print("forward_data = True", file=config_file)
+            print("latitude = 40.240", file=config_file)
+            print("longitude = -105.2353", file=config_file)
+
+    def set_instance_variables_from_config(self, parser):
+        self.comboBox_serialPort.insertItem(0, parser.get('input_properties', 'serial_port'))
+        self.comboBox_serialPort.setCurrentIndex(0)
+        self.lineEdit_baudRate.setText(parser.get('input_properties', 'baud_rate'))
+        self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ip_address'))
+        self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
+        self.lineEdit_latitude.setText(parser.get('input_properties', 'latitude'))
+        self.lineEdit_longitude.setText(parser.get('input_properties', 'longitude'))
+        if parser.get('input_properties', 'decode_kiss') == "True":
+            self.checkBox_decodeKiss.setChecked(True)
+        else:
+            self.checkBox_decodeKiss.setChecked(False)
+        if parser.get('input_properties', 'forward_data') == "True":
+            self.checkBox_forwardData.setChecked(True)
+        else:
+            self.checkBox_decodeKiss.setChecked(False)
+
+    def connect_clicked(self):
         """
         Purpose:
            Respond to the connect button being clicked -- conect to either the serial or socket as determined by the user/GUI
@@ -97,19 +107,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
            None
         """
         # Write the input settings used to the input_properties.cfg configuration file
-        config = SafeConfigParser()
+        config = ConfigParser()
         config.read('input_properties.cfg')
         config.set('input_properties', 'serialPort', self.comboBox_serialPort.currentText())
-        config.set('input_properties', 'baudRate', self.lineEdit_baudRate.text())
-        config.set('input_properties', 'ipAddress', self.lineEdit_ipAddress.text())
+        config.set('input_properties', 'baud_rate', self.lineEdit_baudRate.text())
+        config.set('input_properties', 'ip_address', self.lineEdit_ipAddress.text())
         config.set('input_properties', 'port', self.lineEdit_ipPort.text())
         config.set('input_properties', 'latitude', self.lineEdit_latitude.text())
         config.set('input_properties', 'longitude', self.lineEdit_longitude.text())
-        with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
+        with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'w') as configfile:
             config.write(configfile)
 
-        connectButtonText = str(self.actionConnect.iconText())
-        if connectButtonText == "Connect":
+        connect_button_text = str(self.actionConnect.iconText())
+        if connect_button_text == "Connect":
             self.log.info("Attempting to connect to port")
 
             # Update the GUI to diconnect button
@@ -118,23 +128,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Grab the port information from the UI
             if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
                 port = self.comboBox_serialPort.currentText()
-                baudRate = self.lineEdit_baudRate.text()
+                baud_rate = self.lineEdit_baudRate.text()
 
                 # Connect to the serial port and test that it is readable
-                connectedPort = connect_port_get_packet.connect_serial(port, baudRate, self.log)
-                portReadable = connectedPort.testRead()
+                connected_port = connect_port_get_packet.connect_serial(port, baud_rate, self.log)
+                port_readable = connected_port.testRead()
             else:
-                ipAddress = self.lineEdit_ipAddress.text()
+                ip_address = self.lineEdit_ipAddress.text()
                 port = self.lineEdit_ipPort.text()
 
                 # Connect to the IP socket but there's no test option so just have to assume its working
-                connectedPort = connect_port_get_packet.connect_socket(ipAddress, port, self.log)
-                portReadable = 1
+                connected_port = connect_port_get_packet.connect_socket(ip_address, port, self.log)
+                port_readable = 1
 
             # If port is readable, store the reference to it and start reading. Either way, update the GUI serial status
-            if portReadable:
+            if port_readable:
                 # Store port in instance variable and start reading
-                self.connectedPort = connectedPort
+                self.connectedPort = connected_port
                 self.portReadThread.start()
 
                 # Update GUI
@@ -172,7 +182,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Actually close the port
             self.stopRead()
 
-    def completePassClicked(self):
+    def complete_pass_clicked(self):
         """
         Purpose:
             Respond to the complete pass button being clicked -- upload the binary output data, which is handled in a separate function
@@ -183,7 +193,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         self.uploadData()
 
-    def readPort(self):
+    def read_port(self):
         """
         Purpose:
             Read the buffer data from the port (be it serial or socket) in an infinite loop; decode and display any MinXSS housekeeping packets
@@ -443,7 +453,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.label_uploadStatus.setText("Upload status: Idle")
 
             # Write the input settings used to the input_properties.cfg configuration file
-            config = SafeConfigParser()
+            config = ConfigParser()
             config.read('input_properties.cfg')
             config.set('input_properties', 'forwardData', "True")
             self.log.info("Forward data set to True")
@@ -453,7 +463,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.label_uploadStatus.setText("Upload status: Disabled")
 
             # Write the input settings used to the input_properties.cfg configuration file
-            config = SafeConfigParser()
+            config = ConfigParser()
             config.read('input_properties.cfg')
             config.set('input_properties', 'forwardData', "False")
             self.log.info("Forward data set to False")
@@ -470,14 +480,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             Creates a log file on disk if toggling on
         """
         if self.checkBox_decodeKiss.isChecked():
-            config = SafeConfigParser()
+            config = ConfigParser()
             config.read('input_properties.cfg')
             config.set('input_properties', 'decodeKiss', "True")
             self.log.info("Decode KISS set to True")
             with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
                 config.write(configfile)
         else:
-            config = SafeConfigParser()
+            config = ConfigParser()
             config.read('input_properties.cfg')
             config.set('input_properties', 'decodeKiss', "False")
             self.log.info("Decode KISS set to False")
