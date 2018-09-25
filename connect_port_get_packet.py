@@ -3,10 +3,8 @@ __authors__ = "James Paul Mason"
 __contact__ = "jmason86@gmail.com"
 
 import sys
-import time
 import serial
 import socket
-import pdb, binascii
 
 class connect_serial():
     def __init__(self, port, baudRate, log):
@@ -88,14 +86,14 @@ class connect_serial():
         return portReadable
 
 class connect_socket():
-    def __init__(self, ipAddress, port, log):
-        self.ipAddress = ipAddress
+    def __init__(self, ip_address, port, log):
+        self.ip_address = ip_address
         self.port = port
         self.log = log
-        self.log.info("Opening IP address: {0} on port: {1}".format(ipAddress, port))
+        self.log.info("Opening IP address: {0} on port: {1}".format(ip_address, port))
 
         self.clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.clientsocket.connect((ipAddress, int(port)))
+        self.clientsocket.connect((ip_address, int(port)))
     
     def close(self):
         self.log.info("Closing ground station link")

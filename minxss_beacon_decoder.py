@@ -88,99 +88,110 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
         self.lineEdit_latitude.setText(parser.get('input_properties', 'latitude'))
         self.lineEdit_longitude.setText(parser.get('input_properties', 'longitude'))
-        if parser.get('input_properties', 'decode_kiss') == "True":
-            self.checkBox_decodeKiss.setChecked(True)
-        else:
-            self.checkBox_decodeKiss.setChecked(False)
-        if parser.get('input_properties', 'forward_data') == "True":
-            self.checkBox_forwardData.setChecked(True)
-        else:
-            self.checkBox_decodeKiss.setChecked(False)
+        self.checkBox_decodeKiss.setChecked(self.str2bool(parser.get('input_properties', 'decode_kiss')))
+        self.checkBox_forwardData.setChecked(self.str2bool(parser.get('input_properties', 'forward_data')))
+
+    @staticmethod
+    def str2bool(bool_string):
+        if bool_string == 'True':
+            return True
+        if bool_string == 'False':
+            return False
+        raise ValueError('Can only accept exact strings "True" or "False". Was passed {}'.format(bool_string))
 
     def connect_clicked(self):
-        """
-        Purpose:
-           Respond to the connect button being clicked -- conect to either the serial or socket as determined by the user/GUI
-         Input:
-           None (but looks at the current configuration of the GUI for what to connect to and with what settings)
-         Output:
-           None
-        """
-        # Write the input settings used to the input_properties.cfg configuration file
+        self.write_gui_config_options_to_config_file()
+
+        connect_button_text = str(self.actionConnect.iconText())
+        if connect_button_text == "Connect":
+            self.connect_to_port()
+        else:
+            self.disconnect_from_port()
+
+    def write_gui_config_options_to_config_file(self):
         config = ConfigParser()
         config.read('input_properties.cfg')
-        config.set('input_properties', 'serialPort', self.comboBox_serialPort.currentText())
+        config.set('input_properties', 'serial_port', self.comboBox_serialPort.currentText())
         config.set('input_properties', 'baud_rate', self.lineEdit_baudRate.text())
         config.set('input_properties', 'ip_address', self.lineEdit_ipAddress.text())
         config.set('input_properties', 'port', self.lineEdit_ipPort.text())
+        config.set('input_properties', 'decode_kiss', str(self.checkBox_decodeKiss.isChecked()))
+        config.set('input_properties', 'forward_data', str(self.checkBox_forwardData.isChecked()))
         config.set('input_properties', 'latitude', self.lineEdit_latitude.text())
         config.set('input_properties', 'longitude', self.lineEdit_longitude.text())
         with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'w') as configfile:
             config.write(configfile)
 
-        connect_button_text = str(self.actionConnect.iconText())
-        if connect_button_text == "Connect":
-            self.log.info("Attempting to connect to port")
+    def connect_to_port(self):
+        self.log.info("Attempting to connect to port")
 
-            # Update the GUI to diconnect button
-            self.actionConnect.setText(QtGui.QApplication.translate("MainWindow", "Disconnect", None, QtGui.QApplication.UnicodeUTF8))
+        # Update the GUI to disconnect button
+        self.actionConnect.setText(QApplication.translate("MainWindow", "Disconnect", None, -1))
 
-            # Grab the port information from the UI
-            if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
-                port = self.comboBox_serialPort.currentText()
-                baud_rate = self.lineEdit_baudRate.text()
+        # Grab the port information from the UI
+        if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
+            port = self.comboBox_serialPort.currentText()
+            baud_rate = self.lineEdit_baudRate.text()
 
-                # Connect to the serial port and test that it is readable
-                connected_port = connect_port_get_packet.connect_serial(port, baud_rate, self.log)
-                port_readable = connected_port.testRead()
-            else:
-                ip_address = self.lineEdit_ipAddress.text()
-                port = self.lineEdit_ipPort.text()
-
-                # Connect to the IP socket but there's no test option so just have to assume its working
-                connected_port = connect_port_get_packet.connect_socket(ip_address, port, self.log)
-                port_readable = 1
-
-            # If port is readable, store the reference to it and start reading. Either way, update the GUI serial status
-            if port_readable:
-                # Store port in instance variable and start reading
-                self.connectedPort = connected_port
-                self.portReadThread.start()
-
-                # Update GUI
-                palette = QtGui.QPalette()
-                palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58))  # Green
-                if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
-                    self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
-                    self.label_serialStatus.setPalette(palette)
-                else:
-                    self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
-                    self.label_socketStatus.setPalette(palette)
-            else:
-                palette = QtGui.QPalette()
-                palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
-                if self.tabWidget_serialIp.currentTabText == "Serial":
-                    self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
-                    self.label_serialStatus.setPalette(palette)
-                else:
-                    self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
-                    self.label_socketStatus.setPalette(palette)
+            # Connect to the serial port and test that it is readable
+            connected_port = connect_port_get_packet.connect_serial(port, baud_rate, self.log)
+            port_readable = connected_port.testRead()
         else:
-            self.log.info("Attempting to disconnect from port")
+            ip_address = self.lineEdit_ipAddress.text()
+            port = self.lineEdit_ipPort.text()
 
-            # Update the GUI to connect button
-            self.actionConnect.setText(QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
+            # Connect to the IP socket but there's no test option so just have to assume its working
+            connected_port = connect_port_get_packet.connect_socket(ip_address, port, self.log)
+            port_readable = 1
+
+        # If port is readable, store the reference to it and start reading. Either way, update the GUI serial status
+        if port_readable:
+            # Store port in instance variable and start reading
+            self.connected_port = connected_port
+            self.portReadThread.start()
+
+            # Update GUI
             palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
+            palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58))  # Green
             if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
-                self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+                self.label_serialStatus.setText(
+                    QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
                 self.label_serialStatus.setPalette(palette)
             else:
-                self.label_socketStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+                self.label_socketStatus.setText(
+                    QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
+                self.label_socketStatus.setPalette(palette)
+        else:
+            palette = QtGui.QPalette()
+            palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
+            if self.tabWidget_serialIp.currentTabText == "Serial":
+                self.label_serialStatus.setText(
+                    QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
+                self.label_serialStatus.setPalette(palette)
+            else:
+                self.label_socketStatus.setText(
+                    QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
                 self.label_socketStatus.setPalette(palette)
 
-            # Actually close the port
-            self.stopRead()
+    def disconnect_from_port(self):
+        self.log.info("Attempting to disconnect from port")
+
+        # Update the GUI to connect button
+        self.actionConnect.setText(
+            QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
+        palette = QtGui.QPalette()
+        palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
+        if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
+            self.label_serialStatus.setText(
+                QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+            self.label_serialStatus.setPalette(palette)
+        else:
+            self.label_socketStatus.setText(
+                QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+            self.label_socketStatus.setPalette(palette)
+
+        # Actually close the port
+        self.stopRead()
 
     def complete_pass_clicked(self):
         """
@@ -204,7 +215,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
-            bufferData = self.connectedPort.read_packet()
+            bufferData = self.connected_port.read_packet()
             if len(bufferData) > 0:
                 # Decode KISS escape characters if necessary
                 if self.checkBox_decodeKiss.isChecked:
@@ -414,7 +425,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         Output:
             None
         """
-        self.connectedPort.close()
+        self.connected_port.close()
 
         # Update GUI
         self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
@@ -605,8 +616,12 @@ class PortReadThread(QtCore.QThread):
         self.target(*args, **kwargs)
 
 
-if __name__ == '__main__':
+def main():
     app = QApplication(sys.argv)
     mainWin = MainWindow()
     ret = app.exec_()
     sys.exit(ret)
+
+
+if __name__ == '__main__':
+    main()
