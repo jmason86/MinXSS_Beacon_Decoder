@@ -125,8 +125,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def connect_to_port(self):
         self.log.info("Attempting to connect to port")
 
-        # Update the GUI to disconnect button
-        self.actionConnect.setText(QApplication.translate("MainWindow", "Disconnect", None, -1))
+        self.toggle_connect_button(is_currently_connect=True)
 
         # Grab the port information from the UI
         if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
@@ -155,39 +154,47 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58))  # Green
             if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
                 self.label_serialStatus.setText(
-                    QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
+                    QApplication.translate("MainWindow", "Reading", None, -1))
                 self.label_serialStatus.setPalette(palette)
             else:
                 self.label_socketStatus.setText(
-                    QtGui.QApplication.translate("MainWindow", "Reading", None, QtGui.QApplication.UnicodeUTF8))
+                    QApplication.translate("MainWindow", "Reading", None, -1))
                 self.label_socketStatus.setPalette(palette)
         else:
             palette = QtGui.QPalette()
             palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
             if self.tabWidget_serialIp.currentTabText == "Serial":
                 self.label_serialStatus.setText(
-                    QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
+                    QApplication.translate("MainWindow", "Read failed", None, -1))
                 self.label_serialStatus.setPalette(palette)
             else:
                 self.label_socketStatus.setText(
-                    QtGui.QApplication.translate("MainWindow", "Read failed", None, QtGui.QApplication.UnicodeUTF8))
+                    QApplication.translate("MainWindow", "Read failed", None, -1))
                 self.label_socketStatus.setPalette(palette)
+
+    def toggle_connect_button(self, is_currently_connect):
+        if is_currently_connect:
+            connect_button_text = 'Disconnect'
+        else:
+            connect_button_text = 'Connect'
+        self.actionConnect.setText(QApplication.translate("MainWindow", connect_button_text, None, -1))
+
 
     def disconnect_from_port(self):
         self.log.info("Attempting to disconnect from port")
 
         # Update the GUI to connect button
         self.actionConnect.setText(
-            QtGui.QApplication.translate("MainWindow", "Connect", None, QtGui.QApplication.UnicodeUTF8))
+            QApplication.translate("MainWindow", "Connect", None, -1))
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
         if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
             self.label_serialStatus.setText(
-                QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+                QApplication.translate("MainWindow", "Port closed", None, -1))
             self.label_serialStatus.setPalette(palette)
         else:
             self.label_socketStatus.setText(
-                QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+                QApplication.translate("MainWindow", "Port closed", None, -1))
             self.label_socketStatus.setPalette(palette)
 
         # Actually close the port
@@ -227,12 +234,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                 if self.checkBox_saveLog.isChecked:
                     # Human readable
-                    bufferOutputLog = open(self.bufferOutputFilename, 'a', 0)  # append to existing file
+                    bufferOutputLog = open(self.bufferOutputFilename, 'a')  # append to existing file
                     bufferOutputLog.write(formattedBufferData)
                     bufferOutputLog.closed
 
                     # Binary
-                    bufferOutputBinaryLog = open(self.bufferOutputBinaryFilename, 'a', 0)  # append to existing file
+                    bufferOutputBinaryLog = open(self.bufferOutputBinaryFilename, 'ab')  # append to existing file
                     bufferOutputBinaryLog.write(bufferData)
                     bufferOutputBinaryLog.closed
 
@@ -428,7 +435,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connected_port.close()
 
         # Update GUI
-        self.label_serialStatus.setText(QtGui.QApplication.translate("MainWindow", "Port closed", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_serialStatus.setText(QApplication.translate("MainWindow", "Port closed", None, -1))
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
         self.label_serialStatus.setPalette(palette)
