@@ -20,14 +20,14 @@ __contact__ = "jmason86@gmail.com"
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.log = self.createLog()  # Debug log
+        self.log = self.create_log()  # Debug log
         self.setupUi(self)
         self.setup_available_ports()
         self.assign_widgets()
         self.setup_last_used_settings()
-        self.setupOutputLog()  # Log of buffer data
-        self.portReadThread = PortReadThread(self.read_port, self.stopRead)
-        QApplication.instance().aboutToQuit.connect(self.prepareToExit)
+        self.setup_output_log()  # Log of buffer data
+        self.portReadThread = PortReadThread(self.read_port, self.stop_read)
+        QApplication.instance().aboutToQuit.connect(self.prepare_to_exit)
         self.show()
 
     def setup_available_ports(self):
@@ -49,9 +49,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         Connect UI interactive elements to other functions herein so that code is executed upon user interaction with these elements
         """
         self.actionConnect.triggered.connect(self.connect_clicked)
-        self.checkBox_saveLog.stateChanged.connect(self.saveLogToggled)
-        self.checkBox_forwardData.stateChanged.connect(self.forwardDataToggled)
-        self.checkBox_decodeKiss.stateChanged.connect(self.decodeKissToggled)
+        self.checkBox_saveLog.stateChanged.connect(self.save_log_toggled)
+        self.checkBox_forwardData.stateChanged.connect(self.forward_data_toggled)
+        self.checkBox_decodeKiss.stateChanged.connect(self.decode_kiss_toggled)
         self.actionCompletePass.triggered.connect(self.complete_pass_clicked)
 
     def setup_last_used_settings(self):
@@ -179,7 +179,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             connect_button_text = 'Connect'
         self.actionConnect.setText(QApplication.translate("MainWindow", connect_button_text, None, -1))
 
-
     def disconnect_from_port(self):
         self.log.info("Attempting to disconnect from port")
 
@@ -198,7 +197,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.label_socketStatus.setPalette(palette)
 
         # Actually close the port
-        self.stopRead()
+        self.stop_read()
 
     def complete_pass_clicked(self):
         """
@@ -209,7 +208,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
          Output:
             None
         """
-        self.uploadData()
+        self.upload_data()
 
     def read_port(self):
         """
@@ -423,7 +422,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     else:
                         self.label_solarPanelPlusYTemperature.setPalette(paletteRed)
 
-    def stopRead(self):
+    def stop_read(self):
         """
         Purpose:
             Respond to disconnect button being clicked -- disconnect from the port, be it serial or socket
@@ -440,7 +439,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
         self.label_serialStatus.setPalette(palette)
 
-    def saveLogToggled(self):
+    def save_log_toggled(self):
         """
         Purpose:
             Respond to the user toggling the save log button (create a new output data log as appropriate)
@@ -450,7 +449,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             Creates a log file on disk if toggling on
         """
         if self.checkBox_saveLog.isChecked():
-            self.setupOutputLog()
+            self.setup_output_log()
         else:
             # Update the GUI for the log file - not saving
             self.textBrowser_savingToLogFile.setText("Not saving to log file")
@@ -458,7 +457,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             palette.setColor(QtGui.QPalette.Text, QColor(242, 86, 77))  # Red
             self.textBrowser_savingToLogFile.setPalette(palette)
 
-    def forwardDataToggled(self):
+    def forward_data_toggled(self):
         """
         Purpose:
            Respond to the user toggling the forward data button (update the GUI to correspond)
@@ -488,7 +487,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
                 config.write(configfile)
 
-    def decodeKissToggled(self):
+    def decode_kiss_toggled(self):
         """
         Purpose:
             Respond to the user toggling the forward data button (update the GUI to correspond)
@@ -512,7 +511,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
                 config.write(configfile)
 
-    def setupOutputLog(self):
+    def setup_output_log(self):
         """
         Purpose:
             Create the output files for a human readable hex interpretation of the MinXSS data and a binary file
@@ -546,7 +545,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.log.info("Opening binary file for buffer data")
         bufferOutputBinaryLog.closed
 
-    def createLog(self):
+    def create_log(self):
         """
         Purpose:
             Initialize a debugger log file
@@ -566,7 +565,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         log.info("Launched MinXSS Beacon Decoder")
         return log
 
-    def uploadData(self):
+    def upload_data(self):
         """
         Purpose:
             Upload binary data to the MinXSS team
@@ -577,12 +576,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         if self.checkBox_forwardData.isChecked:
             self.label_uploadStatus.setText("Upload status: Uploading")
-            self.log.info("Uploading data")
             file_upload.upload(self.bufferOutputBinaryFilename, self.log)
             self.label_uploadStatus.setText("Upload status: Complete")
-            self.log.info("Upload complete")
 
-    def prepareToExit(self):
+    def prepare_to_exit(self):
         """
         Purpose:
             Respond to the user clicking the close application button -- handle any last business, which is just uploading the binary file in this case
@@ -592,7 +589,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             None
         """
         self.log.info("About to quit")
-        self.uploadData()
+        self.upload_data()
         self.log.info("Closing MinXSS Beacon Decoder")
 
 
