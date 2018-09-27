@@ -8,7 +8,7 @@ This program receives the serial or socket data from MinXSS, interprets it, and 
 
 All of this code is made open source to hopefully encourage other CubeSat programs to adopt it. 
 
-The GUI is built with the designer component of [Qt Creator](https://www.qt.io/download) (open source version). It uses the [Qt for Python project](https://www.qt.io/qt-for-python) (pyside2 module, available, e.g., [in anaconda](https://anaconda.org/conda-forge/pyside2)) to convert the Qt Designer .ui file into a .py. [minxss_beacon_decoder.py](minxss_beacon_decoder.py) wraps around that GUI code to provide the buttons and text displays with functionality. It uses [connect_port_get_packet.py](connect_port_get_packet.py) to establish a link with the user-specified serial port or TCP/IP socket and then read from it. [minxss_parser.py](minxss_parser.py) is then fed the binary and interprets the data into a dictionary, which is returned to [minxss_beacon_decoder.py](minxss_beacon_decoder.py) for display in the GUI. 
+The GUI is built with the designer component of [Qt Creator](https://www.qt.io/download) (open source version; it's not necessary to have this unless you want to edit the interface). It uses the [Qt for Python project](https://www.qt.io/qt-for-python) (pyside2 module, available, e.g., [in anaconda](https://anaconda.org/conda-forge/pyside2)) to convert the Qt Designer .ui file into a .py (this is required if you want to run the code directly but not required if you're running the built beacon decoder application). [minxss_beacon_decoder.py](minxss_beacon_decoder.py) wraps around that GUI code to provide the buttons and text displays with functionality. It uses [connect_port_get_packet.py](connect_port_get_packet.py) to establish a link with the user-specified serial port or TCP/IP socket and then read from it. [minxss_parser.py](minxss_parser.py) is then fed the binary and interprets the data into a dictionary, which is returned to [minxss_beacon_decoder.py](minxss_beacon_decoder.py) for display in the GUI. 
 
 Here is what the layout looks like: 
 ![Example Screenshot of Telemetry](/screenshots/in_operation1_v1.1.0.png)
@@ -30,7 +30,7 @@ See the release page for periodic releases of code in a good state: https://gith
 
 ## How to run from the code directly
 1. If you haven't already downloaded a local copy of this codebase, do so. 
-2. Open a terminal, navigate to the directory you are storing this codebase, and type: "python minxss_beacon_decoder". 
+2. Open a terminal, navigate to the directory you are storing this codebase, and type: "python minxss_beacon_decoder". Note that this code was developed with python 3, so it may not work if you're using python 2.
 3. That's it! You should see the UI window pop open and you should be able to interact with it. 
 
 ## How to edit interface
