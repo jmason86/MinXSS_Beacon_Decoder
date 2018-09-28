@@ -6,14 +6,13 @@ import sys
 import serial
 import socket
 
+
 class connect_serial():
     def __init__(self, port, baudRate, log):
         self.port = port
         self.baudRate = baudRate
         self.log = log
         self.log.info("Opening port: {0}".format(port))
-        self.ser = serial.Serial(port, baudRate, timeout=.01)
-        #self.ser.flushInput()
 
         if (not self.ser.readable()):
             raise Exception("Port not readable")
@@ -51,7 +50,7 @@ class connect_serial():
         self.log.info("Packet length [bytes] = " + str(len(packet)))
         return packet
 
-# Purpose:
+    # Purpose:
     #   Find the start of the MinXSS packet and return the index within minxssSerialData
     # Input:
     #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
@@ -85,18 +84,32 @@ class connect_serial():
             self.log.error("Test read on port failed")
         return portReadable
 
-class connect_socket():
+
+class ConnectSocket():
     def __init__(self, ip_address, port, log):
         self.ip_address = ip_address
         self.port = port
         self.log = log
-        self.log.info("Opening IP address: {0} on port: {1}".format(ip_address, port))
+        self.port_readable = None
+
+    def connect_to_port(self):
+        self.log.info("Opening IP address: {0} on port: {1}".format(self.ip_address, self.port))
 
         self.clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.clientsocket.connect((ip_address, int(port)))
+
+        try:
+            self.clientsocket.connect((self.ip_address, int(self.port)))
+            self.log.info('Successful port open.')
+            self.port_readable = True
+        except socket.error as error:
+            self.log.warning("Failed connecting to {0} on port {1}".format(self.ip_address, self.port))
+            self.log.warning(error)
+            self.port_readable = False
+        finally:
+            return self
     
     def close(self):
-        self.log.info("Closing ground station link")
+        self.log.info("Closing ground station link.")
         self.clientsocket.close()
     
     # Purpose:
@@ -122,10 +135,10 @@ class connect_socket():
                 foundLogPacket = 1
             if self.findSyncStartIndex(packet) != -1:
                 foundSyncStartIndex = 1
-            if self.findSyncStopIndex(packet) != -1: # once at len(packet) > e.g., 64 then check for sync
+            if self.findSyncStopIndex(packet) != -1:  # once at len(packet) > e.g., 64 then check for sync
                 if foundLogPacket == 1:
                     self.log.info("Found log message. Ignoring in search of housekeeping packet.")
-                    packet = bytearray() # Clear out the packet because its a log message not a housekeeping packet
+                    packet = bytearray()  # Clear out the packet because its a log message not a housekeeping packet
                 else:
                     foundSyncStopIndex = 1
             if foundSyncStartIndex + foundSyncStopIndex == 2:
@@ -133,7 +146,7 @@ class connect_socket():
                     packet = packet[self.findSyncStartIndex(packet):]
                     foundSyncStopIndex = 0
         
-            if len(packet) > 500: # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
+            if len(packet) > 500:  # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
                 self.log.error("Too many bytes in packet, resetting packet buffer")
                 
                 if foundSyncStartIndex:
