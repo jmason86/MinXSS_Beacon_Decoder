@@ -236,7 +236,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 # Decode KISS escape characters if necessary
                 if self.checkBox_decodeKiss.isChecked:
                     bufferData = bufferData.replace(bytearray([0xdb, 0xdc]), bytearray([0xc0]))  # C0 is a special KISS character that get replaced; unreplace it
-                    bufferData = bufferData.replace(bytearray([0xdb, 0xdd]), bytearray([0xdd]))  # DB is a special KISS character that get replaced; unreplace it
+                    bufferData = bufferData.replace(bytearray([0xdb, 0xdd]), bytearray([0xdb]))  # DB is a special KISS character that get replaced; unreplace it
                 formattedBufferData = ' '.join('0x{:02x}'.format(x) for x in bufferData)
                 self.textBrowser_serialOutput.append(formattedBufferData)
                 self.textBrowser_serialOutput.verticalScrollBar().setValue(self.textBrowser_serialOutput.verticalScrollBar().maximum())
