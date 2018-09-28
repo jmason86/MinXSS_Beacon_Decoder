@@ -32,12 +32,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def setup_available_ports(self):
         """
-        Purpose:
-            Determine what ports are available for serial reading and populate the combo box with these options
-         Input:
-           None
-         Output:
-           None
+        Determine what ports are available for serial reading and populate the combo box with these options
         """
         self.comboBox_serialPort.clear()
         listPortInfoObjects = list_ports.comports()
@@ -123,30 +118,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             config.write(configfile)
 
     def connect_to_port(self):
-        self.log.info("Attempting to connect to port")
+        self.log.info("Attempting to connect to port.")
 
         self.toggle_connect_button(is_currently_connect=True)
 
-        # Grab the port information from the UI
-        if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
-            port = self.comboBox_serialPort.currentText()
-            baud_rate = self.lineEdit_baudRate.text()
-
-            # Connect to the serial port and test that it is readable
-            connected_port = connect_port_get_packet.connect_serial(port, baud_rate, self.log)
-            port_readable = connected_port.testRead()
-        else:
-            ip_address = self.lineEdit_ipAddress.text()
-            port = self.lineEdit_ipPort.text()
-
-            # Connect to the IP socket but there's no test option so just have to assume its working
-            connected_port = connect_port_get_packet.connect_socket(ip_address, port, self.log)
-            port_readable = 1
+        if self.user_chose_serial_port():
+            self.connected_port, port_readable = self.connect_to_serial_port()
+        else:  # user chose TCP/IP socket
+            self.connected_port, port_readable = self.connect_to_socket_port()
 
         # If port is readable, store the reference to it and start reading. Either way, update the GUI serial status
         if port_readable:
-            # Store port in instance variable and start reading
-            self.connected_port = connected_port
             self.portReadThread.start()
 
             # Update GUI
@@ -178,6 +160,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             connect_button_text = 'Connect'
         self.actionConnect.setText(QApplication.translate("MainWindow", connect_button_text, None, -1))
+
+    def user_chose_serial_port(self):
+        if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
+            return True
+        else:
+            return False  # implying user chose TCP/IP socket
+
+    def connect_to_serial_port(self):
+        port = self.comboBox_serialPort.currentText()
+        baud_rate = self.lineEdit_baudRate.text()
+
+        connected_port = connect_port_get_packet.connect_serial(port, baud_rate, self.log)
+        port_readable = connected_port.testRead()
+        if port_readable:
+            self.log.info('Successfully connected to serial port')
+        else:
+            self.log.warning('Failed to connect to serial port.')
+        return connected_port, port_readable
+
+    def connect_to_socket_port(self):
+        ip_address = self.lineEdit_ipAddress.text()
+        port = self.lineEdit_ipPort.text()
+
+        connect_socket = connect_port_get_packet.ConnectSocket(ip_address, port, self.log)
+        connected_port = connect_socket.connect_to_port()
+        port_readable = connect_socket.port_readable
+
+        return connected_port, port_readable
 
     def disconnect_from_port(self):
         self.log.info("Attempting to disconnect from port")
