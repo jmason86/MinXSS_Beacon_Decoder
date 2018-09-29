@@ -177,62 +177,71 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def display_gui_reading(self):
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Foreground, self.green_color)
+        reading = QApplication.translate("MainWindow", "Reading", None, -1)
         if self.user_chose_serial_port():
-            self.label_serialStatus.setText(QApplication.translate("MainWindow", "Reading", None, -1))
+            self.label_serialStatus.setText(reading)
             self.label_serialStatus.setPalette(palette)
         else:
-            self.label_socketStatus.setText(QApplication.translate("MainWindow", "Reading", None, -1))
+            self.label_socketStatus.setText(reading)
             self.label_socketStatus.setPalette(palette)
 
     def display_gui_read_failed(self):
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Foreground, self.red_color)
+        read_failed = QApplication.translate("MainWindow", "Read failed", None, -1)
         if self.user_chose_serial_port:
-            self.label_serialStatus.setText(QApplication.translate("MainWindow", "Read failed", None, -1))
+            self.label_serialStatus.setText(read_failed)
             self.label_serialStatus.setPalette(palette)
         else:
-            self.label_socketStatus.setText(QApplication.translate("MainWindow", "Read failed", None, -1))
+            self.label_socketStatus.setText(read_failed)
             self.label_socketStatus.setPalette(palette)
 
     def disconnect_from_port(self):
         self.log.info("Attempting to disconnect from port")
 
-        # Update the GUI to connect button
-        self.actionConnect.setText(
-            QApplication.translate("MainWindow", "Connect", None, -1))
+        self.toggle_connect_button(is_currently_connect=False)
+        self.display_gui_port_closed()
+
+        self.stop_read()
+
+    def display_gui_port_closed(self):
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Foreground, self.red_color)
-        if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
-            self.label_serialStatus.setText(
-                QApplication.translate("MainWindow", "Port closed", None, -1))
+        port_closed = QApplication.translate("MainWindow", "Port closed", None, -1)
+        if self.user_chose_serial_port():
+            self.label_serialStatus.setText(port_closed)
             self.label_serialStatus.setPalette(palette)
         else:
-            self.label_socketStatus.setText(
-                QApplication.translate("MainWindow", "Port closed", None, -1))
+            self.label_socketStatus.setText(port_closed)
             self.label_socketStatus.setPalette(palette)
-
-        # Actually close the port
-        self.stop_read()
 
     def complete_pass_clicked(self):
         """
-        Purpose:
-            Respond to the complete pass button being clicked -- upload the binary output data, which is handled in a separate function
-         Input:
-            None
-         Output:
-            None
+        Respond to the complete pass button being clicked: upload the binary output data
         """
         self.upload_data()
 
+    def upload_data(self):
+        """
+        Upload binary data to the MinXSS team
+        """
+        if self.do_forward_data():
+            self.display_gui_uploading()
+            file_upload.upload(self.bufferOutputBinaryFilename, self.log)
+            self.display_gui_upload_complete()
+
+    def do_forward_data(self):
+        return self.checkBox_forwardData.isChecked
+
+    def display_gui_uploading(self):
+        self.label_uploadStatus.setText("Upload status: Uploading")
+
+    def display_gui_upload_complete(self):
+        self.label_uploadStatus.setText("Upload status: Complete")
+
     def read_port(self):
         """
-        Purpose:
-            Read the buffer data from the port (be it serial or socket) in an infinite loop; decode and display any MinXSS housekeeping packets
-         Input:
-            None
-         Output:
-            None
+        Read the buffer data from the port (be it serial or socket) in an infinite loop; decode and display any MinXSS housekeeping packets
         """
         # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while(True):
@@ -448,12 +457,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         self.connected_port.close()
 
-        # Update GUI
-        self.label_serialStatus.setText(QApplication.translate("MainWindow", "Port closed", None, -1))
-        palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Foreground, self.red_color)
-        self.label_serialStatus.setPalette(palette)
-
     def save_log_toggled(self):
         """
         Purpose:
@@ -579,20 +582,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         log.setLevel(logging.DEBUG)
         log.info("Launched MinXSS Beacon Decoder")
         return log
-
-    def upload_data(self):
-        """
-        Purpose:
-            Upload binary data to the MinXSS team
-        Input:
-            None (though will grab the .dat binary file from disk)
-        Output:
-            None (though will send that .dat binary file over the internet via scp to a server handled by the MinXSS team)
-        """
-        if self.checkBox_forwardData.isChecked:
-            self.label_uploadStatus.setText("Upload status: Uploading")
-            file_upload.upload(self.bufferOutputBinaryFilename, self.log)
-            self.label_uploadStatus.setText("Upload status: Complete")
 
     def prepare_to_exit(self):
         """
