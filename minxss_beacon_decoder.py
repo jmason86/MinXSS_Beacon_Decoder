@@ -20,13 +20,19 @@ __contact__ = "jmason86@gmail.com"
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
+
+        self.green_color = QColor(55, 195, 58)
+        self.yellow_color = QColor(244, 212, 66)
+        self.red_color = QColor(242, 86, 77)
+        self.connected_port = None
+
         self.log = self.create_log()  # Debug log
         self.setupUi(self)
         self.setup_available_ports()
         self.assign_widgets()
         self.setup_last_used_settings()
         self.setup_output_log()  # Log of buffer data
-        self.portReadThread = PortReadThread(self.read_port, self.stop_read)
+        self.port_read_thread = PortReadThread(self.read_port, self.stop_read)
         QApplication.instance().aboutToQuit.connect(self.prepare_to_exit)
         self.show()
 
@@ -35,9 +41,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         Determine what ports are available for serial reading and populate the combo box with these options
         """
         self.comboBox_serialPort.clear()
-        listPortInfoObjects = list_ports.comports()
-        portNames = [x[0] for x in listPortInfoObjects]
-        self.comboBox_serialPort.addItems(portNames)
+        list_port_info_objects = list_ports.comports()
+        port_names = [x[0] for x in list_port_info_objects]
+        self.comboBox_serialPort.addItems(port_names)
 
     def assign_widgets(self):
         """
@@ -127,32 +133,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:  # user chose TCP/IP socket
             self.connected_port, port_readable = self.connect_to_socket_port()
 
-        # If port is readable, store the reference to it and start reading. Either way, update the GUI serial status
         if port_readable:
-            self.portReadThread.start()
-
-            # Update GUI
-            palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58))  # Green
-            if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
-                self.label_serialStatus.setText(
-                    QApplication.translate("MainWindow", "Reading", None, -1))
-                self.label_serialStatus.setPalette(palette)
-            else:
-                self.label_socketStatus.setText(
-                    QApplication.translate("MainWindow", "Reading", None, -1))
-                self.label_socketStatus.setPalette(palette)
+            self.port_read_thread.start()
+            self.display_gui_reading()
         else:
-            palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
-            if self.tabWidget_serialIp.currentTabText == "Serial":
-                self.label_serialStatus.setText(
-                    QApplication.translate("MainWindow", "Read failed", None, -1))
-                self.label_serialStatus.setPalette(palette)
-            else:
-                self.label_socketStatus.setText(
-                    QApplication.translate("MainWindow", "Read failed", None, -1))
-                self.label_socketStatus.setPalette(palette)
+            self.display_gui_read_failed()
 
     def toggle_connect_button(self, is_currently_connect):
         if is_currently_connect:
@@ -189,6 +174,26 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         return connected_port, port_readable
 
+    def display_gui_reading(self):
+        palette = QtGui.QPalette()
+        palette.setColor(QtGui.QPalette.Foreground, self.green_color)
+        if self.user_chose_serial_port():
+            self.label_serialStatus.setText(QApplication.translate("MainWindow", "Reading", None, -1))
+            self.label_serialStatus.setPalette(palette)
+        else:
+            self.label_socketStatus.setText(QApplication.translate("MainWindow", "Reading", None, -1))
+            self.label_socketStatus.setPalette(palette)
+
+    def display_gui_read_failed(self):
+        palette = QtGui.QPalette()
+        palette.setColor(QtGui.QPalette.Foreground, self.red_color)
+        if self.user_chose_serial_port:
+            self.label_serialStatus.setText(QApplication.translate("MainWindow", "Read failed", None, -1))
+            self.label_serialStatus.setPalette(palette)
+        else:
+            self.label_socketStatus.setText(QApplication.translate("MainWindow", "Read failed", None, -1))
+            self.label_socketStatus.setPalette(palette)
+
     def disconnect_from_port(self):
         self.log.info("Attempting to disconnect from port")
 
@@ -196,7 +201,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionConnect.setText(
             QApplication.translate("MainWindow", "Connect", None, -1))
         palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
+        palette.setColor(QtGui.QPalette.Foreground, self.red_color)
         if self.tabWidget_serialIp.currentIndex() == self.tabWidget_serialIp.indexOf(self.serial):
             self.label_serialStatus.setText(
                 QApplication.translate("MainWindow", "Port closed", None, -1))
@@ -326,11 +331,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
                     # Setup color palettes
                     paletteGreen = QtGui.QPalette()
-                    paletteGreen.setColor(QtGui.QPalette.Foreground, QColor(55, 195, 58))  # Green
+                    paletteGreen.setColor(QtGui.QPalette.Foreground, self.green_color)
                     paletteYellow = QtGui.QPalette()
-                    paletteYellow.setColor(QtGui.QPalette.Foreground, QColor(244, 212, 66))  # Yellow
+                    paletteYellow.setColor(QtGui.QPalette.Foreground, self.yellow_color)
                     paletteRed = QtGui.QPalette()
-                    paletteRed.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
+                    paletteRed.setColor(QtGui.QPalette.Foreground, self.red_color)
 
                     ##
                     # Color code telemetry
@@ -446,7 +451,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # Update GUI
         self.label_serialStatus.setText(QApplication.translate("MainWindow", "Port closed", None, -1))
         palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Foreground, QColor(242, 86, 77))  # Red
+        palette.setColor(QtGui.QPalette.Foreground, self.red_color)
         self.label_serialStatus.setPalette(palette)
 
     def save_log_toggled(self):
@@ -464,7 +469,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Update the GUI for the log file - not saving
             self.textBrowser_savingToLogFile.setText("Not saving to log file")
             palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Text, QColor(242, 86, 77))  # Red
+            palette.setColor(QtGui.QPalette.Text, self.red_color)
             self.textBrowser_savingToLogFile.setPalette(palette)
 
     def forward_data_toggled(self):
@@ -539,7 +544,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             # Update the GUI for the log file - is saving
             self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.bufferOutputFilename)
             palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Text, QColor(55, 195, 58))  # Green
+            palette.setColor(QtGui.QPalette.Text, self.green_color)
             self.textBrowser_savingToLogFile.setPalette(palette)
         bufferOutputLog.closed
 
