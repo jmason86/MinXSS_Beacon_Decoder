@@ -21,12 +21,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
 
-        self.green_color = QColor(55, 195, 58)
-        self.yellow_color = QColor(244, 212, 66)
-        self.red_color = QColor(242, 86, 77)
+        self.green_color = None
+        self.yellow_color = None
+        self.red_color = None
         self.connected_port = None
 
         self.log = self.create_log()  # Debug log
+        self.setup_colors()
         self.setupUi(self)
         self.setup_available_ports()
         self.assign_widgets()
@@ -35,6 +36,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.port_read_thread = PortReadThread(self.read_port, self.stop_read)
         QApplication.instance().aboutToQuit.connect(self.prepare_to_exit)
         self.show()
+
+    def setup_colors(self):
+        green = QColor(55, 195, 58)
+        palette_green = QtGui.QPalette()
+        palette_green.setColor(QtGui.QPalette.Text, green)
+        palette_green.setColor(QtGui.QPalette.Foreground, green)
+        self.green_color = palette_green
+
+        yellow = QColor(244, 212, 66)
+        palette_yellow = QtGui.QPalette()
+        palette_yellow.setColor(QtGui.QPalette.Text, yellow)
+        palette_yellow.setColor(QtGui.QPalette.Foreground, yellow)
+        self.yellow_color = palette_yellow
+
+        red = QColor(242, 86, 77)
+        palette_red = QtGui.QPalette()
+        palette_red.setColor(QtGui.QPalette.Text, red)
+        palette_red.setColor(QtGui.QPalette.Foreground, red)
+        self.red_color = palette_red
 
     def setup_available_ports(self):
         """
@@ -175,26 +195,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return connected_port, port_readable
 
     def display_gui_reading(self):
-        palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Foreground, self.green_color)
         reading = QApplication.translate("MainWindow", "Reading", None, -1)
         if self.user_chose_serial_port():
             self.label_serialStatus.setText(reading)
-            self.label_serialStatus.setPalette(palette)
+            self.label_serialStatus.setPalette(self.green_color)
         else:
             self.label_socketStatus.setText(reading)
-            self.label_socketStatus.setPalette(palette)
+            self.label_socketStatus.setPalette(self.green_color)
 
     def display_gui_read_failed(self):
-        palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Foreground, self.red_color)
         read_failed = QApplication.translate("MainWindow", "Read failed", None, -1)
         if self.user_chose_serial_port:
             self.label_serialStatus.setText(read_failed)
-            self.label_serialStatus.setPalette(palette)
+            self.label_serialStatus.setPalette(self.red_color)
         else:
             self.label_socketStatus.setText(read_failed)
-            self.label_socketStatus.setPalette(palette)
+            self.label_socketStatus.setPalette(self.red_color)
 
     def disconnect_from_port(self):
         self.log.info("Attempting to disconnect from port")
@@ -205,15 +221,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.stop_read()
 
     def display_gui_port_closed(self):
-        palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Foreground, self.red_color)
         port_closed = QApplication.translate("MainWindow", "Port closed", None, -1)
         if self.user_chose_serial_port():
             self.label_serialStatus.setText(port_closed)
-            self.label_serialStatus.setPalette(palette)
+            self.label_serialStatus.setPalette(self.red_color)
         else:
             self.label_socketStatus.setText(port_closed)
-            self.label_socketStatus.setPalette(palette)
+            self.label_socketStatus.setPalette(self.red_color)
 
     def complete_pass_clicked(self):
         """
@@ -307,6 +321,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.display_gui_telemetry_power(telemetry)
         self.display_gui_telemetry_temperature(telemetry)
 
+        palette = QtGui.QPalette()
+        palette.setColor(QtGui.QPalette.Text, QColor(55, 195, 58))
+        self.label_spacecraftMode.setPalette(palette)
         self.color_code_telemetry(telemetry)
 
     @staticmethod
@@ -491,12 +508,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def stop_read(self):
         """
-        Purpose:
-            Respond to disconnect button being clicked -- disconnect from the port, be it serial or socket
-        Input:
-            None
-        Output:
-            None
+        Respond to disconnect button being clicked -- disconnect from the port, be it serial or socket
         """
         self.connected_port.close()
 
@@ -514,9 +526,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         else:
             # Update the GUI for the log file - not saving
             self.textBrowser_savingToLogFile.setText("Not saving to log file")
-            palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Text, self.red_color)
-            self.textBrowser_savingToLogFile.setPalette(palette)
+            self.textBrowser_savingToLogFile.setPalette(self.red_color)
 
     def forward_data_toggled(self):
         """
@@ -589,10 +599,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         with open(self.bufferOutputFilename, 'w') as bufferOutputLog:
             # Update the GUI for the log file - is saving
             self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.bufferOutputFilename)
-            palette = QtGui.QPalette()
-            palette.setColor(QtGui.QPalette.Text, self.green_color)
-            self.textBrowser_savingToLogFile.setPalette(palette)
-        bufferOutputLog.closed
+            self.textBrowser_savingToLogFile.setPalette(self.green_color)
+        bufferOutputLog.close()
 
         # Binary log
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
