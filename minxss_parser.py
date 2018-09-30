@@ -18,52 +18,52 @@ class Minxss_Parser():
     # Output:
     #   selectedTelemetryDictionary [dictionary]: The telemetry with key/value pairs
     #
-    def parsePacket(self, minxssPacket):
+    def parse_packet(self, minxss_packet):
         # Find the sync bytes (0x08, 0x19), reframe the packet to start after sync
-        syncOffset = self.findSyncStartIndex(minxssPacket)
+        syncOffset = self.findSyncStartIndex(minxss_packet)
         if syncOffset == -1:
             self.log.error("No start sync bytes found in minxss_parser, exiting.")
-            return -1
+            return None
         else:
-            minxssPacket = minxssPacket[syncOffset:len(minxssPacket)]
+            minxss_packet = minxss_packet[syncOffset:len(minxss_packet)]
         
         # Prepare a dictionary for storage of telemetry points
-        selectedTelemetryDictionary = {}
+        selected_telemetry_dictionary = {}
         
         # Get the telemetry points
         # Note: Second index in range of minxssPacket must be +1 what you'd normally expect because python is wonky
         # For example, to grab bytes at indices 3 and 4, you don't do minxssPacket[3:4], you have to do minxssPacket[3:5]
-        selectedTelemetryDictionary['FlightModel'] = self.decodeFlightModel(minxssPacket[51])                                       # [Unitless]
-        selectedTelemetryDictionary['CommandAcceptCount'] = self.decodeCommandAcceptCount(minxssPacket[16:16+2])                    # [#]
-        selectedTelemetryDictionary['SpacecraftMode'] = self.decodeSpacecraftMode(minxssPacket[12])                                 # [Unitless]
-        selectedTelemetryDictionary['PointingMode'] = self.decodePointingMode(minxssPacket[13])                                     # [Unitless]
-        selectedTelemetryDictionary['EnableX123'] = self.decodeEnableX123(minxssPacket[88:88+2])                                    # [Boolean]
-        selectedTelemetryDictionary['EnableSps'] = self.decodeEnableSps(minxssPacket[88:88+2])                                      # [Boolean]
-        selectedTelemetryDictionary['Eclipse'] = self.decodeEclipse(minxssPacket[12])                                               # [Boolean]
-        selectedTelemetryDictionary['SpsX'] = self.decodeSps(minxssPacket[204:204+2])                                               # [deg]
-        selectedTelemetryDictionary['SpsY'] = self.decodeSps(minxssPacket[206:206+2])                                               # [deg]
-        selectedTelemetryDictionary['Xp'] = self.decodeXp(minxssPacket[192:192+4])                                                  # [DN]
-        selectedTelemetryDictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[122:122+2])                  # [deg C]
-        selectedTelemetryDictionary['BatteryTemperature'] = self.decodeBytesTemperatureBattery(minxssPacket[174:174+2])             # [deg C]
-        selectedTelemetryDictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[128:128+2])                   # [deg C]
-        selectedTelemetryDictionary['CdhBoardTemperature'] = self.decodeBytesTemperature(minxssPacket[86:86+2])                     # [deg C]
-        selectedTelemetryDictionary['MotherboardTemperature'] = self.decodeBytesTemperature(minxssPacket[124:124+2])                # [deg C]
-        selectedTelemetryDictionary['SolarPanelMinusYTemperature'] = self.decodeBytesTemperatureSolarPanel(minxssPacket[160:160+2]) # [deg C]
-        selectedTelemetryDictionary['SolarPanelPlusXTemperature'] = self.decodeBytesTemperatureSolarPanel(minxssPacket[162:162+2])  # [deg C]
-        selectedTelemetryDictionary['SolarPanelPlusYTemperature'] = self.decodeBytesTemperatureSolarPanel(minxssPacket[164:164+2])  # [deg C]
-        selectedTelemetryDictionary['BatteryVoltage'] = self.decodeBytesFuelGaugeBatteryVoltage(minxssPacket[132:132+2])            # [V]
-        selectedTelemetryDictionary['BatteryChargeCurrent'] = self.decodeBytesBatteryCurrent(minxssPacket[168:168+2])               # [mA]
-        selectedTelemetryDictionary['BatteryDischargeCurrent'] = self.decodeBytesBatteryCurrent(minxssPacket[172:172+2])            # [mA]
-        selectedTelemetryDictionary['SolarPanelMinusYCurrent'] = self.decodeBytesSolarArrayCurrent(minxssPacket[136:136+2])         # [mA]
-        selectedTelemetryDictionary['SolarPanelPlusXCurrent'] = self.decodeBytesSolarArrayCurrent(minxssPacket[140:140+2])          # [mA]
-        selectedTelemetryDictionary['SolarPanelPlusYCurrent'] = self.decodeBytesSolarArrayCurrent(minxssPacket[144:144+2])          # [mA]
-        selectedTelemetryDictionary['SolarPanelMinusYVoltage'] = self.decodeBytesSolarArrayVoltage(minxssPacket[138:138+2])         # [V]
-        selectedTelemetryDictionary['SolarPanelPlusXVoltage'] = self.decodeBytesSolarArrayVoltage(minxssPacket[142:142+2])          # [V]
-        selectedTelemetryDictionary['SolarPanelPlusYVoltage'] = self.decodeBytesSolarArrayVoltage(minxssPacket[146:146+2])          # [V]
+        selected_telemetry_dictionary['FlightModel'] = self.decodeFlightModel(minxss_packet[51])                                       # [Unitless]
+        selected_telemetry_dictionary['CommandAcceptCount'] = self.decodeCommandAcceptCount(minxss_packet[16:16 + 2])                    # [#]
+        selected_telemetry_dictionary['SpacecraftMode'] = self.decodeSpacecraftMode(minxss_packet[12])                                 # [Unitless]
+        selected_telemetry_dictionary['PointingMode'] = self.decodePointingMode(minxss_packet[13])                                     # [Unitless]
+        selected_telemetry_dictionary['EnableX123'] = self.decodeEnableX123(minxss_packet[88:88 + 2])                                    # [Boolean]
+        selected_telemetry_dictionary['EnableSps'] = self.decodeEnableSps(minxss_packet[88:88 + 2])                                      # [Boolean]
+        selected_telemetry_dictionary['Eclipse'] = self.decodeEclipse(minxss_packet[12])                                               # [Boolean]
+        selected_telemetry_dictionary['SpsX'] = self.decodeSps(minxss_packet[204:204 + 2])                                               # [deg]
+        selected_telemetry_dictionary['SpsY'] = self.decodeSps(minxss_packet[206:206 + 2])                                               # [deg]
+        selected_telemetry_dictionary['Xp'] = self.decodeXp(minxss_packet[192:192 + 4])                                                  # [DN]
+        selected_telemetry_dictionary['CommBoardTemperature'] = self.decodeBytesTemperature(minxss_packet[122:122 + 2])                  # [deg C]
+        selected_telemetry_dictionary['BatteryTemperature'] = self.decodeBytesTemperatureBattery(minxss_packet[174:174 + 2])             # [deg C]
+        selected_telemetry_dictionary['EpsBoardTemperature'] = self.decodeBytesTemperature(minxss_packet[128:128 + 2])                   # [deg C]
+        selected_telemetry_dictionary['CdhBoardTemperature'] = self.decodeBytesTemperature(minxss_packet[86:86 + 2])                     # [deg C]
+        selected_telemetry_dictionary['MotherboardTemperature'] = self.decodeBytesTemperature(minxss_packet[124:124 + 2])                # [deg C]
+        selected_telemetry_dictionary['SolarPanelMinusYTemperature'] = self.decodeBytesTemperatureSolarPanel(minxss_packet[160:160 + 2]) # [deg C]
+        selected_telemetry_dictionary['SolarPanelPlusXTemperature'] = self.decodeBytesTemperatureSolarPanel(minxss_packet[162:162 + 2])  # [deg C]
+        selected_telemetry_dictionary['SolarPanelPlusYTemperature'] = self.decodeBytesTemperatureSolarPanel(minxss_packet[164:164 + 2])  # [deg C]
+        selected_telemetry_dictionary['BatteryVoltage'] = self.decodeBytesFuelGaugeBatteryVoltage(minxss_packet[132:132 + 2])            # [V]
+        selected_telemetry_dictionary['BatteryChargeCurrent'] = self.decodeBytesBatteryCurrent(minxss_packet[168:168 + 2])               # [mA]
+        selected_telemetry_dictionary['BatteryDischargeCurrent'] = self.decodeBytesBatteryCurrent(minxss_packet[172:172 + 2])            # [mA]
+        selected_telemetry_dictionary['SolarPanelMinusYCurrent'] = self.decodeBytesSolarArrayCurrent(minxss_packet[136:136 + 2])         # [mA]
+        selected_telemetry_dictionary['SolarPanelPlusXCurrent'] = self.decodeBytesSolarArrayCurrent(minxss_packet[140:140 + 2])          # [mA]
+        selected_telemetry_dictionary['SolarPanelPlusYCurrent'] = self.decodeBytesSolarArrayCurrent(minxss_packet[144:144 + 2])          # [mA]
+        selected_telemetry_dictionary['SolarPanelMinusYVoltage'] = self.decodeBytesSolarArrayVoltage(minxss_packet[138:138 + 2])         # [V]
+        selected_telemetry_dictionary['SolarPanelPlusXVoltage'] = self.decodeBytesSolarArrayVoltage(minxss_packet[142:142 + 2])          # [V]
+        selected_telemetry_dictionary['SolarPanelPlusYVoltage'] = self.decodeBytesSolarArrayVoltage(minxss_packet[146:146 + 2])          # [V]
         
         self.log.info("From MinXSS parser:")
-        self.log.info(selectedTelemetryDictionary)
-        return selectedTelemetryDictionary
+        self.log.info(selected_telemetry_dictionary)
+        return selected_telemetry_dictionary
 
     # Purpose:
     #   Find the start of the MinXSS packet and return the index within minxssSerialData
@@ -194,7 +194,7 @@ class Minxss_Parser():
     #
     def testParsePacket(self, minxssPacket, log):
         log.info("Testing MinXSS packet parse")
-        selectedTelemetryDictionary = self.parsePacket(minxssPacket)
+        selectedTelemetryDictionary = self.parse_packet(minxssPacket)
         print(selectedTelemetryDictionary)
         log.info(selectedTelemetryDictionary)
 

@@ -10,7 +10,7 @@ import connect_port_get_packet
 import file_upload
 import datetime
 from serial.tools import list_ports  # This is pyserial, not plain serial
-import minxss_parser
+import minxss_parser as mp
 
 """Call the GUI and attach it to functions."""
 __author__ = "James Paul Mason"
@@ -241,204 +241,253 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def read_port(self):
         """
-        Read the buffer data from the port (be it serial or socket) in an infinite loop.
-        Decode and display any MinXSS housekeeping packets.
+        Read the buffer data from the port in an infinite loop.
+        Decode, display, and write to disk any MinXSS housekeeping packets.
         """
-        # Infinite loop to read the port and display the data in the GUI and optionally write to output file
         while True:
             buffer_data = self.connected_port.read_packet()
-            if len(buffer_data) > 0:
-                # Decode KISS escape characters if necessary
-                if self.checkBox_decodeKiss.isChecked:
-                    buffer_data = buffer_data.replace(bytearray([0xdb, 0xdc]), bytearray([0xc0]))  # C0 is a special KISS character that get replaced; unreplace it
-                    buffer_data = buffer_data.replace(bytearray([0xdb, 0xdd]), bytearray([0xdb]))  # DB is a special KISS character that get replaced; unreplace it
-                formatted_buffer_data = ' '.join('0x{:02x}'.format(x) for x in buffer_data)
-                self.textBrowser_serialOutput.append(formatted_buffer_data)
-                self.textBrowser_serialOutput.verticalScrollBar().setValue(self.textBrowser_serialOutput.verticalScrollBar().maximum())
+            if len(buffer_data) == 0:
+                continue
 
-                if self.checkBox_saveLog.isChecked:
-                    # Human readable
-                    buffer_output_log = open(self.bufferOutputFilename, 'a')  # append to existing file
-                    buffer_output_log.write(formatted_buffer_data)
-                    buffer_output_log.closed
+            buffer_data = self.decode_kiss(buffer_data)
 
-                    # Binary
-                    buffer_output_binary_log = open(self.bufferOutputBinaryFilename, 'ab')  # append to existing file
-                    buffer_output_binary_log.write(buffer_data)
-                    buffer_output_binary_log.closed
+            buffer_data_hex_string = self.convert_buffer_data_to_hex_string(buffer_data)
+            self.display_gui_hex(buffer_data_hex_string)
 
-                # Parse and interpret the binary data into human readable telemetry
-                minxss_parser = minxss_parser.Minxss_Parser(buffer_data, self.log)
-                selected_telemetry_dictionary = minxss_parser.parsePacket(buffer_data)
+            self.save_data_to_disk(buffer_data_hex_string, buffer_data)
 
-                # If valid data, update GUI with telemetry points
-                if selected_telemetry_dictionary != -1:
-                    ##
-                    # Display numbers in GUI
-                    ##
+            minxss_parser = mp.Minxss_Parser(buffer_data, self.log)
+            telemetry = minxss_parser.parse_packet(buffer_data)
+            self.display_gui_telemetry(telemetry)
 
-                    # Current timestamp
-                    self.label_lastPacketTime.setText("Last packet at: {} local, {} UTC".format(datetime.datetime.now().isoformat(), datetime.datetime.utcnow().isoformat()))
+    def decode_kiss(self, buffer_data):
+        if self.do_decode_kiss():
+            # C0 is a special KISS character that get replaced; unreplace it
+            buffer_data = buffer_data.replace(bytearray([0xdb, 0xdc]), bytearray([0xc0]))
+            # DB is a special KISS character that get replaced; unreplace it
+            buffer_data = buffer_data.replace(bytearray([0xdb, 0xdd]), bytearray([0xdb]))
+        return buffer_data
 
-                    # Spacecraft State
-                    self.label_flightModel.setText("{0:0=1d}".format(selected_telemetry_dictionary['FlightModel']))
-                    self.label_commandAcceptCount.setText("{0:0=1d}".format(selected_telemetry_dictionary['CommandAcceptCount']))
-                    if selected_telemetry_dictionary['SpacecraftMode'] == 0:
-                        self.label_spacecraftMode.setText("Unknown")
-                    elif selected_telemetry_dictionary['SpacecraftMode'] == 1:
-                        self.label_spacecraftMode.setText("Phoenix")
-                    elif selected_telemetry_dictionary['SpacecraftMode'] == 2:
-                        self.label_spacecraftMode.setText("Safe")
-                    elif selected_telemetry_dictionary['SpacecraftMode'] == 4:
-                        self.label_spacecraftMode.setText("Science")
-                    if selected_telemetry_dictionary['PointingMode'] == 0:
-                        self.label_pointingMode.setText("Coarse Point")
-                    elif selected_telemetry_dictionary['PointingMode'] == 1:
-                        self.label_pointingMode.setText("Fine Point")
-                    if selected_telemetry_dictionary['EnableX123'] == 1:
-                        self.label_enableX123.setText("Yes")
-                    else:
-                        self.label_enableX123.setText("No")
-                    if selected_telemetry_dictionary['EnableSps'] == 1:
-                        self.label_enableSps.setText("Yes")
-                    else:
-                        self.label_enableSps.setText("No")
-                    if selected_telemetry_dictionary['Eclipse'] == 1:
-                        self.label_eclipse.setText("Eclipse")
-                    else:
-                        self.label_eclipse.setText("In Sun")
+    def do_decode_kiss(self):
+        return self.checkBox_decodeKiss.isChecked
 
-                    # Solar Data
-                    self.label_spsX.setText("{0:.2f}".format(round(selected_telemetry_dictionary['SpsX'], 2)))
-                    self.label_spsY.setText("{0:.2f}".format(round(selected_telemetry_dictionary['SpsY'], 2)))
-                    self.label_xp.setText("{0:.2f}".format(round(selected_telemetry_dictionary['Xp'], 2)))
+    @staticmethod
+    def convert_buffer_data_to_hex_string(buffer_data):
+        return ' '.join('0x{:02x}'.format(x) for x in buffer_data)
 
-                    # Power
-                    self.label_batteryVoltage.setText("{0:.2f}".format(round(selected_telemetry_dictionary['BatteryVoltage'], 2)))
-                    if selected_telemetry_dictionary['BatteryChargeCurrent'] > selected_telemetry_dictionary['BatteryDischargeCurrent']:
-                        battery_current = selected_telemetry_dictionary['BatteryChargeCurrent'] / 1e3
-                        self.label_batteryCurrentText.setText("Battery Charge Current")
-                    else:
-                        battery_current = selected_telemetry_dictionary['BatteryDischargeCurrent'] / 1e3
-                        self.label_batteryCurrentText.setText("Battery Discharge Current")
-                    self.label_batteryCurrent.setText("{0:.2f}".format(round(battery_current, 2)))
-                    solar_panel_minus_y_power = selected_telemetry_dictionary['SolarPanelMinusYVoltage'] * selected_telemetry_dictionary['SolarPanelMinusYCurrent'] / 1e3
-                    self.label_solarPanelMinusYPower.setText("{0:.2f}".format(round(solar_panel_minus_y_power, 2)))
-                    solar_panel_plus_x_power = selected_telemetry_dictionary['SolarPanelPlusXVoltage'] * selected_telemetry_dictionary['SolarPanelPlusXCurrent'] / 1e3
-                    self.label_solarPanelPlusXPower.setText("{0:.2f}".format(round(solar_panel_plus_x_power, 2)))
-                    solar_panel_plus_y_power = selected_telemetry_dictionary['SolarPanelPlusYVoltage'] * selected_telemetry_dictionary['SolarPanelPlusYCurrent'] / 1e3
-                    self.label_solarPanelPlusYPower.setText("{0:.2f}".format(round(solar_panel_plus_y_power, 2)))
+    def display_gui_hex(self, buffer_data_hex_string):
+        self.textBrowser_serialOutput.append(buffer_data_hex_string)
+        scroll_to_bottom = self.textBrowser_serialOutput.verticalScrollBar().maximum()
+        self.textBrowser_serialOutput.verticalScrollBar().setValue(scroll_to_bottom)
 
-                    # Temperature
-                    self.label_commBoardTemperature.setText("{0:.2f}".format(round(selected_telemetry_dictionary['CommBoardTemperature'], 2)))
-                    self.label_batteryTemperature.setText("{0:.2f}".format(round(selected_telemetry_dictionary['BatteryTemperature'], 2)))
-                    self.label_epsBoardTemperature.setText("{0:.2f}".format(round(selected_telemetry_dictionary['EpsBoardTemperature'], 2)))
-                    self.label_cdhTemperature.setText("{0:.2f}".format(round(selected_telemetry_dictionary['CdhBoardTemperature'], 2)))
-                    self.label_motherboardTemperature.setText("{0:.2f}".format(round(selected_telemetry_dictionary['MotherboardTemperature'], 2)))
-                    self.label_solarPanelMinusYTemperature.setText("{0:.2f}".format(round(selected_telemetry_dictionary['SolarPanelMinusYTemperature'], 2)))
-                    self.label_solarPanelPlusXTemperature.setText("{0:.2f}".format(round(selected_telemetry_dictionary['SolarPanelPlusXTemperature'], 2)))
-                    self.label_solarPanelPlusYTemperature.setText("{0:.2f}".format(round(selected_telemetry_dictionary['SolarPanelPlusYTemperature'], 2)))
+    def save_data_to_disk(self, buffer_data_hex_string, buffer_data):
+        if self.do_save_log():
+            # Human readable
+            buffer_output_log = open(self.bufferOutputFilename, 'a')
+            buffer_output_log.write(buffer_data_hex_string)
+            buffer_output_log.close()
 
+            # Binary
+            buffer_output_binary_log = open(self.bufferOutputBinaryFilename, 'ab')
+            buffer_output_binary_log.write(buffer_data)
+            buffer_output_binary_log.close()
 
-                    ##
-                    # Color code telemetry
-                    ##
+    def do_save_log(self):
+        return self.checkBox_saveLog.isChecked
 
-                    # Spacecraft State
-                    if selected_telemetry_dictionary['SpacecraftMode'] == 0:
-                        self.label_spacecraftMode.setPalette(self.red_color)
-                    elif selected_telemetry_dictionary['SpacecraftMode'] == 1:
-                        self.label_spacecraftMode.setPalette(self.red_color)
-                    elif selected_telemetry_dictionary['SpacecraftMode'] == 2:
-                        self.label_spacecraftMode.setPalette(self.yellow_color)
-                    elif selected_telemetry_dictionary['SpacecraftMode'] == 4:
-                        self.label_spacecraftMode.setPalette(self.green_color)
-                    if selected_telemetry_dictionary['PointingMode'] == 0:
-                        self.label_pointingMode.setPalette(self.yellow_color)
-                    elif selected_telemetry_dictionary['PointingMode'] == 1:
-                        self.label_pointingMode.setPalette(self.green_color)
+    def display_gui_telemetry(self, telemetry):
+        if not telemetry:
+            return
 
-                    # Solar Data
-                    if abs(selected_telemetry_dictionary['SpsX']) <= 3.0:
-                        self.label_spsX.setPalette(self.green_color)
-                    else:
-                        self.label_spsX.setPalette(self.red_color)
-                    if abs(selected_telemetry_dictionary['SpsY']) <= 3.0:
-                        self.label_spsY.setPalette(self.green_color)
-                    else:
-                        self.label_spsY.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['Xp'] <= 24860.0 and selected_telemetry_dictionary['Xp'] >= 0:
-                        self.label_xp.setPalette(self.green_color)
-                    else:
-                        self.label_xp.setPalette(self.red_color)
+        self.label_lastPacketTime.setText(
+            "Last packet at: {} local, {} UTC".format(self.get_local_time(), self.get_utc_time()))
 
-                    # Power
-                    if solar_panel_minus_y_power >= -1.0 and solar_panel_minus_y_power <= 9.7:
-                        self.label_solarPanelMinusYPower.setPalette(self.green_color)
-                    else:
-                        self.label_solarPanelMinusYPower.setPalette(self.red_color)
-                    if solar_panel_plus_x_power >= -1.0 and solar_panel_plus_x_power <= 5.9:
-                        self.label_solarPanelPlusXPower.setPalette(self.green_color)
-                    else:
-                        self.label_solarPanelPlusXPower.setPalette(self.red_color)
-                    if solar_panel_plus_y_power >= -1.0 and solar_panel_plus_y_power <= 10.4:
-                        self.label_solarPanelPlusYPower.setPalette(self.green_color)
-                    else:
-                        self.label_solarPanelPlusYPower.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['BatteryVoltage'] >= 7.1:
-                        self.label_batteryVoltage.setPalette(self.green_color)
-                    elif selected_telemetry_dictionary['BatteryVoltage'] >= 6.9:
-                        self.label_batteryVoltage.setPalette(self.yellow_color)
-                    else:
-                        self.label_batteryVoltage.setPalette(self.red_color)
-                    if battery_current >= 0 and battery_current <= 2.9:
-                        self.label_batteryCurrent.setPalette(self.green_color)
-                    else:
-                        self.label_batteryCurrent.setPalette(self.red_color)
+        self.display_gui_telemetry_spacecraft_state(telemetry)
+        self.display_gui_telemetry_solar_data(telemetry)
+        self.display_gui_telemetry_power(telemetry)
+        self.display_gui_telemetry_temperature(telemetry)
 
-                    # Temperature
-                    if selected_telemetry_dictionary['CommBoardTemperature'] >= -8.0 and \
-                       selected_telemetry_dictionary['CommBoardTemperature'] <= 60.0:
-                        self.label_commBoardTemperature.setPalette(self.green_color)
-                    else:
-                        self.label_commBoardTemperature.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['BatteryTemperature'] >= 5.0 and \
-                       selected_telemetry_dictionary['BatteryTemperature'] <= 25:
-                        self.label_batteryTemperature.setPalette(self.green_color)
-                    elif selected_telemetry_dictionary['BatteryTemperature'] >= 2.0 and selected_telemetry_dictionary['BatteryTemperature'] < 5.0 or selected_telemetry_dictionary['BatteryTemperature'] > 25.0:
-                        self.label_batteryTemperature.setPalette(self.yellow_color)
-                    else:
-                        self.label_batteryTemperature.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['EpsBoardTemperature'] >= -8.0 and \
-                       selected_telemetry_dictionary['EpsBoardTemperature'] <= 45.0:
-                        self.label_epsBoardTemperature.setPalette(self.green_color)
-                    else:
-                        self.label_epsBoardTemperature.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['CdhBoardTemperature'] >= -8.0 and \
-                       selected_telemetry_dictionary['CdhBoardTemperature'] <= 29.0:
-                        self.label_cdhTemperature.setPalette(self.green_color)
-                    else:
-                        self.label_cdhTemperature.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['MotherboardTemperature'] >= -13.0 and \
-                       selected_telemetry_dictionary['MotherboardTemperature'] <= 28.0:
-                        self.label_motherboardTemperature.setPalette(self.green_color)
-                    else:
-                        self.label_motherboardTemperature.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['SolarPanelMinusYTemperature'] >= -42.0 and \
-                       selected_telemetry_dictionary['SolarPanelMinusYTemperature'] <= 61.0:
-                        self.label_solarPanelMinusYTemperature.setPalette(self.green_color)
-                    else:
-                        self.label_solarPanelMinusYTemperature.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['SolarPanelPlusXTemperature'] >= -24.0 and \
-                       selected_telemetry_dictionary['SolarPanelPlusXTemperature'] <= 65.0:
-                        self.label_solarPanelPlusXTemperature.setPalette(self.green_color)
-                    else:
-                        self.label_solarPanelPlusXTemperature.setPalette(self.red_color)
-                    if selected_telemetry_dictionary['SolarPanelPlusYTemperature'] >= -35.0 and \
-                       selected_telemetry_dictionary['SolarPanelPlusYTemperature'] <= 58.0:
-                        self.label_solarPanelPlusYTemperature.setPalette(self.green_color)
-                    else:
-                        self.label_solarPanelPlusYTemperature.setPalette(self.red_color)
+        self.color_code_telemetry(telemetry)
+
+    @staticmethod
+    def get_local_time():
+        return datetime.datetime.now().replace(microsecond=0).isoformat(' ')
+
+    @staticmethod
+    def get_utc_time():
+        return datetime.datetime.utcnow().replace(microsecond=0).isoformat(' ')
+
+    def display_gui_telemetry_spacecraft_state(self, telemetry):
+        self.label_flightModel.setText("{0:0=1d}".format(telemetry['FlightModel']))
+        self.label_commandAcceptCount.setText("{0:0=1d}".format(telemetry['CommandAcceptCount']))
+        if telemetry['SpacecraftMode'] == 0:
+            self.label_spacecraftMode.setText("Unknown")
+        elif telemetry['SpacecraftMode'] == 1:
+            self.label_spacecraftMode.setText("Phoenix")
+        elif telemetry['SpacecraftMode'] == 2:
+            self.label_spacecraftMode.setText("Safe")
+        elif telemetry['SpacecraftMode'] == 4:
+            self.label_spacecraftMode.setText("Science")
+        if telemetry['PointingMode'] == 0:
+            self.label_pointingMode.setText("Coarse Point")
+        elif telemetry['PointingMode'] == 1:
+            self.label_pointingMode.setText("Fine Point")
+        if telemetry['EnableX123'] == 1:
+            self.label_enableX123.setText("Yes")
+        else:
+            self.label_enableX123.setText("No")
+        if telemetry['EnableSps'] == 1:
+            self.label_enableSps.setText("Yes")
+        else:
+            self.label_enableSps.setText("No")
+        if telemetry['Eclipse'] == 1:
+            self.label_eclipse.setText("Eclipse")
+        else:
+            self.label_eclipse.setText("In Sun")
+
+    def display_gui_telemetry_solar_data(self, telemetry):
+        self.label_spsX.setText("{0:.2f}".format(round(telemetry['SpsX'], 2)))
+        self.label_spsY.setText("{0:.2f}".format(round(telemetry['SpsY'], 2)))
+        self.label_xp.setText("{0:.2f}".format(round(telemetry['Xp'], 2)))
+
+    def display_gui_telemetry_power(self, telemetry):
+        self.label_batteryVoltage.setText("{0:.2f}".format(round(telemetry['BatteryVoltage'], 2)))
+        battery_current = self.get_battery_current(telemetry)
+        self.label_batteryCurrent.setText("{0:.2f}".format(round(battery_current, 2)))
+
+        solar_panel_minus_y_power = telemetry['SolarPanelMinusYVoltage'] * telemetry['SolarPanelMinusYCurrent'] / 1e3
+        solar_panel_plus_x_power = telemetry['SolarPanelPlusXVoltage'] * telemetry['SolarPanelPlusXCurrent'] / 1e3
+        solar_panel_plus_y_power = telemetry['SolarPanelPlusYVoltage'] * telemetry['SolarPanelPlusYCurrent'] / 1e3
+        self.label_solarPanelMinusYPower.setText("{0:.2f}".format(round(solar_panel_minus_y_power, 2)))
+        self.label_solarPanelPlusXPower.setText("{0:.2f}".format(round(solar_panel_plus_x_power, 2)))
+        self.label_solarPanelPlusYPower.setText("{0:.2f}".format(round(solar_panel_plus_y_power, 2)))
+
+    def get_battery_current(self, telemetry):
+        if telemetry['BatteryChargeCurrent'] > telemetry['BatteryDischargeCurrent']:
+            battery_current = telemetry['BatteryChargeCurrent'] / 1e3
+            self.label_batteryCurrentText.setText("Battery Charge Current")
+        else:
+            battery_current = telemetry['BatteryDischargeCurrent'] / 1e3
+            self.label_batteryCurrentText.setText("Battery Discharge Current")
+        return battery_current
+
+    def display_gui_telemetry_temperature(self, telemetry):
+        self.label_commBoardTemperature.setText("{0:.2f}".format(round(telemetry['CommBoardTemperature'], 2)))
+        self.label_batteryTemperature.setText("{0:.2f}".format(round(telemetry['BatteryTemperature'], 2)))
+        self.label_epsBoardTemperature.setText("{0:.2f}".format(round(telemetry['EpsBoardTemperature'], 2)))
+        self.label_cdhTemperature.setText("{0:.2f}".format(round(telemetry['CdhBoardTemperature'], 2)))
+        self.label_motherboardTemperature.setText("{0:.2f}".format(round(telemetry['MotherboardTemperature'], 2)))
+        self.label_solarPanelMinusYTemperature.setText("{0:.2f}".format(round(telemetry['SolarPanelMinusYTemperature'], 2)))
+        self.label_solarPanelPlusXTemperature.setText("{0:.2f}".format(round(telemetry['SolarPanelPlusXTemperature'], 2)))
+        self.label_solarPanelPlusYTemperature.setText("{0:.2f}".format(round(telemetry['SolarPanelPlusYTemperature'], 2)))
+
+    def color_code_telemetry(self, telemetry):
+        self.color_code_spacecraft_state(telemetry)
+        self.color_code_solar_data(telemetry)
+        self.color_code_power(telemetry)
+        self.color_code_temperature(telemetry)
+
+    def color_code_spacecraft_state(self, telemetry):
+        if telemetry['SpacecraftMode'] == 0:
+            self.label_spacecraftMode.setPalette(self.red_color)
+        elif telemetry['SpacecraftMode'] == 1:
+            self.label_spacecraftMode.setPalette(self.red_color)
+        elif telemetry['SpacecraftMode'] == 2:
+            self.label_spacecraftMode.setPalette(self.yellow_color)
+        elif telemetry['SpacecraftMode'] == 4:
+            self.label_spacecraftMode.setPalette(self.green_color)
+        if telemetry['PointingMode'] == 0:
+            self.label_pointingMode.setPalette(self.yellow_color)
+        elif telemetry['PointingMode'] == 1:
+            self.label_pointingMode.setPalette(self.green_color)
+
+    def color_code_solar_data(self, telemetry):
+        if abs(telemetry['SpsX']) <= 3.0:
+            self.label_spsX.setPalette(self.green_color)
+        else:
+            self.label_spsX.setPalette(self.red_color)
+
+        if abs(telemetry['SpsY']) <= 3.0:
+            self.label_spsY.setPalette(self.green_color)
+        else:
+            self.label_spsY.setPalette(self.red_color)
+
+        if 0 <= telemetry['Xp'] <= 24860.0:
+            self.label_xp.setPalette(self.green_color)
+        else:
+            self.label_xp.setPalette(self.red_color)
+
+    def color_code_power(self, telemetry):
+        solar_panel_minus_y_power = telemetry['SolarPanelMinusYVoltage'] * telemetry['SolarPanelMinusYCurrent'] / 1e3
+        solar_panel_plus_x_power = telemetry['SolarPanelPlusXVoltage'] * telemetry['SolarPanelPlusXCurrent'] / 1e3
+        solar_panel_plus_y_power = telemetry['SolarPanelPlusYVoltage'] * telemetry['SolarPanelPlusYCurrent'] / 1e3
+        battery_current = self.get_battery_current(telemetry)
+
+        if -1.0 <= solar_panel_minus_y_power <= 10.4:
+            self.label_solarPanelMinusYPower.setPalette(self.green_color)
+        else:
+            self.label_solarPanelMinusYPower.setPalette(self.red_color)
+        if -1.0 <= solar_panel_plus_x_power <= 5.9:
+            self.label_solarPanelPlusXPower.setPalette(self.green_color)
+        else:
+            self.label_solarPanelPlusXPower.setPalette(self.red_color)
+        if -1.0 <= solar_panel_plus_y_power <= 10.4:
+            self.label_solarPanelPlusYPower.setPalette(self.green_color)
+        else:
+            self.label_solarPanelPlusYPower.setPalette(self.red_color)
+        if telemetry['BatteryVoltage'] >= 7.2:
+            self.label_batteryVoltage.setPalette(self.green_color)
+        elif telemetry['BatteryVoltage'] >= 6.6:
+            self.label_batteryVoltage.setPalette(self.yellow_color)
+        else:
+            self.label_batteryVoltage.setPalette(self.red_color)
+        if 0 <= battery_current <= 2.9:
+            self.label_batteryCurrent.setPalette(self.green_color)
+        else:
+            self.label_batteryCurrent.setPalette(self.red_color)
+
+    def color_code_temperature(self, telemetry):
+        if -8.0 <= telemetry['CommBoardTemperature'] <= 60.0:
+            self.label_commBoardTemperature.setPalette(self.green_color)
+        else:
+            self.label_commBoardTemperature.setPalette(self.red_color)
+
+        if 5.0 <= telemetry['BatteryTemperature'] <= 25:
+            self.label_batteryTemperature.setPalette(self.green_color)
+        elif 2.0 <= telemetry['BatteryTemperature'] < 5.0 or telemetry['BatteryTemperature'] > 25.0:
+            self.label_batteryTemperature.setPalette(self.yellow_color)
+        else:
+            self.label_batteryTemperature.setPalette(self.red_color)
+
+        if -8.0 <= telemetry['EpsBoardTemperature'] <= 45.0:
+            self.label_epsBoardTemperature.setPalette(self.green_color)
+        else:
+            self.label_epsBoardTemperature.setPalette(self.red_color)
+
+        if -8.0 <= telemetry['CdhBoardTemperature'] <= 29.0:
+            self.label_cdhTemperature.setPalette(self.green_color)
+        else:
+            self.label_cdhTemperature.setPalette(self.red_color)
+
+        if -13.0 <= telemetry['MotherboardTemperature'] <= 28.0:
+            self.label_motherboardTemperature.setPalette(self.green_color)
+        else:
+            self.label_motherboardTemperature.setPalette(self.red_color)
+
+        if -75.0 <= telemetry['SolarPanelMinusYTemperature'] <= 85.0:
+            self.label_solarPanelMinusYTemperature.setPalette(self.green_color)
+        else:
+            self.label_solarPanelMinusYTemperature.setPalette(self.red_color)
+
+        if -75.0 <= telemetry['SolarPanelPlusXTemperature'] <= 85.0:
+            self.label_solarPanelPlusXTemperature.setPalette(self.green_color)
+        else:
+            self.label_solarPanelPlusXTemperature.setPalette(self.red_color)
+
+        if -75.0 <= telemetry['SolarPanelPlusYTemperature'] <= 85.0:
+            self.label_solarPanelPlusYTemperature.setPalette(self.green_color)
+        else:
+            self.label_solarPanelPlusYTemperature.setPalette(self.red_color)
 
     def stop_read(self):
         """
