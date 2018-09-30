@@ -142,6 +142,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         config.set('input_properties', 'longitude', self.lineEdit_longitude.text())
         with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'w') as configfile:
             config.write(configfile)
+        self.log.info('Updated input_properties.cfg file with new settings.')
 
     def connect_to_port(self):
         self.log.info("Attempting to connect to port.")
@@ -297,7 +298,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def save_data_to_disk(self, buffer_data_hex_string, buffer_data):
         if self.do_save_log():
             # Human readable
-            buffer_output_log = open(self.bufferOutputFilename, 'a')
+            buffer_output_log = open(self.buffer_output_filename, 'a')
             buffer_output_log.write(buffer_data_hex_string)
             buffer_output_log.close()
 
@@ -507,102 +508,51 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.label_solarPanelPlusYTemperature.setPalette(self.red_color)
 
     def stop_read(self):
-        """
-        Respond to disconnect button being clicked -- disconnect from the port, be it serial or socket
-        """
         self.connected_port.close()
 
     def save_log_toggled(self):
-        """
-        Purpose:
-            Respond to the user toggling the save log button (create a new output data log as appropriate)
-        Input:
-            None
-        Output:
-            Creates a log file on disk if toggling on
-        """
-        if self.checkBox_saveLog.isChecked():
+        if self.do_save_log():
             self.setup_output_log()
         else:
-            # Update the GUI for the log file - not saving
-            self.textBrowser_savingToLogFile.setText("Not saving to log file")
-            self.textBrowser_savingToLogFile.setPalette(self.red_color)
+            self.display_gui_no_output_log()
+
+    def display_gui_no_output_log(self):
+        self.textBrowser_savingToLogFile.setText("Not saving to log file")
+        self.textBrowser_savingToLogFile.setPalette(self.red_color)
 
     def forward_data_toggled(self):
-        """
-        Purpose:
-           Respond to the user toggling the forward data button (update the GUI to correspond)
-        Input:
-            None
-        Output:
-            Creates a log file on disk if toggling on
-        """
-        if self.checkBox_forwardData.isChecked():
-            self.label_uploadStatus.setText("Upload status: Idle")
-
-            # Write the input settings used to the input_properties.cfg configuration file
-            config = ConfigParser()
-            config.read('input_properties.cfg')
-            config.set('input_properties', 'forwardData', "True")
-            self.log.info("Forward data set to True")
-            with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
-                config.write(configfile)
+        if self.do_forward_data():
+            self.display_gui_upload_idle()
         else:
-            self.label_uploadStatus.setText("Upload status: Disabled")
+            self.display_gui_upload_disabled()
 
-            # Write the input settings used to the input_properties.cfg configuration file
-            config = ConfigParser()
-            config.read('input_properties.cfg')
-            config.set('input_properties', 'forwardData', "False")
-            self.log.info("Forward data set to False")
-            with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
-                config.write(configfile)
+        self.write_gui_config_options_to_config_file()
+
+    def display_gui_upload_idle(self):
+        self.label_uploadStatus.setText("Upload status: Idle")
+
+    def display_gui_upload_disabled(self):
+        self.label_uploadStatus.setText("Upload status: Disabled")
 
     def decode_kiss_toggled(self):
-        """
-        Purpose:
-            Respond to the user toggling the forward data button (update the GUI to correspond)
-        Input:
-            None
-        Output:
-            Creates a log file on disk if toggling on
-        """
-        if self.checkBox_decodeKiss.isChecked():
-            config = ConfigParser()
-            config.read('input_properties.cfg')
-            config.set('input_properties', 'decodeKiss', "True")
-            self.log.info("Decode KISS set to True")
-            with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
-                config.write(configfile)
-        else:
-            config = ConfigParser()
-            config.read('input_properties.cfg')
-            config.set('input_properties', 'decodeKiss', "False")
-            self.log.info("Decode KISS set to False")
-            with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'wb') as configfile:
-                config.write(configfile)
+        self.write_gui_config_options_to_config_file()
 
     def setup_output_log(self):
         """
-        Purpose:
-            Create the output files for a human readable hex interpretation of the MinXSS data and a binary file
-        Input:
-            None
-        Output:
-            A .tex file with hex MinXSS data and a .dat file with binary MinXSS data
+        Create two files on disk to store data output: one with hex strings and one as binary
         """
-        # Human readable log
+        # Human readable data output
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
-        self.bufferOutputFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + ".txt"
+        self.buffer_output_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + ".txt"
 
-        with open(self.bufferOutputFilename, 'w') as bufferOutputLog:
+        with open(self.buffer_output_filename, 'w') as bufferOutputLog:
             # Update the GUI for the log file - is saving
-            self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.bufferOutputFilename)
+            self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.buffer_output_filename)
             self.textBrowser_savingToLogFile.setPalette(self.green_color)
         bufferOutputLog.close()
 
-        # Binary log
+        # Binary data output
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
         latitude = self.lineEdit_latitude.text()
