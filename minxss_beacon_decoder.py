@@ -305,7 +305,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return
 
         self.label_lastPacketTime.setText(
-            "Last packet at: {} local, {} UTC".format(self.get_local_time(), self.get_utc_time()))
+            "Last packet at: {} local    /    {} UTC".format(self.get_local_time(), self.get_utc_time()))
 
         self.display_gui_telemetry_spacecraft_state(telemetry)
         self.display_gui_telemetry_solar_data(telemetry)
