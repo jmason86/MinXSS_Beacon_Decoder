@@ -25,14 +25,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.yellow_color = None
         self.red_color = None
         self.connected_port = None
+        self.output_hex_filename = None
+        self.output_binary_filename = None
 
         self.log = self.create_log()  # Debug log
+        self.log.info("Launched MinXSS Beacon Decoder")
+
         self.setup_colors()
         self.setupUi(self)
         self.setup_available_ports()
-        self.assign_widgets()
+        self.connect_ui_to_functions()
         self.setup_last_used_settings()
-        self.setup_output_log()  # Log of buffer data
+        self.setup_output_files()
         self.port_read_thread = PortReadThread(self.read_port, self.stop_read)
         QApplication.instance().aboutToQuit.connect(self.prepare_to_exit)
         self.show()
@@ -65,10 +69,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         port_names = [x[0] for x in list_port_info_objects]
         self.comboBox_serialPort.addItems(port_names)
 
-    def assign_widgets(self):
-        """
-        Connect UI interactive elements to other functions herein so that code is executed upon user interaction with these elements
-        """
+    def connect_ui_to_functions(self):
         self.actionConnect.triggered.connect(self.connect_clicked)
         self.checkBox_saveLog.stateChanged.connect(self.save_log_toggled)
         self.checkBox_forwardData.stateChanged.connect(self.forward_data_toggled)
@@ -231,18 +232,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.label_socketStatus.setPalette(self.red_color)
 
     def complete_pass_clicked(self):
-        """
-        Respond to the complete pass button being clicked: upload the binary output data
-        """
         self.upload_data()
 
     def upload_data(self):
-        """
-        Upload binary data to the MinXSS team
-        """
         if self.do_forward_data():
+            self.log.info('Uploading data to MinXSS team.')
             self.display_gui_uploading()
-            file_upload.upload(self.bufferOutputBinaryFilename, self.log)
+            file_upload.upload(self.output_binary_filename, self.log)
             self.display_gui_upload_complete()
 
     def do_forward_data(self):
@@ -255,10 +251,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.label_uploadStatus.setText("Upload status: Complete")
 
     def read_port(self):
-        """
-        Read the buffer data from the port in an infinite loop.
-        Decode, display, and write to disk any MinXSS housekeeping packets.
-        """
         while True:
             buffer_data = self.connected_port.read_packet()
             if len(buffer_data) == 0:
@@ -297,15 +289,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def save_data_to_disk(self, buffer_data_hex_string, buffer_data):
         if self.do_save_log():
-            # Human readable
-            buffer_output_log = open(self.buffer_output_filename, 'a')
-            buffer_output_log.write(buffer_data_hex_string)
-            buffer_output_log.close()
+            output_hex_file = open(self.output_hex_filename, 'a')
+            output_hex_file.write(buffer_data_hex_string)
+            output_hex_file.close()
 
-            # Binary
-            buffer_output_binary_log = open(self.bufferOutputBinaryFilename, 'ab')
-            buffer_output_binary_log.write(buffer_data)
-            buffer_output_binary_log.close()
+            output_binary_file = open(self.output_binary_filename, 'ab')
+            output_binary_file.write(buffer_data)
+            output_binary_file.close()
 
     def do_save_log(self):
         return self.checkBox_saveLog.isChecked
@@ -512,7 +502,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def save_log_toggled(self):
         if self.do_save_log():
-            self.setup_output_log()
+            self.setup_output_files()
         else:
             self.display_gui_no_output_log()
 
@@ -537,91 +527,92 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def decode_kiss_toggled(self):
         self.write_gui_config_options_to_config_file()
 
-    def setup_output_log(self):
-        """
-        Create two files on disk to store data output: one with hex strings and one as binary
-        """
-        # Human readable data output
+    def setup_output_files(self):
+        self.setup_output_file_decoded_data_as_hex()
+        self.setup_output_file_decoded_data_as_binary()
+    
+    def setup_output_file_decoded_data_as_hex(self):
+        self.ensure_output_folder_exists()
+        self.set_output_hex_filename()
+
+        with open(self.output_hex_filename, 'w') as output_hex_file:
+            self.log.info("Opening .txt file to output decoded data as hex.")
+            self.display_gui_output_hex_is_saving()
+        output_hex_file.close()  # Will later append to file as needed
+
+    @staticmethod
+    def ensure_output_folder_exists():
         if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
-        self.buffer_output_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + ".txt"
+    
+    def set_output_hex_filename(self):
+        # TODO: Add ham call sign
+        latitude = self.lineEdit_latitude.text()
+        longitude = self.lineEdit_longitude.text()
+        self.output_hex_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
+                                                datetime.datetime.now().isoformat().replace(':', '_')) + '_' + latitude + '_' + longitude + ".txt"
 
-        with open(self.buffer_output_filename, 'w') as bufferOutputLog:
-            # Update the GUI for the log file - is saving
-            self.textBrowser_savingToLogFile.setText("Saving to log file: " + self.buffer_output_filename)
-            self.textBrowser_savingToLogFile.setPalette(self.green_color)
-        bufferOutputLog.close()
+    def display_gui_output_hex_is_saving(self):
+        self.textBrowser_savingToLogFile.setText("Saving to log files: {} and .dat".format(self.output_hex_filename))
+        self.textBrowser_savingToLogFile.setPalette(self.green_color)
 
-        # Binary data output
-        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
-            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
+    def setup_output_file_decoded_data_as_binary(self):
+        self.ensure_output_folder_exists()
+        self.set_output_binary_filename()
+
+        with open(self.output_binary_filename, 'w') as buffer_output_binary_log:
+            self.log.info("Opening binary file to output decoded data.")
+        buffer_output_binary_log.close()
+
+    def set_output_binary_filename(self):
+        # TODO: Add ham call sign
         latitude = self.lineEdit_latitude.text()
         longitude = self.lineEdit_longitude.text()
 
-        self.bufferOutputBinaryFilename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output", datetime.datetime.now().isoformat().replace(':', '_')) + "_" + latitude + "_" + longitude + ".dat"
-
-        with open(self.bufferOutputBinaryFilename, 'w') as bufferOutputBinaryLog:
-            self.log.info("Opening binary file for buffer data")
-        bufferOutputBinaryLog.closed
+        self.output_binary_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
+                                                   datetime.datetime.now().isoformat().replace(':', '_')) + "_" + latitude + "_" + longitude + ".dat"
 
     def create_log(self):
         """
-        Purpose:
-            Initialize a debugger log file
-        Input:
-            None
-        Output:
-            The .log file for informational and debug statements
+        For debugging and informational purposes.
         """
-        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log")):
-            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log"))
-        log = logging.getLogger('serial_reader_debug')
-        handler = logging.FileHandler(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log", "minxss_beacon_decoder_debug.log"))
+        self.ensure_log_folder_exists()
+        log = logging.getLogger('minxss_beacon_decoder_debug')
+        handler = logging.FileHandler(self.create_log_filename())
         formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
         handler.setFormatter(formatter)
         log.addHandler(handler)
         log.setLevel(logging.DEBUG)
-        log.info("Launched MinXSS Beacon Decoder")
         return log
 
+    @staticmethod
+    def ensure_log_folder_exists():
+        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log")):
+            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log"))
+
+    @staticmethod
+    def create_log_filename():
+        return os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log", "minxss_beacon_decoder_debug.log")
+
     def prepare_to_exit(self):
-        """
-        Purpose:
-            Respond to the user clicking the close application button -- handle any last business, which is just uploading the binary file in this case
-        Input:
-            None
-        Output:
-            None
-        """
-        self.log.info("About to quit")
-        self.upload_data()
-        self.log.info("Closing MinXSS Beacon Decoder")
+        self.log.info("About to quit.")
+        self.upload_data()  # Only occurs if forward data is toggled on
+        self.log.info("Closing MinXSS Beacon Decoder.")
 
 
 class PortReadThread(QtCore.QThread):
     """
-    Purpose:
-        Separate class that handles reading the port in an infinite loop -- means the main loop can still be responsive to user interaction
+    Separate class/thread to read the port in an infinite loop so the main loop can still respond to user interaction
     Input:
         QtCore.QThread: The thread to run this task on
-    Output:
-        N/A
     """
-    def __init__(self, target, slotOnFinished=None):
+    def __init__(self, target, slot_on_finished=None):
         super(PortReadThread, self).__init__()
         self.target = target
-        if slotOnFinished:
-            self.finished.connect(slotOnFinished)
+        if slot_on_finished:
+            self.finished.connect(slot_on_finished)  # signal (finished) connected to slot (stop_reading)
 
     def run(self, *args, **kwargs):
-        """
-        Purpose:
-            Run a specific block of code in the thread
-        Input:
-            args, kwargs: flexible input for arguments
-        Output:
-            None
-        """
         self.target(*args, **kwargs)
 
 
