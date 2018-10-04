@@ -25,6 +25,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.yellow_color = None
         self.red_color = None
         self.connected_port = None
+        self.config_filename = None
         self.output_hex_filename = None
         self.output_binary_filename = None
 
@@ -78,20 +79,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def setup_last_used_settings(self):
         parser = ConfigParser()
-        config_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")
-        if not self.config_file_exists_and_is_not_empty(config_filename):
-            self.write_default_config(config_filename)
+        self.config_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")
+        if not self.config_file_exists_and_is_not_empty():
+            self.write_default_config()
 
-        parser.read(config_filename)
+        parser.read(self.config_filename)
         self.set_instance_variables_from_config(parser)
 
-    @staticmethod
-    def config_file_exists_and_is_not_empty(config_filename):
-        return os.path.isfile(config_filename) and os.stat(config_filename).st_size != 0
+    def config_file_exists_and_is_not_empty(self):
+        return os.path.isfile(self.config_filename) and os.stat(self.config_filename).st_size != 0
 
-    @staticmethod
-    def write_default_config(config_filename):
-        with open(config_filename, "w") as config_file:
+    def write_default_config(self):
+        with open(self.config_filename, "w") as config_file:
             print("[input_properties]", file=config_file)
             print("serial_port = 3", file=config_file)
             print("baud_rate = 19200", file=config_file)
@@ -99,19 +98,23 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print("port = 10000", file=config_file)
             print("decode_kiss = True", file=config_file)
             print("forward_data = True", file=config_file)
+            print("callsign = SFJPM86", file=config_file)
             print("latitude = 40.240", file=config_file)
             print("longitude = -105.2353", file=config_file)
 
     def set_instance_variables_from_config(self, parser):
+        self.tabWidget_serialIp.setCurrentIndex(1)  # TODO: Make this an actual config parameter
         self.comboBox_serialPort.insertItem(0, parser.get('input_properties', 'serial_port'))
         self.comboBox_serialPort.setCurrentIndex(0)
         self.lineEdit_baudRate.setText(parser.get('input_properties', 'baud_rate'))
         self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ip_address'))
         self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
+        self.lineEdit_callsign.setText(parser.get('input_properties', 'callsign'))
         self.lineEdit_latitude.setText(parser.get('input_properties', 'latitude'))
         self.lineEdit_longitude.setText(parser.get('input_properties', 'longitude'))
         self.checkBox_decodeKiss.setChecked(self.str2bool(parser.get('input_properties', 'decode_kiss')))
         self.checkBox_forwardData.setChecked(self.str2bool(parser.get('input_properties', 'forward_data')))
+        # Intentionally don't do saveData -- always defaults to on to avoid frustration of lost data
 
     @staticmethod
     def str2bool(bool_string):
@@ -132,13 +135,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def write_gui_config_options_to_config_file(self):
         config = ConfigParser()
-        config.read('input_properties.cfg')
+        config.read(self.config_filename)
         config.set('input_properties', 'serial_port', self.comboBox_serialPort.currentText())
         config.set('input_properties', 'baud_rate', self.lineEdit_baudRate.text())
         config.set('input_properties', 'ip_address', self.lineEdit_ipAddress.text())
         config.set('input_properties', 'port', self.lineEdit_ipPort.text())
         config.set('input_properties', 'decode_kiss', str(self.checkBox_decodeKiss.isChecked()))
         config.set('input_properties', 'forward_data', str(self.checkBox_forwardData.isChecked()))
+        config.set('input_properties', 'callsign', self.lineEdit_callsign.text())
         config.set('input_properties', 'latitude', self.lineEdit_latitude.text())
         config.set('input_properties', 'longitude', self.lineEdit_longitude.text())
         with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'w') as configfile:
@@ -546,11 +550,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
     
     def set_output_hex_filename(self):
-        # TODO: Add ham call sign
+        callsign = self.lineEdit_callsign.text()
         latitude = self.lineEdit_latitude.text()
         longitude = self.lineEdit_longitude.text()
         self.output_hex_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
-                                                datetime.datetime.now().isoformat().replace(':', '_')) + '_' + latitude + '_' + longitude + ".txt"
+                                                datetime.datetime.now().isoformat().replace(':', '_')) + '_' + callsign + '_' + latitude + '_' + longitude + ".txt"
 
     def display_gui_output_hex_is_saving(self):
         self.textBrowser_savingDataToFile.setText("Saving data to files: {} and .dat.".format(self.output_hex_filename))
@@ -565,12 +569,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         buffer_output_binary_file.close()
 
     def set_output_binary_filename(self):
-        # TODO: Add ham call sign
-        latitude = self.lineEdit_latitude.text()
-        longitude = self.lineEdit_longitude.text()
+        self.output_binary_filename = self.output_hex_filename.replace('.txt', '.dat')
+        #latitude = self.lineEdit_latitude.text()
+        #longitude = self.lineEdit_longitude.text()
 
-        self.output_binary_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
-                                                   datetime.datetime.now().isoformat().replace(':', '_')) + "_" + latitude + "_" + longitude + ".dat"
+        #self.output_binary_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
+        #                                           datetime.datetime.now().isoformat().replace(':', '_')) + "_" + latitude + "_" + longitude + ".dat"
 
     def create_log(self):
         """

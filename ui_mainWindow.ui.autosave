@@ -860,7 +860,7 @@
        <string notr="true">background-color: rgb(51, 51, 51);</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_telemetry">
        <property name="palette">
@@ -36547,7 +36547,7 @@
               <enum>QTabWidget::Rounded</enum>
              </property>
              <property name="currentIndex">
-              <number>0</number>
+              <number>1</number>
              </property>
              <widget class="QWidget" name="serial">
               <attribute name="title">

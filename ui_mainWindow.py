@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Wed Oct  3 21:10:17 2018
+# Created: Wed Oct  3 21:46:06 2018
 #      by: pyside2-uic 2.0.0 running on PySide2 5.6.0~a1
 #
 # WARNING! All changes made in this file will be lost!
@@ -16176,8 +16176,8 @@ class Ui_MainWindow(object):
         self.pushButton_2.setPalette(palette)
         self.pushButton_2.setText("")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo White.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         icon.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo White.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(":/assets/MinXSS CubeSat Logo White.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.pushButton_2.setIcon(icon)
         self.pushButton_2.setIconSize(QtCore.QSize(100, 100))
         self.pushButton_2.setObjectName("pushButton_2")
@@ -16327,8 +16327,8 @@ class Ui_MainWindow(object):
         self.pushButton.setFont(font)
         self.pushButton.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(":/assets/CU LASP White Text.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         icon1.addPixmap(QtGui.QPixmap(":/assets/CU LASP White Text.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(":/assets/CU LASP White Text.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.pushButton.setIcon(icon1)
         self.pushButton.setIconSize(QtCore.QSize(230, 220))
         self.pushButton.setObjectName("pushButton")
@@ -17490,20 +17490,20 @@ class Ui_MainWindow(object):
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.actionConnect = QtWidgets.QAction(MainWindow)
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(":/assets/universal-serial-usb-connector.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         icon2.addPixmap(QtGui.QPixmap(":/assets/universal-serial-usb-connector.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(":/assets/universal-serial-usb-connector.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.actionConnect.setIcon(icon2)
         self.actionConnect.setObjectName("actionConnect")
         self.actionCompletePass = QtWidgets.QAction(MainWindow)
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(":/assets/satellite-station.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         icon3.addPixmap(QtGui.QPixmap(":/assets/satellite-station.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(":/assets/satellite-station.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.actionCompletePass.setIcon(icon3)
         self.actionCompletePass.setObjectName("actionCompletePass")
         self.actionRefreshSerialPorts = QtWidgets.QAction(MainWindow)
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(":/assets/refresh-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         icon4.addPixmap(QtGui.QPixmap(":/assets/refresh-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(":/assets/refresh-button.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.actionRefreshSerialPorts.setIcon(icon4)
         self.actionRefreshSerialPorts.setObjectName("actionRefreshSerialPorts")
         self.toolBar.addAction(self.actionConnect)
@@ -17511,7 +17511,7 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionCompletePass)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         self.tabWidget_serialIp.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lineEdit_baudRate, self.textBrowser_serialOutput)
@@ -17593,7 +17593,7 @@ class Ui_MainWindow(object):
         self.label_batteryTemperature.setText(QtWidgets.QApplication.translate("MainWindow", "-", None, -1))
         self.label_58.setText(QtWidgets.QApplication.translate("MainWindow", "Radio:", None, -1))
         self.label_87.setText(QtWidgets.QApplication.translate("MainWindow", "[-8, 58] ºC", None, -1))
-        self.label_19.setText(QtWidgets.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v2.0.0", None, -1))
+        self.label_19.setText(QtWidgets.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v2.0.1", None, -1))
         self.label_lastPacketTime.setText(QtWidgets.QApplication.translate("MainWindow", "Last packet at: ", None, -1))
         self.label_uploadStatus.setText(QtWidgets.QApplication.translate("MainWindow", "Upload status: Idle", None, -1))
         self.label.setText(QtWidgets.QApplication.translate("MainWindow", "Raw serial data (hex):", None, -1))
