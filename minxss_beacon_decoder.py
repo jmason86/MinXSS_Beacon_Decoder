@@ -75,7 +75,71 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.checkBox_saveData.stateChanged.connect(self.save_data_toggled)
         self.checkBox_forwardData.stateChanged.connect(self.forward_data_toggled)
         self.checkBox_decodeKiss.stateChanged.connect(self.decode_kiss_toggled)
+        self.lineEdit_callsign.editingFinished.connect(self.ground_station_config_changed)
+        self.lineEdit_latitude.editingFinished.connect(self.ground_station_config_changed)
+        self.lineEdit_longitude.editingFinished.connect(self.ground_station_config_changed)
         self.actionCompletePass.triggered.connect(self.complete_pass_clicked)
+
+    def ground_station_config_changed(self):
+        self.setup_output_files()
+        self.write_gui_config_options_to_config_file()
+
+    def setup_output_files(self):
+        self.setup_output_file_decoded_data_as_hex()
+        self.setup_output_file_decoded_data_as_binary()
+
+    def setup_output_file_decoded_data_as_hex(self):
+        self.ensure_output_folder_exists()
+        self.set_output_hex_filename()
+
+        with open(self.output_hex_filename, 'w') as output_hex_file:
+            self.log.info("Opening new .txt file to output decoded data as hex.")
+            self.display_gui_output_hex_is_saving()
+        output_hex_file.close()  # Will later append to file as needed
+
+    @staticmethod
+    def ensure_output_folder_exists():
+        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
+            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
+
+    def set_output_hex_filename(self):
+        callsign = self.lineEdit_callsign.text()
+        latitude = self.lineEdit_latitude.text()
+        longitude = self.lineEdit_longitude.text()
+        self.output_hex_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
+                                                datetime.datetime.now().isoformat().replace(':',
+                                                                                            '_')) + '_' + callsign + '_' + latitude + '_' + longitude + ".txt"
+
+    def display_gui_output_hex_is_saving(self):
+        self.textBrowser_savingDataToFile.setText("Saving data to files: {} and .dat.".format(self.output_hex_filename))
+        self.textBrowser_savingDataToFile.setPalette(self.green_color)
+
+    def setup_output_file_decoded_data_as_binary(self):
+        self.ensure_output_folder_exists()
+        self.set_output_binary_filename()
+
+        with open(self.output_binary_filename, 'w') as buffer_output_binary_file:
+            self.log.info("Opening new binary file to output decoded data.")
+        buffer_output_binary_file.close()
+
+    def set_output_binary_filename(self):
+        self.output_binary_filename = self.output_hex_filename.replace('.txt', '.dat')
+
+    def write_gui_config_options_to_config_file(self):
+        config = ConfigParser()
+        config.read(self.config_filename)
+        config.set('input_properties', 'serial_port', self.comboBox_serialPort.currentText())
+        config.set('input_properties', 'baud_rate', self.lineEdit_baudRate.text())
+        config.set('input_properties', 'ip_address', self.lineEdit_ipAddress.text())
+        config.set('input_properties', 'port', self.lineEdit_ipPort.text())
+        config.set('input_properties', 'decode_kiss', str(self.checkBox_decodeKiss.isChecked()))
+        config.set('input_properties', 'forward_data', str(self.checkBox_forwardData.isChecked()))
+        config.set('input_properties', 'callsign', self.lineEdit_callsign.text())
+        config.set('input_properties', 'latitude', self.lineEdit_latitude.text())
+        config.set('input_properties', 'longitude', self.lineEdit_longitude.text())
+        with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'w') as configfile:
+            config.write(configfile)
+        self.log.info('Updated input_properties.cfg file with new settings.')
 
     def setup_last_used_settings(self):
         parser = ConfigParser()
@@ -132,22 +196,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.connect_to_port()
         else:
             self.disconnect_from_port()
-
-    def write_gui_config_options_to_config_file(self):
-        config = ConfigParser()
-        config.read(self.config_filename)
-        config.set('input_properties', 'serial_port', self.comboBox_serialPort.currentText())
-        config.set('input_properties', 'baud_rate', self.lineEdit_baudRate.text())
-        config.set('input_properties', 'ip_address', self.lineEdit_ipAddress.text())
-        config.set('input_properties', 'port', self.lineEdit_ipPort.text())
-        config.set('input_properties', 'decode_kiss', str(self.checkBox_decodeKiss.isChecked()))
-        config.set('input_properties', 'forward_data', str(self.checkBox_forwardData.isChecked()))
-        config.set('input_properties', 'callsign', self.lineEdit_callsign.text())
-        config.set('input_properties', 'latitude', self.lineEdit_latitude.text())
-        config.set('input_properties', 'longitude', self.lineEdit_longitude.text())
-        with open(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg"), 'w') as configfile:
-            config.write(configfile)
-        self.log.info('Updated input_properties.cfg file with new settings.')
 
     def connect_to_port(self):
         self.log.info("Attempting to connect to port.")
@@ -530,51 +578,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def decode_kiss_toggled(self):
         self.write_gui_config_options_to_config_file()
-
-    def setup_output_files(self):
-        self.setup_output_file_decoded_data_as_hex()
-        self.setup_output_file_decoded_data_as_binary()
-    
-    def setup_output_file_decoded_data_as_hex(self):
-        self.ensure_output_folder_exists()
-        self.set_output_hex_filename()
-
-        with open(self.output_hex_filename, 'w') as output_hex_file:
-            self.log.info("Opening .txt file to output decoded data as hex.")
-            self.display_gui_output_hex_is_saving()
-        output_hex_file.close()  # Will later append to file as needed
-
-    @staticmethod
-    def ensure_output_folder_exists():
-        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output")):
-            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
-    
-    def set_output_hex_filename(self):
-        callsign = self.lineEdit_callsign.text()
-        latitude = self.lineEdit_latitude.text()
-        longitude = self.lineEdit_longitude.text()
-        self.output_hex_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
-                                                datetime.datetime.now().isoformat().replace(':', '_')) + '_' + callsign + '_' + latitude + '_' + longitude + ".txt"
-
-    def display_gui_output_hex_is_saving(self):
-        self.textBrowser_savingDataToFile.setText("Saving data to files: {} and .dat.".format(self.output_hex_filename))
-        self.textBrowser_savingDataToFile.setPalette(self.green_color)
-
-    def setup_output_file_decoded_data_as_binary(self):
-        self.ensure_output_folder_exists()
-        self.set_output_binary_filename()
-
-        with open(self.output_binary_filename, 'w') as buffer_output_binary_file:
-            self.log.info("Opening binary file to output decoded data.")
-        buffer_output_binary_file.close()
-
-    def set_output_binary_filename(self):
-        self.output_binary_filename = self.output_hex_filename.replace('.txt', '.dat')
-        #latitude = self.lineEdit_latitude.text()
-        #longitude = self.lineEdit_longitude.text()
-
-        #self.output_binary_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
-        #                                           datetime.datetime.now().isoformat().replace(':', '_')) + "_" + latitude + "_" + longitude + ".dat"
 
     def create_log(self):
         """

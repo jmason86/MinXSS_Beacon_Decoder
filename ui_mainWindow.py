@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Wed Oct  3 21:46:06 2018
+# Created: Thu Oct  4 19:53:05 2018
 #      by: pyside2-uic 2.0.0 running on PySide2 5.6.0~a1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17512,7 +17512,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
-        self.tabWidget_serialIp.setCurrentIndex(0)
+        self.tabWidget_serialIp.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.lineEdit_baudRate, self.textBrowser_serialOutput)
 
@@ -17593,7 +17593,7 @@ class Ui_MainWindow(object):
         self.label_batteryTemperature.setText(QtWidgets.QApplication.translate("MainWindow", "-", None, -1))
         self.label_58.setText(QtWidgets.QApplication.translate("MainWindow", "Radio:", None, -1))
         self.label_87.setText(QtWidgets.QApplication.translate("MainWindow", "[-8, 58] ºC", None, -1))
-        self.label_19.setText(QtWidgets.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v2.0.1", None, -1))
+        self.label_19.setText(QtWidgets.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v2.0.2", None, -1))
         self.label_lastPacketTime.setText(QtWidgets.QApplication.translate("MainWindow", "Last packet at: ", None, -1))
         self.label_uploadStatus.setText(QtWidgets.QApplication.translate("MainWindow", "Upload status: Idle", None, -1))
         self.label.setText(QtWidgets.QApplication.translate("MainWindow", "Raw serial data (hex):", None, -1))
