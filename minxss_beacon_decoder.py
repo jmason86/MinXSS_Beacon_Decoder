@@ -29,7 +29,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.output_binary_filename = None
 
         self.log = self.create_log()  # Debug log
-        self.log.info("Launched MinXSS Beacon Decoder")
+        self.log.info("Launched MinXSS Beacon Decoder.")
 
         self.setup_colors()
         self.setupUi(self)
@@ -242,7 +242,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.display_gui_upload_complete()
 
     def do_forward_data(self):
-        return self.checkBox_forwardData.isChecked
+        return self.checkBox_forwardData.isChecked()
 
     def display_gui_uploading(self):
         self.label_uploadStatus.setText("Upload status: Uploading")
@@ -276,7 +276,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return buffer_data
 
     def do_decode_kiss(self):
-        return self.checkBox_decodeKiss.isChecked
+        return self.checkBox_decodeKiss.isChecked()
 
     @staticmethod
     def convert_buffer_data_to_hex_string(buffer_data):
@@ -298,7 +298,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             output_binary_file.close()
 
     def do_save_log(self):
-        return self.checkBox_saveLog.isChecked
+        return self.checkBox_saveLog.isChecked()
 
     def display_gui_telemetry(self, telemetry):
         if not telemetry:
