@@ -71,7 +71,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def connect_ui_to_functions(self):
         self.actionConnect.triggered.connect(self.connect_clicked)
-        self.checkBox_saveLog.stateChanged.connect(self.save_log_toggled)
+        self.checkBox_saveData.stateChanged.connect(self.save_data_toggled)
         self.checkBox_forwardData.stateChanged.connect(self.forward_data_toggled)
         self.checkBox_decodeKiss.stateChanged.connect(self.decode_kiss_toggled)
         self.actionCompletePass.triggered.connect(self.complete_pass_clicked)
@@ -181,7 +181,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         connected_port = connect_port_get_packet.connect_serial(port, baud_rate, self.log)
         port_readable = connected_port.testRead()
         if port_readable:
-            self.log.info('Successfully connected to serial port')
+            self.log.info('Successfully connected to serial port.')
         else:
             self.log.warning('Failed to connect to serial port.')
         return connected_port, port_readable
@@ -215,7 +215,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.label_socketStatus.setPalette(self.red_color)
 
     def disconnect_from_port(self):
-        self.log.info("Attempting to disconnect from port")
+        self.log.info("Attempting to disconnect from port.")
 
         self.toggle_connect_button(is_currently_connect=False)
         self.display_gui_port_closed()
@@ -288,7 +288,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.textBrowser_serialOutput.verticalScrollBar().setValue(scroll_to_bottom)
 
     def save_data_to_disk(self, buffer_data_hex_string, buffer_data):
-        if self.do_save_log():
+        if self.do_save_data():
             output_hex_file = open(self.output_hex_filename, 'a')
             output_hex_file.write(buffer_data_hex_string)
             output_hex_file.close()
@@ -297,8 +297,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             output_binary_file.write(buffer_data)
             output_binary_file.close()
 
-    def do_save_log(self):
-        return self.checkBox_saveLog.isChecked()
+    def do_save_data(self):
+        return self.checkBox_saveData.isChecked()
 
     def display_gui_telemetry(self, telemetry):
         if not telemetry:
@@ -500,15 +500,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def stop_read(self):
         self.connected_port.close()
 
-    def save_log_toggled(self):
-        if self.do_save_log():
+    def save_data_toggled(self):
+        if self.do_save_data():
             self.setup_output_files()
         else:
-            self.display_gui_no_output_log()
+            self.display_gui_no_output_data()
 
-    def display_gui_no_output_log(self):
-        self.textBrowser_savingToLogFile.setText("Not saving to log file")
-        self.textBrowser_savingToLogFile.setPalette(self.red_color)
+    def display_gui_no_output_data(self):
+        self.textBrowser_savingDataToFile.setText("Not saving data to file.")
+        self.textBrowser_savingDataToFile.setPalette(self.red_color)
 
     def forward_data_toggled(self):
         if self.do_forward_data():
@@ -553,16 +553,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                                 datetime.datetime.now().isoformat().replace(':', '_')) + '_' + latitude + '_' + longitude + ".txt"
 
     def display_gui_output_hex_is_saving(self):
-        self.textBrowser_savingToLogFile.setText("Saving to log files: {} and .dat".format(self.output_hex_filename))
-        self.textBrowser_savingToLogFile.setPalette(self.green_color)
+        self.textBrowser_savingDataToFile.setText("Saving data to files: {} and .dat.".format(self.output_hex_filename))
+        self.textBrowser_savingDataToFile.setPalette(self.green_color)
 
     def setup_output_file_decoded_data_as_binary(self):
         self.ensure_output_folder_exists()
         self.set_output_binary_filename()
 
-        with open(self.output_binary_filename, 'w') as buffer_output_binary_log:
+        with open(self.output_binary_filename, 'w') as buffer_output_binary_file:
             self.log.info("Opening binary file to output decoded data.")
-        buffer_output_binary_log.close()
+        buffer_output_binary_file.close()
 
     def set_output_binary_filename(self):
         # TODO: Add ham call sign
