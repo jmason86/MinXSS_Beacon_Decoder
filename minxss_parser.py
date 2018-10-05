@@ -132,7 +132,14 @@ class Minxss_Parser():
     #
     
     def decodeFlightModel(self, bytearrayTemp):
-        return (bytearrayTemp & 0x0030) >> 4 # [Unitless]
+        flight_model = (bytearrayTemp & 0x0030) >> 4  # [Unitless]
+
+        # Fix mistaken flight model number in final flight software burn
+        if flight_model == 3:
+            flight_model = 2
+        elif flight_model == 4:
+            flight_model = 3  # This is the engineering test unit (AKA FlatSat)
+        return flight_model
     
     def decodeCommandAcceptCount(self, bytearrayTemp):
         return self.decodeBytes(bytearrayTemp) # [#]
