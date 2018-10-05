@@ -1,6 +1,6 @@
 # 1. Run this code in a dedicated terminal
 # 2. Launch the beacon decoder and connect it to ip = localhost, port = (see hard-code value below)
-# 3. Observe that the data are decoded and red/yellow/green highlighted
+# 3. Observe that the sequence of data are decoded and red/yellow/green highlighted
 
 import socket
 import time
