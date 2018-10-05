@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Thu Oct  4 19:53:05 2018
+# Created: Fri Oct  5 11:34:08 2018
 #      by: pyside2-uic 2.0.0 running on PySide2 5.6.0~a1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17511,10 +17511,24 @@ class Ui_MainWindow(object):
         self.toolBar.addAction(self.actionCompletePass)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         self.tabWidget_serialIp.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        MainWindow.setTabOrder(self.lineEdit_baudRate, self.textBrowser_serialOutput)
+        MainWindow.setTabOrder(self.lineEdit_ipAddress, self.lineEdit_ipPort)
+        MainWindow.setTabOrder(self.lineEdit_ipPort, self.lineEdit_callsign)
+        MainWindow.setTabOrder(self.lineEdit_callsign, self.lineEdit_latitude)
+        MainWindow.setTabOrder(self.lineEdit_latitude, self.lineEdit_longitude)
+        MainWindow.setTabOrder(self.lineEdit_longitude, self.checkBox_decodeKiss)
+        MainWindow.setTabOrder(self.checkBox_decodeKiss, self.checkBox_saveData)
+        MainWindow.setTabOrder(self.checkBox_saveData, self.checkBox_forwardData)
+        MainWindow.setTabOrder(self.checkBox_forwardData, self.textBrowser_savingDataToFile)
+        MainWindow.setTabOrder(self.textBrowser_savingDataToFile, self.lineEdit_baudRate)
+        MainWindow.setTabOrder(self.lineEdit_baudRate, self.tabWidget_serialIp)
+        MainWindow.setTabOrder(self.tabWidget_serialIp, self.pushButton_2)
+        MainWindow.setTabOrder(self.pushButton_2, self.pushButton)
+        MainWindow.setTabOrder(self.pushButton, self.textBrowser_serialOutput)
+        MainWindow.setTabOrder(self.textBrowser_serialOutput, self.comboBox_serialPort)
+        MainWindow.setTabOrder(self.comboBox_serialPort, self.tabWidget)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "MinXSS Beacon Decoder", None, -1))

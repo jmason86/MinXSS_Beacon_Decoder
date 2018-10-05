@@ -860,7 +860,7 @@
        <string notr="true">background-color: rgb(51, 51, 51);</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_telemetry">
        <property name="palette">
@@ -52080,8 +52080,22 @@ p, li { white-space: pre-wrap; }
   </action>
  </widget>
  <tabstops>
+  <tabstop>lineEdit_ipAddress</tabstop>
+  <tabstop>lineEdit_ipPort</tabstop>
+  <tabstop>lineEdit_callsign</tabstop>
+  <tabstop>lineEdit_latitude</tabstop>
+  <tabstop>lineEdit_longitude</tabstop>
+  <tabstop>checkBox_decodeKiss</tabstop>
+  <tabstop>checkBox_saveData</tabstop>
+  <tabstop>checkBox_forwardData</tabstop>
+  <tabstop>textBrowser_savingDataToFile</tabstop>
   <tabstop>lineEdit_baudRate</tabstop>
+  <tabstop>tabWidget_serialIp</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton</tabstop>
   <tabstop>textBrowser_serialOutput</tabstop>
+  <tabstop>comboBox_serialPort</tabstop>
+  <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources>
   <include location="assets/QtAssets.qrc"/>
