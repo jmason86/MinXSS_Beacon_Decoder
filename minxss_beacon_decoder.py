@@ -145,6 +145,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         parser = ConfigParser()
         self.config_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")
         if not self.config_file_exists_and_is_not_empty():
+            self.log.info('No input_properties.cfg file found. Creating the default one.')
             self.write_default_config()
 
         parser.read(self.config_filename)
