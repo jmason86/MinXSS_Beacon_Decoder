@@ -231,12 +231,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         port = self.comboBox_serialPort.currentText()
         baud_rate = self.lineEdit_baudRate.text()
 
-        connected_port = connect_port_get_packet.connect_serial(port, baud_rate, self.log)
-        port_readable = connected_port.testRead()
-        if port_readable:
-            self.log.info('Successfully connected to serial port.')
-        else:
-            self.log.warning('Failed to connect to serial port.')
+        connect_serial = connect_port_get_packet.ConnectSerial(port, baud_rate, self.log)
+        connected_port = connect_serial.connect_to_port()
+        port_readable = connected_port.port_readable
+
         return connected_port, port_readable
 
     def connect_to_socket_port(self):
