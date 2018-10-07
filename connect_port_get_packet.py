@@ -7,85 +7,79 @@ import serial
 import socket
 
 
-class connect_serial():
-    def __init__(self, port, baudRate, log):
+class ConnectSerial:
+    def __init__(self, port, baud_rate, log):
         self.port = port
-        self.baudRate = baudRate
+        self.baud_rate = baud_rate
         self.log = log
-        self.log.info("Opening port: {0}".format(port))
 
-        if (not self.ser.readable()):
-            raise Exception("Port not readable")
+        self.ser = None
+        self.start_sync_bytes = None
+        self.stop_sync_bytes = None
+
+        self.open_serial_port()
+
+    def open_serial_port(self):
+        self.log.info("Opening serial port {0} at baud rate {1}".format(self.port, self.baud_rate))
+
+        self.ser = serial.Serial(self.port, self.baud_rate)
+        if not self.ser.readable():
+            self.log.error('Serial port not readable.')
 
     def close(self):
-        self.log.info("Closing ground station link")
-        self.ser.close
-    
-    # Purpose:
-    #   From all of the binary coming in, grab a single MinXSS packet
-    # Input:
-    #   None
-    # Output:
-    #   packet [bytearray]: A single MinXSS packet with all headers and footers
-    def read_packet(self):
-        packet = bytearray()
-        bufferedData = bytearray()
-        
-        foundSyncStartIndex = 0
-        foundSyncStopIndex = 0
-        while(foundSyncStartIndex == 0 and foundSyncStopIndex == 0):
-            if self.findSyncStartIndex(bufferedData) != -1:
-                foundSyncStartIndex = 1
-            if self.findSyncStopIndex(bufferedData) != -1:
-                foundSyncStopIndex = 1
+        self.log.info("Closing serial port.")
+        self.ser.close()
 
-            bufferedData = self.ser.read()
-            for byte in bufferedData:
+    def read_packet(self):
+        #  From all of the binary coming in, grab and return a single MinXSS packet including all headers/footers
+        packet = bytearray()
+        buffered_data = bytearray()
+        
+        found_sync_start_index = 0
+        found_sync_stop_index = 0
+        while found_sync_start_index == 0 and found_sync_stop_index == 0:
+            if self.find_sync_start_index(buffered_data) != -1:
+                found_sync_start_index = 1
+            if self.find_sync_stop_index(buffered_data) != -1:
+                found_sync_stop_index = 1
+
+            buffered_data = self.ser.read()
+            for byte in buffered_data:
                 packet.append(byte)
 
-            if len(packet) > 500: # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
-                self.log.error("Too many bytes in packet")
+            if len(packet) > 500:  # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
+                self.log.error("Too many bytes in packet.")
                 break
                     
         self.log.info("Packet length [bytes] = " + str(len(packet)))
         return packet
 
-    # Purpose:
-    #   Find the start of the MinXSS packet and return the index within minxssSerialData
-    # Input:
-    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
-    # Output:
-    #   packetStartIndex [int]: The index within minxssSerialData where the start sync bytes were found. -1 if not found.
-    #
-    def findSyncStartIndex(self, minxssSerialData):
-        syncBytes = bytearray([0x08, 0x19])
-        packetStartIndex = bytearray(minxssSerialData).find(syncBytes)
-        return packetStartIndex
+    def find_sync_start_index(self, buffered_serial_data):
+        self.set_start_sync_bytes()
+        return bytearray(buffered_serial_data).find(self.start_sync_bytes)
 
-    # Purpose:
-    #   Find the end of the MinXSS packet and return the index within minxssSerialData
-    # Input:
-    #   minxssSerialData [bytearray]: The direct output of the python serial line (connect_serial_decode_kiss.read()), or simulated data in that format
-    # Output:
-    #   packetStopIndex [int]: The index within minxssSerialData where the end sync bytes were found. -1 if not found.
-    #
-    def findSyncStopIndex(self, minxssSerialData):
-        syncBytes = bytearray([0xa5, 0xa5])
-        packetStopIndex = bytearray(minxssSerialData).find(syncBytes)
-        return packetStopIndex
+    def set_start_sync_bytes(self):
+        self.start_sync_bytes = bytearray([0x08, 0x19])
 
-    def testRead(self):
+    def find_sync_stop_index(self, buffered_serial_data):
+        self.set_stop_sync_bytes()
+        return bytearray(buffered_serial_data).find(self.stop_sync_bytes)
+
+    def set_stop_sync_bytes(self):
+        self.stop_sync_bytes = bytearray([0xa5, 0xa5])
+
+    def test_read(self):
         self.log.info("Testing read on port: {0}".format(self.port))
-        portReadable = self.ser.readable()
+        port_readable = self.ser.readable()
 
-        if portReadable:
-            self.log.info("Test read on port was successful")
+        if port_readable:
+            self.log.info("Test read on port was successful.")
         else:
-            self.log.error("Test read on port failed")
-        return portReadable
+            self.log.error("Test read on port failed.")
+        return port_readable
 
 
-class ConnectSocket():
+class ConnectSocket:
     def __init__(self, ip_address, port, log):
         self.ip_address = ip_address
         self.port = port
