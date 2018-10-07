@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="assets">
     <file>MinXSS CubeSat Logo White.png</file>
+    <file>icon_256.png</file>
     <file>refresh-button.png</file>
     <file>satellite-station.png</file>
     <file>CU LASP White Text.png</file>

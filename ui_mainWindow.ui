@@ -860,7 +860,7 @@
        <string notr="true">background-color: rgb(51, 51, 51);</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_telemetry">
        <property name="palette">
