@@ -26,10 +26,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.red_color = None
         self.connected_port = None
         self.config_filename = None
+        self.base_output_filename = None
         self.output_hex_filename = None
         self.output_binary_filename = None
 
-        self.log = self.create_log()  # Debug log
+        self.log = self.create_log()
         self.log.info("Launched MinXSS Beacon Decoder.")
 
         self.setup_colors()
@@ -85,8 +86,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.write_gui_config_options_to_config_file()
 
     def setup_output_files(self):
+        self.set_base_output_filename()
         self.setup_output_file_decoded_data_as_hex()
         self.setup_output_file_decoded_data_as_binary()
+
+    def set_base_output_filename(self):
+        callsign = self.lineEdit_callsign.text()
+        latitude = self.lineEdit_latitude.text()
+        longitude = self.lineEdit_longitude.text()
+        self.base_output_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
+                                                 datetime.datetime.now().isoformat().replace(':',
+                                                                                             '_')) + '_' + callsign + '_' + latitude + '_' + longitude
 
     def setup_output_file_decoded_data_as_hex(self):
         self.ensure_output_folder_exists()
@@ -103,12 +113,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output"))
 
     def set_output_hex_filename(self):
-        callsign = self.lineEdit_callsign.text()
-        latitude = self.lineEdit_latitude.text()
-        longitude = self.lineEdit_longitude.text()
-        self.output_hex_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
-                                                datetime.datetime.now().isoformat().replace(':',
-                                                                                            '_')) + '_' + callsign + '_' + latitude + '_' + longitude + ".txt"
+        self.output_hex_filename = self.base_output_filename + ".txt"
 
     def display_gui_output_hex_is_saving(self):
         self.textBrowser_savingDataToFile.setText("Saving data to files: {} and .dat.".format(self.output_hex_filename))
@@ -123,7 +128,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         buffer_output_binary_file.close()
 
     def set_output_binary_filename(self):
-        self.output_binary_filename = self.output_hex_filename.replace('.txt', '.dat')
+        self.output_binary_filename = self.base_output_filename + ".dat"
 
     def write_gui_config_options_to_config_file(self):
         config = ConfigParser()
@@ -363,9 +368,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.display_gui_telemetry_power(telemetry)
         self.display_gui_telemetry_temperature(telemetry)
 
-        palette = QtGui.QPalette()
-        palette.setColor(QtGui.QPalette.Text, QColor(55, 195, 58))
-        self.label_spacecraftMode.setPalette(palette)
+        self.label_spacecraftMode.setPalette(self.green_color)
         self.color_code_telemetry(telemetry)
 
     @staticmethod
