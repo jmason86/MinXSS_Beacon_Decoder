@@ -10,7 +10,7 @@ import connect_port_get_packet
 import file_upload
 import datetime
 from serial.tools import list_ports  # This is pyserial, not plain serial
-import minxss_parser as mp
+from minxss_parser import MinxssParser
 
 """Call the GUI and attach it to functions."""
 __author__ = "James Paul Mason"
@@ -319,7 +319,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             self.save_data_to_disk(buffer_data_hex_string, buffer_data)
 
-            minxss_parser = mp.Minxss_Parser(buffer_data, self.log)
+            minxss_parser = MinxssParser(self.log)
             telemetry = minxss_parser.parse_packet(buffer_data)
             self.display_gui_telemetry(telemetry)
 
