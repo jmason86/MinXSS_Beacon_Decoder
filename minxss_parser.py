@@ -81,37 +81,23 @@ class MinxssParser:
                                        the calling function
         """
         if len(bytearray_temp) == 1:
-            return bytearray_temp
+            telemetry_point_raw = bytearray_temp
         elif len(bytearray_temp) == 2:
-            if return_unsigned_int:
-                return uint16((int8(bytearray_temp[1]) << 8) | uint8(bytearray_temp[0]))
-            else:
-                return int16((uint8(bytearray_temp[1]) << 8) | uint8(bytearray_temp[0]))
+            telemetry_point_raw = (uint8(bytearray_temp[1]) << 8) | uint8(bytearray_temp[0])
         elif len(bytearray_temp) == 4:
-            if return_unsigned_int:
-                return uint32((uint8(bytearray_temp[3]) << 24) | (uint8(bytearray_temp[2] << 16)) |
-                              (uint8(bytearray_temp[1] << 8)) | (uint8(bytearray_temp[0] << 0)))
-            else:
-                return int32((uint8(bytearray_temp[3]) << 24) | (uint8(bytearray_temp[2] << 16)) |
-                             (uint8(bytearray_temp[1] << 8)) | (uint8(bytearray_temp[0] << 0)))
+            telemetry_point_raw = (uint8(bytearray_temp[3]) << 24) | (uint8(bytearray_temp[2] << 16)) | \
+                                  (uint8(bytearray_temp[1] << 8)) | (uint8(bytearray_temp[0] << 0))
         else:
             self.log.debug("More bytes than expected")
-                
-    ##
-    # The following functions all have the same purpose: to convert raw bytes to human-readable output.
-    # Only the units will be commented on. The function and variable names are explicit and verbose for clarity.
-    ##
-    
-    # Purpose:
-    #   Convert raw telemetry to human-readable number in human-readable units
-    # Input:
-    #   bytearrayTemp [bytearray]: The bytes corresponding to the telemetry to decode.
-    #                              Can accept any number of bytes but do not expect more than 4
-    # Output:
-    #   telemetryPoint [int, float, string, as appropriate]: The telemetry point in human-readable form and units
-    #
-    
-    def decode_flight_model(self, bytearrayTemp):
+            return None
+
+        if return_unsigned_int:
+            return uint16(telemetry_point_raw)
+        else:
+            return int16(telemetry_point_raw)
+
+    @staticmethod
+    def decode_flight_model(bytearrayTemp):
         flight_model = (bytearrayTemp & 0x0030) >> 4  # [Unitless]
 
         # Fix mistaken flight model number in final flight software burn
