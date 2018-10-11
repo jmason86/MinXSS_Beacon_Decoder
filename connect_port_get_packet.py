@@ -4,13 +4,12 @@ __contact__ = "jmason86@gmail.com"
 
 import serial
 import socket
+from find_sync_bytes import FindSyncBytes
 
 
 class PacketReader:
     def __init__(self):
-        self.log_sync_bytes = bytearray([0x08, 0x1D])  # Real time spacecraft messages to ignore
-        self.start_sync_bytes = bytearray([0x08, 0x19])  # Beacon housekeeping data
-        self.stop_sync_bytes = bytearray([0xa5, 0xa5])
+        self.fsb = FindSyncBytes()
 
     def read_packet(self):
         #  From all of the binary coming in, grab and return a single packet including all headers/footers
@@ -24,23 +23,23 @@ class PacketReader:
             for byte in buffered_data:
                 packet.append(byte)
 
-            if self.find_log_sync_start_index(packet) != -1:
+            if self.fsb.find_log_sync_start_index(packet) != -1:
                 found_log_packet = True
-            if self.find_sync_start_index(packet) != -1:
+            if self.fsb.find_sync_start_index(packet) != -1:
                 found_sync_start_index = True
-            if self.find_sync_stop_index(packet) != -1:
+            if self.fsb.find_sync_stop_index(packet) != -1:
                 if found_log_packet:
                     packet = bytearray()  # Clear out the packet because its a log message not a housekeeping packet
                 else:
                     found_sync_stop_index = True
             if found_sync_start_index and found_sync_stop_index:
-                if self.find_sync_start_index(packet) > self.find_sync_stop_index(packet):
-                    packet = packet[self.find_sync_start_index(packet):]
+                if self.fsb.find_sync_start_index(packet) > self.fsb.find_sync_stop_index(packet):
+                    packet = packet[self.fsb.find_sync_start_index(packet):]
                     found_sync_stop_index = 0
 
             if len(packet) > 500:  # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
                 if found_sync_start_index:
-                    packet = packet[self.find_sync_start_index(packet):]  # start packet at start sync
+                    packet = packet[self.fsb.find_sync_start_index(packet):]  # start packet at start sync
                 else:
                     packet = bytearray()
 
@@ -51,15 +50,6 @@ class PacketReader:
         # Placeholder method to be overridden by subclasses for serial and sockets
         # because they have different objects to read from and syntax to read with.
         return bytearray()
-
-    def find_log_sync_start_index(self, buffered_serial_data):
-        return bytearray(buffered_serial_data).find(self.log_sync_bytes)
-
-    def find_sync_start_index(self, buffered_serial_data):
-        return bytearray(buffered_serial_data).find(self.start_sync_bytes)
-
-    def find_sync_stop_index(self, buffered_serial_data):
-        return bytearray(buffered_serial_data).find(self.stop_sync_bytes)
 
 
 class ConnectSerial(PacketReader):
