@@ -12,12 +12,22 @@ class Logger:
         """
         self.ensure_log_folder_exists()
         log = logging.getLogger('minxss_beacon_decoder_debug')
-        handler = logging.FileHandler(self.create_log_filename())
-        formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-        handler.setFormatter(formatter)
-        log.addHandler(handler)
-        log.setLevel(logging.DEBUG)
+
+        if not self.logger_exists(log):
+            handler = logging.FileHandler(self.create_log_filename())
+            formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+            handler.setFormatter(formatter)
+            log.addHandler(handler)
+            log.setLevel(logging.DEBUG)
+
         return log
+
+    @staticmethod
+    def logger_exists(log):
+        if len(log.handlers) > 0:
+            return True
+        else:
+            return False
 
     @staticmethod
     def ensure_log_folder_exists():
