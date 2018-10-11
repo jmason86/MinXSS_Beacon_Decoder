@@ -319,8 +319,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             self.save_data_to_disk(buffer_data_hex_string, buffer_data)
 
-            minxss_parser = MinxssParser(self.log)
-            telemetry = minxss_parser.parse_packet(buffer_data)
+            minxss_parser = MinxssParser(buffer_data, self.log)
+            telemetry = minxss_parser.parse_packet()
             self.display_gui_telemetry(telemetry)
 
     def decode_kiss(self, buffer_data):
