@@ -2,7 +2,7 @@
 __author__ = "James Paul Mason"
 __contact__ = "jmason86@gmail.com"
 
-from numpy import int8, uint8, int16, uint16, int32, uint32
+from numpy import uint8, int16, uint16
 from find_sync_bytes import FindSyncBytes
 
 
@@ -97,8 +97,8 @@ class MinxssParser:
             return int16(telemetry_point_raw)
 
     @staticmethod
-    def decode_flight_model(bytearrayTemp):
-        flight_model = (bytearrayTemp & 0x0030) >> 4  # [Unitless]
+    def decode_flight_model(bytearray_temp):
+        flight_model = (bytearray_temp & 0x0030) >> 4  # [Unitless]
 
         # Fix mistaken flight model number in final flight software burn
         if flight_model == 3:
@@ -107,53 +107,52 @@ class MinxssParser:
             flight_model = 3  # This is the engineering test unit (AKA FlatSat)
         return flight_model
     
-    def decode_command_accept_count(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp) # [#]
+    def decode_command_accept_count(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp)  # [#]
     
-    def decode_spacecraft_mode(self, bytearrayTemp):
-        return (bytearrayTemp & 0x07) # [Unitless]
+    @staticmethod
+    def decode_spacecraft_mode(bytearray_temp):
+        return bytearray_temp & 0x07  # [Unitless]
     
-    def decode_pointing_mode(self, bytearrayTemp):
-        return (bytearrayTemp & 0x01) # [Unitless]
+    @staticmethod
+    def decode_pointing_mode(bytearray_temp):
+        return bytearray_temp & 0x01  # [Unitless]
     
-    def decode_enable_x123(self, bytearrayTemp):
-        decodedByte = self.decode_bytes(bytearrayTemp)
-        return (decodedByte & 0x0002) >> 1 # [Boolean]
+    def decode_enable_x123(self, bytearray_temp):
+        decoded_byte = self.decode_bytes(bytearray_temp)
+        return (decoded_byte & 0x0002) >> 1  # [Boolean]
     
-    def decode_enable_sps(self, bytearrayTemp):
-        decodedByte = self.decode_bytes(bytearrayTemp)
-        return (decodedByte & 0x0004) >> 2 # [Boolean]
+    def decode_enable_sps(self, bytearray_temp):
+        decoded_byte = self.decode_bytes(bytearray_temp)
+        return (decoded_byte & 0x0004) >> 2  # [Boolean]
     
-    def decode_sps(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp) / 1e4 * 3.0 # [deg]
-    
-    def decode_eclipse(self, bytearrayTemp):
-        return (bytearrayTemp & 0x08) >> 3
+    def decode_sps(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp) / 1e4 * 3.0  # [deg]
 
-    def decode_xp(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp, return_unsigned_int=True) # [DN]
+    @staticmethod
+    def decode_eclipse(bytearray_temp):
+        return (bytearray_temp & 0x08) >> 3  # [Boolean]
+
+    def decode_xp(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp, return_unsigned_int=True)  # [DN]
     
-    def decode_temperature(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp) / 256.0 # [deg C]
+    def decode_temperature(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp) / 256.0  # [deg C]
     
-    def decode_temperature_battery(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp, return_unsigned_int=True) * 0.18766 - 250.2 # [deg C]
+    def decode_temperature_battery(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp, return_unsigned_int=True) * 0.18766 - 250.2  # [deg C]
     
-    def decode_temperature_solar_panel(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp, return_unsigned_int=True) * 0.1744 - 216.0 # [deg C]
+    def decode_temperature_solar_panel(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp, return_unsigned_int=True) * 0.1744 - 216.0  # [deg C]
     
-    def decode_battery_voltage(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp, return_unsigned_int=True) / 6415.0 # [V]
+    def decode_battery_voltage(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp, return_unsigned_int=True) / 6415.0  # [V]
     
-    def decode_battery_current(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp, return_unsigned_int=True) * 3.5568 - 61.6 # [mA]
+    def decode_battery_current(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp, return_unsigned_int=True) * 3.5568 - 61.6  # [mA]
     
-    def decode_solar_array_current(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp, return_unsigned_int=True) * 163.8 / 327.68 # [mA]
+    def decode_solar_array_current(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp, return_unsigned_int=True) * 163.8 / 327.68  # [mA]
     
-    def decode_solar_array_voltage(self, bytearrayTemp):
-        return self.decode_bytes(bytearrayTemp, return_unsigned_int=True) * 32.76 / 32768.0 # [V]
-    
-    ##
-    # End byte->human-readable conversion functions
-    ##
+    def decode_solar_array_voltage(self, bytearray_temp):
+        return self.decode_bytes(bytearray_temp, return_unsigned_int=True) * 32.76 / 32768.0  # [V]
