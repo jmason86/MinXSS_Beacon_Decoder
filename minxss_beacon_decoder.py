@@ -1,11 +1,11 @@
 import sys
 import os
-import logging
 from configparser import ConfigParser
 from PySide2 import QtGui, QtCore
 from PySide2.QtWidgets import QMainWindow, QApplication
 from PySide2.QtGui import QColor
 from ui_mainWindow import Ui_MainWindow
+from logger import Logger
 import connect_port_get_packet
 import file_upload
 import datetime
@@ -30,7 +30,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.output_hex_filename = None
         self.output_binary_filename = None
 
-        self.log = self.create_log()
+        self.log = Logger().create_log()
         self.log.info("Launched MinXSS Beacon Decoder.")
 
         self.setup_colors()
@@ -246,7 +246,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ip_address = self.lineEdit_ipAddress.text()
         port = self.lineEdit_ipPort.text()
 
-        connect_socket = connect_port_get_packet.ConnectSocket(ip_address, port, self.log)
+        connect_socket = connect_port_get_packet.ConnectSocket(ip_address, port)
         connected_port = connect_socket.connect_to_port()
         port_readable = connect_socket.port_readable
 
@@ -319,7 +319,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             self.save_data_to_disk(buffer_data_hex_string, buffer_data)
 
-            minxss_parser = MinxssParser(buffer_data, self.log)
+            minxss_parser = MinxssParser(buffer_data)
             telemetry = minxss_parser.parse_packet()
             self.display_gui_telemetry(telemetry)
 
@@ -580,28 +580,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def decode_kiss_toggled(self):
         self.write_gui_config_options_to_config_file()
-
-    def create_log(self):
-        """
-        For debugging and informational purposes.
-        """
-        self.ensure_log_folder_exists()
-        log = logging.getLogger('minxss_beacon_decoder_debug')
-        handler = logging.FileHandler(self.create_log_filename())
-        formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-        handler.setFormatter(formatter)
-        log.addHandler(handler)
-        log.setLevel(logging.DEBUG)
-        return log
-
-    @staticmethod
-    def ensure_log_folder_exists():
-        if not os.path.exists(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log")):
-            os.makedirs(os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log"))
-
-    @staticmethod
-    def create_log_filename():
-        return os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "log", "minxss_beacon_decoder_debug.log")
 
     def prepare_to_exit(self):
         self.log.info("About to quit.")

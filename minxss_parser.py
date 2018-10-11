@@ -4,12 +4,13 @@ __contact__ = "jmason86@gmail.com"
 
 from numpy import uint8, int16, uint16
 from find_sync_bytes import FindSyncBytes
+from logger import Logger
 
 
 class MinxssParser:
-    def __init__(self, minxss_packet, log):
+    def __init__(self, minxss_packet):
         self.minxss_packet = minxss_packet  # [bytearray]: Un-decoded data to be parsed
-        self.log = log
+        self.log = Logger().create_log()
 
     def parse_packet(self):
         """

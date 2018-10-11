@@ -5,6 +5,7 @@ __contact__ = "jmason86@gmail.com"
 import serial
 import socket
 from find_sync_bytes import FindSyncBytes
+from logger import Logger
 
 
 class PacketReader:
@@ -56,7 +57,7 @@ class ConnectSerial(PacketReader):
 
         self.port = port
         self.baud_rate = baud_rate
-        self.log = log
+        self.log = Logger().create_log()
 
         self.ser = None
         self.port_readable = None
@@ -84,12 +85,12 @@ class ConnectSerial(PacketReader):
 
 
 class ConnectSocket(PacketReader):
-    def __init__(self, ip_address, port, log):
+    def __init__(self, ip_address, port):
         super(ConnectSocket, self).__init__()
 
         self.ip_address = ip_address
         self.port = port
-        self.log = log
+        self.log = Logger().create_log()
 
         self.client_socket = None
         self.port_readable = None
