@@ -8,9 +8,6 @@ from find_sync_bytes import FindSyncBytes
 
 
 class PacketReader:
-    def __init__(self):
-        self.fsb = FindSyncBytes()
-
     def read_packet(self):
         #  From all of the binary coming in, grab and return a single packet including all headers/footers
         packet = bytearray()
@@ -23,23 +20,24 @@ class PacketReader:
             for byte in buffered_data:
                 packet.append(byte)
 
-            if self.fsb.find_log_sync_start_index(packet) != -1:
+            fsb = FindSyncBytes()
+            if fsb.find_log_sync_start_index(packet) != -1:
                 found_log_packet = True
-            if self.fsb.find_sync_start_index(packet) != -1:
+            if fsb.find_sync_start_index(packet) != -1:
                 found_sync_start_index = True
-            if self.fsb.find_sync_stop_index(packet) != -1:
+            if fsb.find_sync_stop_index(packet) != -1:
                 if found_log_packet:
                     packet = bytearray()  # Clear out the packet because its a log message not a housekeeping packet
                 else:
                     found_sync_stop_index = True
             if found_sync_start_index and found_sync_stop_index:
-                if self.fsb.find_sync_start_index(packet) > self.fsb.find_sync_stop_index(packet):
-                    packet = packet[self.fsb.find_sync_start_index(packet):]
+                if fsb.find_sync_start_index(packet) > fsb.find_sync_stop_index(packet):
+                    packet = packet[fsb.find_sync_start_index(packet):]
                     found_sync_stop_index = 0
 
             if len(packet) > 500:  # Assuming that there's no way to have this much header on the 254 byte MinXSS packet
                 if found_sync_start_index:
-                    packet = packet[self.fsb.find_sync_start_index(packet):]  # start packet at start sync
+                    packet = packet[fsb.find_sync_start_index(packet):]  # start packet at start sync
                 else:
                     packet = bytearray()
 
