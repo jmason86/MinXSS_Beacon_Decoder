@@ -85,10 +85,7 @@ class MinxssParser:
     def ensure_packet_starts_at_sync(self):
         fsb = FindSyncBytes()
         sync_offset = fsb.find_sync_start_index(self.minxss_packet)
-        if sync_offset != -1:
-            self.minxss_packet = self.minxss_packet[sync_offset:len(self.minxss_packet)]
-        else:
-            self.log.error("No start sync bytes found in minxss_parser, exiting.")
+        self.minxss_packet = self.minxss_packet[sync_offset:len(self.minxss_packet)]
 
     def decode_bytes(self, bytearray_temp, return_unsigned_int=False):
         """
