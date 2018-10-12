@@ -11,11 +11,15 @@ class MinxssParser:
     def __init__(self, minxss_packet):
         self.minxss_packet = minxss_packet  # [bytearray]: Un-decoded data to be parsed
         self.log = Logger().create_log()
+        self.expected_packet_length = 252
 
     def parse_packet(self):
         """
         Returns decoded telemetry as a dictionary
         """
+        if not self.is_valid_packet():
+            return None
+
         self.ensure_packet_starts_at_sync()
 
         telemetry = dict()
@@ -60,6 +64,24 @@ class MinxssParser:
         self.log.info(telemetry)
         return telemetry
 
+    def is_valid_packet(self):
+        fsb = FindSyncBytes()
+        sync_start_index = fsb.find_sync_start_index(self.minxss_packet)
+        sync_stop_index = fsb.find_sync_stop_index(self.minxss_packet)
+        packet_length = sync_stop_index - sync_start_index
+
+        if sync_start_index == -1:
+            self.log.error('Invalid packet detected. No sync start pattern found. Returning.')
+            return False
+        if sync_stop_index == -1:
+            self.log.error('Invalid packet detected. No sync stop pattern found. Returning.')
+            return False
+        if packet_length != self.expected_packet_length:
+            self.log.error('Invalid packet detected. Packet length is {0} but expected to be {1}. Returning.'.format(packet_length, self.expected_packet_length))
+            return False
+
+        return True
+
     def ensure_packet_starts_at_sync(self):
         fsb = FindSyncBytes()
         sync_offset = fsb.find_sync_start_index(self.minxss_packet)
@@ -67,7 +89,6 @@ class MinxssParser:
             self.minxss_packet = self.minxss_packet[sync_offset:len(self.minxss_packet)]
         else:
             self.log.error("No start sync bytes found in minxss_parser, exiting.")
-            return None
 
     def decode_bytes(self, bytearray_temp, return_unsigned_int=False):
         """
