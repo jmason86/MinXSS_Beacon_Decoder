@@ -292,7 +292,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def upload_data(self):
         if self.do_forward_data():
-            self.log.info('Uploading data to MinXSS team.')
             self.display_gui_uploading()
             file_upload.upload(self.output_binary_filename, self.log)
             self.display_gui_upload_complete()
@@ -373,11 +372,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     @staticmethod
     def get_local_time():
-        return datetime.datetime.now().replace(microsecond=0).isoformat(' ')
+        local_time = datetime.datetime.now().replace(microsecond=0).isoformat(' ')
+        return local_time
 
     @staticmethod
     def get_utc_time():
-        return datetime.datetime.utcnow().replace(microsecond=0).isoformat(' ')
+        utc_time = datetime.datetime.utcnow().replace(microsecond=0).isoformat(' ')
+        return utc_time
 
     def display_gui_telemetry_spacecraft_state(self, telemetry):
         self.label_flightModel.setText("{0:0=1d}".format(telemetry['FlightModel']))
