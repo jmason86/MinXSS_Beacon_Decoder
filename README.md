@@ -11,16 +11,16 @@ All of this code is made open source to hopefully encourage other CubeSat progra
 The GUI is built with the designer component of [Qt Creator](https://www.qt.io/download) (open source version; it's not necessary to have this unless you want to edit the interface). It uses the [Qt for Python project](https://www.qt.io/qt-for-python) (pyside2 module, available, e.g., [in anaconda](https://anaconda.org/conda-forge/pyside2)) to convert the Qt Designer .ui file into a .py (this is required if you want to run the code directly but not required if you're running the built beacon decoder application). [minxss_beacon_decoder.py](minxss_beacon_decoder.py) wraps around that GUI code to provide the buttons and text displays with functionality. It uses [connect_port_get_packet.py](connect_port_get_packet.py) to establish a link with the user-specified serial port or TCP/IP socket and then read from it. [minxss_parser.py](minxss_parser.py) is then fed the binary and interprets the data into a dictionary, which is returned to [minxss_beacon_decoder.py](minxss_beacon_decoder.py) for display in the GUI. 
 
 Here is what the layout looks like: 
-![Example Screenshot of Telemetry](/screenshots/in_operation1_v1.1.0.png)
+![Example Screenshot of Telemetry](/screenshots/in_operation2_v2.0.2.png)
 
 The other important component of this program is the optional (but default) automatic forwarding of binary data to the MinXSS team at the University of Colorado at Boulder / Laboratory for Atmospheric and Space Physics. There we merge data received at our own ground stations in Boulder and Alaska, and any other data sent in from volunteer HAM operators around the world. We process the data automatically up to the high-level science products and publish them online at our website (http://lasp.colorado.edu/home/minxss/data/). This all occurs daily. 
 In order to forward the data, just make sure to leave the "Forward data" toggle checked, and when the pass is over, either click the "Complete Pass" button or just exit the program. 
 
-![Example Screenshot of Input / Options](/screenshots/in_operation2v1.1.0.png)
+![Example Screenshot of Input / Options](/screenshots/in_operation2_v2.0.2.png)
 
 See the release page for periodic releases of code in a good state: https://github.com/jmason86/MinXSS_Beacon_Decoder/releases. 
 
-![Example Screenshot of About](/screenshots/in_operation3v1.1.0.png)
+![Example Screenshot of About](/screenshots/in_operation3_v1.1.0.png)
 
 ## How to run from the compiled code (.exe, .app)
 1. If you haven't already downloaded [the latest release](https://github.com/jmason86/MinXSS_Beacon_Decoder/releases), do so. 
