@@ -293,7 +293,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def upload_data(self):
         if self.do_forward_data():
             self.display_gui_uploading()
-            file_upload.upload(self.output_binary_filename, self.log)
+            file_upload.upload(self.output_binary_filename)
             self.display_gui_upload_complete()
 
     def do_forward_data(self):
