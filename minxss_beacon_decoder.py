@@ -1,6 +1,6 @@
 import sys
 import os
-from configparser import ConfigParser
+import configparser
 from PySide2 import QtGui, QtCore
 from PySide2.QtWidgets import QMainWindow, QApplication
 from PySide2.QtGui import QColor
@@ -131,7 +131,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.output_binary_filename = self.base_output_filename + ".dat"
 
     def write_gui_config_options_to_config_file(self):
-        config = ConfigParser()
+        config = configparser.ConfigParser()
         config.read(self.config_filename)
         config.set('input_properties', 'serial_port', self.comboBox_serialPort.currentText())
         config.set('input_properties', 'baud_rate', self.lineEdit_baudRate.text())
@@ -147,17 +147,44 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.log.info('Updated input_properties.cfg file with new settings.')
 
     def setup_last_used_settings(self):
-        parser = ConfigParser()
+        config = configparser.ConfigParser()
         self.config_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "input_properties.cfg")
-        if not self.config_file_exists_and_is_not_empty():
+        if self.need_new_config_file(config):
             self.log.info('No input_properties.cfg file found. Creating the default one.')
             self.write_default_config()
 
-        parser.read(self.config_filename)
-        self.set_instance_variables_from_config(parser)
+        config.read(self.config_filename)
+        self.set_instance_variables_from_config(config)
 
-    def config_file_exists_and_is_not_empty(self):
-        return os.path.isfile(self.config_filename) and os.stat(self.config_filename).st_size != 0
+    def need_new_config_file(self, config):
+        if not os.path.isfile(self.config_filename):
+            return True
+        if os.stat(self.config_filename).st_size == 0:
+            return True
+
+        try:
+            config.read(self.config_filename)
+        except configparser.MissingSectionHeaderError:
+            return True
+
+        if not config.has_option('input_properties', 'serial_port'):
+            return True
+        if not config.has_option('input_properties', 'baud_rate'):
+            return True
+        if not config.has_option('input_properties', 'ip_address'):
+            return True
+        if not config.has_option('input_properties', 'port'):
+            return True
+        if not config.has_option('input_properties', 'decode_kiss'):
+            return True
+        if not config.has_option('input_properties', 'forward_data'):
+            return True
+        if not config.has_option('input_properties', 'callsign'):
+            return True
+        if not config.has_option('input_properties', 'latitude'):
+            return True
+        if not config.has_option('input_properties', 'longitude'):
+            return True
 
     def write_default_config(self):
         with open(self.config_filename, "w") as config_file:
@@ -172,18 +199,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             print("latitude = 40.240", file=config_file)
             print("longitude = -105.2353", file=config_file)
 
-    def set_instance_variables_from_config(self, parser):
+    def set_instance_variables_from_config(self, config):
         self.tabWidget_serialIp.setCurrentIndex(1)  # TODO: Make this an actual config parameter
-        self.comboBox_serialPort.insertItem(0, parser.get('input_properties', 'serial_port'))
+        self.comboBox_serialPort.insertItem(0, config.get('input_properties', 'serial_port'))
         self.comboBox_serialPort.setCurrentIndex(0)
-        self.lineEdit_baudRate.setText(parser.get('input_properties', 'baud_rate'))
-        self.lineEdit_ipAddress.setText(parser.get('input_properties', 'ip_address'))
-        self.lineEdit_ipPort.setText(parser.get('input_properties', 'port'))
-        self.lineEdit_callsign.setText(parser.get('input_properties', 'callsign'))
-        self.lineEdit_latitude.setText(parser.get('input_properties', 'latitude'))
-        self.lineEdit_longitude.setText(parser.get('input_properties', 'longitude'))
-        self.checkBox_decodeKiss.setChecked(self.str2bool(parser.get('input_properties', 'decode_kiss')))
-        self.checkBox_forwardData.setChecked(self.str2bool(parser.get('input_properties', 'forward_data')))
+        self.lineEdit_baudRate.setText(config.get('input_properties', 'baud_rate'))
+        self.lineEdit_ipAddress.setText(config.get('input_properties', 'ip_address'))
+        self.lineEdit_ipPort.setText(config.get('input_properties', 'port'))
+        self.lineEdit_callsign.setText(config.get('input_properties', 'callsign'))
+        self.lineEdit_latitude.setText(config.get('input_properties', 'latitude'))
+        self.lineEdit_longitude.setText(config.get('input_properties', 'longitude'))
+        self.checkBox_decodeKiss.setChecked(self.str2bool(config.get('input_properties', 'decode_kiss')))
+        self.checkBox_forwardData.setChecked(self.str2bool(config.get('input_properties', 'forward_data')))
         # Intentionally don't do saveData -- always defaults to on to avoid frustration of lost data
 
     @staticmethod
