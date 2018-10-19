@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_mainWindow.ui'
 #
-# Created: Fri Oct  5 13:11:36 2018
+# Created: Fri Oct 19 10:35:24 2018
 #      by: pyside2-uic 2.0.0 running on PySide2 5.6.0~a1
 #
 # WARNING! All changes made in this file will be lost!
@@ -17607,7 +17607,7 @@ class Ui_MainWindow(object):
         self.label_batteryTemperature.setText(QtWidgets.QApplication.translate("MainWindow", "-", None, -1))
         self.label_58.setText(QtWidgets.QApplication.translate("MainWindow", "Radio:", None, -1))
         self.label_87.setText(QtWidgets.QApplication.translate("MainWindow", "[-8, 58] ºC", None, -1))
-        self.label_19.setText(QtWidgets.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v2.0.2", None, -1))
+        self.label_19.setText(QtWidgets.QApplication.translate("MainWindow", "MinXSS CubeSat Real-Time Telemetry v2.0.3", None, -1))
         self.label_lastPacketTime.setText(QtWidgets.QApplication.translate("MainWindow", "Last packet at: ", None, -1))
         self.label_uploadStatus.setText(QtWidgets.QApplication.translate("MainWindow", "Upload status: Idle", None, -1))
         self.label.setText(QtWidgets.QApplication.translate("MainWindow", "Raw serial data (hex):", None, -1))

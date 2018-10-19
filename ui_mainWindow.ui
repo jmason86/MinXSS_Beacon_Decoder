@@ -33833,7 +33833,7 @@
                </font>
               </property>
               <property name="text">
-               <string>MinXSS CubeSat Real-Time Telemetry v2.0.2</string>
+               <string>MinXSS CubeSat Real-Time Telemetry v2.0.3</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
