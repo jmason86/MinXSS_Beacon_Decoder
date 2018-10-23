@@ -2,8 +2,8 @@ import sys
 import os
 import configparser
 from PySide2 import QtGui, QtCore
-from PySide2.QtWidgets import QMainWindow, QApplication
-from PySide2.QtGui import QColor
+from PySide2.QtWidgets import QMainWindow, QApplication, QSystemTrayIcon, QMenu
+from PySide2.QtGui import QColor, QIcon
 from ui_mainWindow import Ui_MainWindow
 from logger import Logger
 import connect_port_get_packet
@@ -24,24 +24,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.green_color = None
         self.yellow_color = None
         self.red_color = None
+        self.tray = QSystemTrayIcon(self)
         self.connected_port = None
         self.config_filename = None
         self.base_output_filename = None
         self.output_hex_filename = None
         self.output_binary_filename = None
+        self.port_read_thread = PortReadThread(self.read_port, self.stop_read)
 
         self.log = Logger().create_log()
         self.log.info("Launched MinXSS Beacon Decoder.")
 
-        self.setup_colors()
-        self.setupUi(self)
-        self.setup_available_ports()
+        self.setup_ui()
         self.connect_ui_to_functions()
-        self.setup_last_used_settings()
         self.setup_output_files()
-        self.port_read_thread = PortReadThread(self.read_port, self.stop_read)
+
         QApplication.instance().aboutToQuit.connect(self.prepare_to_exit)
         self.show()
+
+    def setup_ui(self):
+        self.setupUi(self)
+        self.setup_colors()
+        self.setup_tray_icon()
+        self.setup_available_ports()
+        self.setup_last_used_settings()
 
     def setup_colors(self):
         green = QColor(55, 195, 58)
@@ -61,6 +67,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         palette_red.setColor(QtGui.QPalette.Text, red)
         palette_red.setColor(QtGui.QPalette.Foreground, red)
         self.red_color = palette_red
+
+    def setup_tray_icon(self):
+        if self.tray.isSystemTrayAvailable():
+            self.tray.setIcon(QIcon('assets/icon_256.png'))
+            menu = QMenu()
+            action_quit = menu.addAction("Quit")
+            action_quit.triggered.connect(self.close)
+
+            self.tray.setContextMenu(menu)
+            self.tray.show()
+        else:
+            self.tray = None
 
     def setup_available_ports(self):
         """
