@@ -159,7 +159,7 @@ class MinxssParser:
         return self.decode_bytes(bytearray_temp) / 256.0  # [deg C]
     
     def decode_temperature_battery(self, bytearray_temp):
-        return self.decode_bytes(bytearray_temp, return_unsigned_int=True) * 0.18766 - 250.2  # [deg C]
+        return self.decode_bytes(bytearray_temp, return_unsigned_int=True) * 0.307 - 373.0  # [deg C]
     
     def decode_temperature_solar_panel(self, bytearray_temp):
         return self.decode_bytes(bytearray_temp, return_unsigned_int=True) * 0.1744 - 216.0  # [deg C]
