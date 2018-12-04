@@ -1,4 +1,5 @@
-# MinXSS_Beacon_Decoder
+# The MinXSS Beacon Decoder and Forwarder
+[![DOI](https://zenodo.org/badge/82593919.svg)](https://zenodo.org/badge/latestdoi/82593919)
 ## Overview
 A GUI for decoding serial or socket data received with a UHF HAM radio station from the MinXSS CubeSat in space. There are two MinXSS spacecraft: MinXSS-1 deployed from the International Space Station on 2016 May 16 and operated until 2017 May 06 when it burned up in Earth's atmosphere (as planned); MinXSS-2 will be launched in early 2018. 
 
