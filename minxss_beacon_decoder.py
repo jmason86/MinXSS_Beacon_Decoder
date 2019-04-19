@@ -113,8 +113,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         latitude = self.lineEdit_latitude.text()
         longitude = self.lineEdit_longitude.text()
         self.base_output_filename = os.path.join(os.path.expanduser("~"), "MinXSS_Beacon_Decoder", "output",
-                                                 datetime.datetime.now().isoformat().replace(':',
-                                                                                             '_')) + '_' + callsign + '_' + latitude + '_' + longitude
+                                                 datetime.datetime.utcnow().isoformat().replace(':',
+                                                                                                '_')) + '_' + callsign + '_' + latitude + '_' + longitude
 
     def setup_output_file_decoded_data_as_hex(self):
         self.ensure_output_folder_exists()
